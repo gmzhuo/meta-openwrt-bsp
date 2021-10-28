@@ -5,9 +5,6 @@ first 'init' program more efficiently."
 
 INITRAMFS_SCRIPTS ?= "\
                       initramfs-framework-base \
-                      initramfs-module-setup-live \
-                      initramfs-module-udev \
-                      initramfs-module-install-efi \
                      "
 
 PACKAGE_INSTALL = "${INITRAMFS_SCRIPTS} ${VIRTUAL-RUNTIME_base-utils} udev base-passwd ${ROOTFS_BOOTSTRAP_INSTALL}"
@@ -27,5 +24,3 @@ inherit core-image
 IMAGE_ROOTFS_SIZE = "8192"
 IMAGE_ROOTFS_EXTRA_SPACE = "0"
 
-# Use the same restriction as initramfs-module-install
-# COMPATIBLE_HOST = '(x86_64.*|i.86.*|arm.*|aarch64.*|mipsel.*)-(linux.*|freebsd.*)'

@@ -23,16 +23,3 @@ Index: kernel-source/arch/mips/boot/Makefile
  	$(call if_changed,bin)
  
  targets += vmlinux.srec
-Index: kernel-source/arch/mips/boot/dts/ralink/mt7620a_hiwifi_hc5x61.dtsi
-===================================================================
---- kernel-source.orig/arch/mips/boot/dts/ralink/mt7620a_hiwifi_hc5x61.dtsi
-+++ kernel-source/arch/mips/boot/dts/ralink/mt7620a_hiwifi_hc5x61.dtsi
-@@ -7,7 +7,7 @@ targets += vmlinux.bin
- 	compatible = "hiwifi,hc5x61", "ralink,mt7620a-soc";
- 
- 	chosen {
--		bootargs = "console=ttyS0,115200";
-+		bootargs = "console=ttyS0,57600 rdinit=/bin/sh";
- 	};
- 
- 	keys {
