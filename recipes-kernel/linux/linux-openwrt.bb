@@ -83,24 +83,7 @@ do_openwrt_patch() {
 	echo "EXTRA_CFLAGS += -I\${srctree}/include/linux -I\${srctree}/include/linux/lzma" >>${S}/lib/lzma/Makefile
 	echo "dtb-y += ${MACHINE_DEFAULT_DTB}" >>${S}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/Makefile
 
-	#mkdir -p ${STAGING_KERNEL_DIR}/.kernel-meta/cfg/
-	#cp ${WORKDIR}/openwrt/target/linux/generic/config-5.10 ${STAGING_KERNEL_DIR}/.kernel-meta/cfg/config-5.10.cfg
-	#cp ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/${KERNEL_FEATURE_BSP_CONFIG} ${STAGING_KERNEL_DIR}/.kernel-meta/cfg/config-machine-5.10.cfg
-
-	echo "CONFIG_KERNEL_DTB=y" >>${S}/.kernel-meta/configs/config-mt7620-5.10.cfg
-	echo "CONFIG_BUILTIN_DTB=y" >>${S}/.kernel-meta/configs/config-mt7620-5.10.cfg
-	echo "# CONFIG_MIPS_NO_APPENDED_DTB is not set" >>${S}/.kernel-meta/configs/config-mt7620-5.10.cfg
-	echo "CONFIG_MIPS_ELF_APPENDED_DTB=y" >>${S}/.kernel-meta/configs/config-mt7620-5.10.cfg
-	echo "# CONFIG_MIPS_RAW_APPENDED_DTB is not set" >>${S}/.kernel-meta/configs/config-mt7620-5.10.cfg
-	echo "CONFIG_APPENDED_DTB=${OPENWRT_KERNEL_DTS_PATH}/${MACHINE_DEFAULT_DTB}" >>${S}/.kernel-meta/configs/config-mt7620-5.10.cfg
-
-
-	echo "/ {" >> ${S}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/mt7620a_hiwifi_hc5x61.dtsi
-	echo "\tchosen {" >> ${S}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/mt7620a_hiwifi_hc5x61.dtsi
-	echo '\t\tbootargs = "console=ttyS0,115200";'  >> ${S}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/mt7620a_hiwifi_hc5x61.dtsi
-	echo "\t};" >> ${S}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/mt7620a_hiwifi_hc5x61.dtsi
-	echo "};" >> ${S}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/mt7620a_hiwifi_hc5x61.dtsi
-
+	patch -p1 <${WORKDIR}/${MACHINE_EXTERNAL_PATCH}
 
 	bbnote "config adjust done"
 }
