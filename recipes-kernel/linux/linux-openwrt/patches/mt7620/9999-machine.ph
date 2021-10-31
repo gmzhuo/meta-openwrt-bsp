@@ -32,7 +32,7 @@ Index: kernel-source/arch/mips/boot/dts/ralink/mt7620a_hiwifi_hc5x61.dtsi
  
  	chosen {
 -		bootargs = "console=ttyS0,115200";
-+		bootargs = "console=ttyS0,57600 rdinit=/bin/sh";
++		bootargs = "console=ttyS0,57600";
  	};
  
  	keys {

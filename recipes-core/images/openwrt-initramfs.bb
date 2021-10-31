@@ -1,26 +1,26 @@
-# Simple initramfs image. Mostly used for live images.
-DESCRIPTION = "Small image capable of booting a device. The kernel includes \
-the Minimal RAM-based Initial Root Filesystem (initramfs), which finds the \
-first 'init' program more efficiently."
+# This file Copyright (C) 2015 Khem Raj <raj.khem@gmail.com> and
+# Copyright (C) 2018 Daniel Dickinson <cshored@thecshore.com>
+#
+# It is released under the MIT license.  See COPYING.MIT
+# for the terms.
 
-INITRAMFS_SCRIPTS ?= "\
-                      initramfs-framework-base \
-                     "
-
-PACKAGE_INSTALL = "${INITRAMFS_SCRIPTS} ${VIRTUAL-RUNTIME_base-utils} udev base-passwd ${ROOTFS_BOOTSTRAP_INSTALL}"
-
-# Do not pollute the initrd image with rootfs features
-IMAGE_FEATURES = ""
-
-export IMAGE_BASENAME = "${MLPREFIX}openwrt-initramfs"
-IMAGE_NAME_SUFFIX ?= ""
-IMAGE_LINGUAS = ""
+SUMMARY = "OpenWrt Minimal Complete Image"
 
 LICENSE = "MIT"
+export IMAGE_BASENAME = "${MLPREFIX}openwrt-initramfs"
 
-IMAGE_FSTYPES = "${INITRAMFS_FSTYPES}"
-inherit core-image
+inherit core-image openwrt openwrt-kmods openwrt-services
 
-IMAGE_ROOTFS_SIZE = "8192"
-IMAGE_ROOTFS_EXTRA_SPACE = "0"
+CORE_IMAGE_BASE_INSTALL = '\
+    packagegroup-core-boot \
+    packagegroup-openwrt-minimal \
+    \
+    ${MACHINE_EXTRA_RDEPENDS} \
+    ${CORE_IMAGE_EXTRA_INSTALL} \
+	initramfs-dev \
+     '
+
+IMAGE_INSTALL ?= "${CORE_IMAGE_BASE_INSTALL}"
+
+IMAGE_FSTYPES += "ext4"
 
