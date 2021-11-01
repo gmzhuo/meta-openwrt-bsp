@@ -13,7 +13,7 @@ inherit core-image openwrt openwrt-kmods openwrt-services
 
 CORE_IMAGE_BASE_INSTALL = '\
     packagegroup-core-boot \
-    packagegroup-openwrt-minimal \
+    packagegroup-openwrt-minimal-base \
     \
     ${MACHINE_EXTRA_RDEPENDS} \
     ${CORE_IMAGE_EXTRA_INSTALL} \
