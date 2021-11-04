@@ -35,20 +35,17 @@ S = "${WORKDIR}/backports-5.15-rc6-1"
 module_do_compile() {
 	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
 
-	oe_runmake CROSS_COMPILE="${CROSS_COMPILE}" ARCH="mips" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" \
-		EXTRA_CFLAGS="-I${S}/include" KERNELRELEASE=${KERNEL_VERSION} \
+	oe_runmake CROSS_COMPILE="${CROSS_COMPILE}" ARCH="${ARCH}"  \
 		KLIB_BUILD="${STAGING_KERNEL_BUILDDIR}" \
-		MODPROBE=true KLIB="${STAGING_KERNEL_BUILDDIR}" KERNEL_SUBLEVEL=10 KBUILD_LDFLAGS_MODULE_PREREQ= V=1 modules
+		MODPROBE=true KLIB="${D}" modules
 }
 
 module_do_install() {
 	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
-	oe_runmake CROSS_COMPILE="${CROSS_COMPILE}" ARCH="mips" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" \
-		EXTRA_CFLAGS="-I${S}/include" KERNELRELEASE=${KERNEL_VERSION} \
+
+	oe_runmake CROSS_COMPILE="${CROSS_COMPILE}" ARCH="${ARCH}"  \
 		KLIB_BUILD="${STAGING_KERNEL_BUILDDIR}" \
-		CC="${KERNEL_CC}" LD="${KERNEL_LD}" \
-		O=${STAGING_KERNEL_BUILDDIR} \
-		MODPROBE=true KLIB="${D}" KERNEL_SUBLEVEL=10 KBUILD_LDFLAGS_MODULE_PREREQ= modules_install V=1
+		MODPROBE=true KLIB="${D}" modules_install
 
 	if [ ! -e "${B}/${MODULES_MODULE_SYMVERS_LOCATION}/Module.symvers" ] ; then
 		bbwarn "Module.symvers not found in ${B}/${MODULES_MODULE_SYMVERS_LOCATION}"
@@ -66,9 +63,6 @@ module_do_install() {
 inherit cml1
 
 do_configure() {
-	export PATH_BACK=${PATH}
-	export PATH=$PATH:/usr/bin/
-
 	rm -rf \
 		include/linux/ssb \
 		include/linux/bcma \
@@ -85,27 +79,22 @@ do_configure() {
 
 	set -x
 	touch .config
-	bbnote ${@" ".join(find_cfgs(d))}
 	merge_config.sh -m .config ${@" ".join(find_cfgs(d))}
-	cat .config
-	make CROSS_COMPILE="${CROSS_COMPILE}" ARCH="mips" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" \
-		EXTRA_CFLAGS="-I${S}/include" KERNELRELEASE=${KERNEL_VERSION}\
+
+	oe_runmake CROSS_COMPILE="${CROSS_COMPILE}" ARCH="${ARCH}"  \
 		KLIB_BUILD="${STAGING_KERNEL_BUILDDIR}" \
-		CC="${KERNEL_CC}" LD="${KERNEL_LD}" \
-		O=${STAGING_KERNEL_BUILDDIR} \
-		MODPROBE=true KLIB="${STAGING_KERNEL_BUILDDIR}" KERNEL_SUBLEVEL=10 KBUILD_LDFLAGS_MODULE_PREREQ= allnoconfig CC=cc
-	export PATH=${PATH_BACK}
+		MODPROBE=true KLIB="${D}" CC=gcc LEX=flex allnoconfig 
 }
 
-PACKAGES += "kernel-module-compat kernel-module-mac80211 kernel-module-cfg80211 kernel-module-rt2800lib kernel-module-rt2800mmio kernel-module-rt2800soc kernel-module-rt2x00mmio kernel-module-rt2x00soc"
+#PACKAGES += "kernel-module-compat kernel-module-mac80211 kernel-module-cfg80211 kernel-module-rt2800lib kernel-module-rt2800mmio kernel-module-rt2800soc kernel-module-rt2x00mmio kernel-module-rt2x00soc"
 RPROVIDES:${PN} += "kernel-module-mac80211"
-RPROVIDES:${PN}-compat += "kernel-module-mac80211-compat"
-FILES:kernel-module-compat = "lib/modules/5.10.77-yocto-standard/updates/compat/compat.ko"
-FILES:kernel-module-mac80211 = "lib/modules/5.10.77-yocto-standard/updates/net/mac80211/mac80211.ko"
-FILES:kernel-module-cfg80211 = "lib/modules/5.10.77-yocto-standard/updates/net/wireless/cfg80211.ko"
-FILES:kernel-module-rt2800lib = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2800lib.ko"
-FILES:kernel-module-rt2800mmio = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2800mmio.ko"
-FILES:kernel-module-rt2800soc = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2800soc.ko"
-FILES:kernel-module-rt2x00lib = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2x00lib.ko"
-FILES:kernel-module-rt2x00mmio = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2x00mmio.ko"
-FILES:kernel-module-rt2x00soc = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2x00soc.ko"
+#RPROVIDES:${PN}-compat += "kernel-module-mac80211-compat"
+#FILES:kernel-module-compat = "lib/modules/5.10.77-yocto-standard/updates/compat/compat.ko"
+#FILES:kernel-module-mac80211 = "lib/modules/5.10.77-yocto-standard/updates/net/mac80211/mac80211.ko"
+#FILES:kernel-module-cfg80211 = "lib/modules/5.10.77-yocto-standard/updates/net/wireless/cfg80211.ko"
+#FILES:kernel-module-rt2800lib = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2800lib.ko"
+#FILES:kernel-module-rt2800mmio = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2800mmio.ko"
+#FILES:kernel-module-rt2800soc = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2800soc.ko"
+#FILES:kernel-module-rt2x00lib = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2x00lib.ko"
+#FILES:kernel-module-rt2x00mmio = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2x00mmio.ko"
+#FILES:kernel-module-rt2x00soc = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2x00soc.ko"
