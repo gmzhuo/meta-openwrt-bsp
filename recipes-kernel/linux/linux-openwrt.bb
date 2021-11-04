@@ -26,7 +26,7 @@ KMETA = "kernel-meta"
 
 SRC_URI = " \
     git://mirrors.tuna.tsinghua.edu.cn/git/linux-stable.git;protocol=https;branch=${KBRANCH} \
-	git://github.com/gmzhuo/openwrt-kernel-cache.git;type=kmeta;name=meta;branch=main;destsuffix=${KMETA} \
+	git://github.com/gmzhuo/openwrt-kernel-cache.git;protocol=https;type=kmeta;name=meta;branch=main;destsuffix=${KMETA} \
 	${OPENWRT_SRC_URI};type=openwrt;name=openwrt;destsuffix=openwrt \
 	file://configs/config-5.10.cfg;name=config-general \
 	file://configs/config-mt7620-5.10.cfg;name=config-machine \

@@ -1,0 +1,29 @@
+SRC_URI += "file://patches/ath9k/350-ath9k_hw-reset-AHB-WMAC-interface-on-AR91xx.patch \
+		file://patches/ath9k/351-ath9k_hw-issue-external-reset-for-QCA955x.patch \
+		file://patches/ath9k/354-ath9k-force-rx_clear-when-disabling-rx.patch \
+		file://patches/ath9k/356-Revert-ath9k-interpret-requested-txpower-in-EIRP-dom.patch \
+		file://patches/ath9k/365-ath9k-adjust-tx-power-reduction-for-US-regulatory-do.patch \
+		file://patches/ath9k/401-ath9k_blink_default.patch \
+		file://patches/ath9k/410-ath9k_allow_adhoc_and_ap.patch \
+		file://patches/ath9k/450-ath9k-enabled-MFP-capability-unconditionally.patch \
+		file://patches/ath9k/500-ath9k_eeprom_debugfs.patch \
+		file://patches/ath9k/501-ath9k_ahb_init.patch \
+		file://patches/ath9k/510-ath9k_intr_mitigation_tweak.patch \
+		file://patches/ath9k/511-ath9k_reduce_rxbuf.patch \
+		file://patches/ath9k/512-ath9k_channelbw_debugfs.patch \
+		file://patches/ath9k/513-ath9k_add_pci_ids.patch \
+		file://patches/ath9k/530-ath9k_extra_leds.patch \
+		file://patches/ath9k/531-ath9k_extra_platform_leds.patch \
+		file://patches/ath9k/540-ath9k_reduce_ani_interval.patch \
+		file://patches/ath9k/542-ath9k_debugfs_diag.patch \
+		file://patches/ath9k/543-ath9k_entropy_from_adc.patch \
+		file://patches/ath9k/544-ath9k-ar933x-usb-hang-workaround.patch \
+		file://patches/ath9k/545-ath9k_ani_ws_detect.patch \
+		file://patches/ath9k/547-ath9k_led_defstate_fix.patch \
+		file://patches/ath9k/548-ath9k_enable_gpio_chip.patch \
+		file://patches/ath9k/549-ath9k_enable_gpio_buttons.patch \
+		file://patches/ath9k/550-ath9k-disable-bands-via-dt.patch \
+		file://patches/ath9k/551-ath9k_ubnt_uap_plus_hsr.patch \
+		file://patches/ath9k/552-ath9k-ahb_of.patch \
+		file://patches/ath9k/553-ath9k_of_gpio_mask.patch \
+		"
