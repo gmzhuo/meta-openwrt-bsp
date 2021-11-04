@@ -39,3 +39,98 @@ II. Misc
 ========
 
 --- replace with specific information about the meta-openwrt-bsp layer ---
+
+mipsel-poky-linux-musl-objcopy --update-section .appended_dtb=arch/mips/boot/dts/ralink/mt7620a_hiwifi_hc5761.dtb vmlinux
+mipsel-poky-linux-musl-objcopy -O binary -R .note -R .comment -S vmlinux linux.bin
+uboot-mkimage -A mips -O linux -T kernel -C "none" -a 80000000 -e 8042efb8 -n "test name" -d linux.bin uImage
+
+gzip linux.bin;cp linux.bin.gz linux.bin
+uboot-mkimage -A mips -O linux -T kernel -C "gzip" -a 80000400 -e 8042efb8 -n "test name" -d linux.bin uImage
+
+mkimage -A mips -O linux -T kernel -C "gzip" -a 80000000 -e 80000400 -n "test name" -d linux.bin uImage
+
+
+ENTRYPOINT=`${HOST_PREFIX}nm ${B}/vmlinux | awk '$3=="${UBOOT_ENTRYSYMBOL}" {print "0x"$1;exit}'`
+uboot-mkimage -A mips -O linux -T kernel -C "gzip" -a 800000000 -e 8042efb8 -n "test name" -d linux.bin uImage
+mipsel-poky-linux-musl-objcopy --update-section .appended_dtb=arch/mips/boot/dts/ralink/mt7620a_hiwifi_hc5761.dtb vmlinux
+
+mipsel-poky-linux-musl-objcopy --update-section .appended_dtb=arch/mips/boot/dts/ralink/mt7620a_hiwifi_hc5761.dtb vmlinuz
+
+
+mipsel-openwrt-linux-musl-objcopy -O binary -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id \
+	-S /opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/linux-5.10.75/vmlinux \
+	/opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/vmlinux-initramfs
+
+mipsel-openwrt-linux-musl-objcopy -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id \
+	-S /opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/linux-5.10.75/vmlinux \
+	/opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/vmlinux-initramfs.elf;
+
+cp -fpR /opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/linux-5.10.75/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/vmlinux-initramfs.debug
+
+
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/vmlinux-initramfs \
+	/opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/tmp/openwrt-ramips-mt7620-hiwifi_hc5761-initramfs-kernel.bin
+cat /opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/image-mt7620a_hiwifi_hc5761.dtb >> /opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/tmp/openwrt-ramips-mt7620-hiwifi_hc5761-initramfs-kernel.bin
+
+
+mkimage -A mips -O linux -T kernel -C lzma -a 0x80000000 -e 0x80000000 -n 'MIPS OpenWrt Linux-5.10.75'   \
+	-d /opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/tmp/openwrt-ramips-mt7620-hiwifi_hc5761-initramfs-kernel.bin \
+	/opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/tmp/openwrt-ramips-mt7620-hiwifi_hc5761-initramfs-kernel.bin.new
+
+
+mipsel-openwrt-linux-musl-objcopy -O binary -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id \
+	-S /opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work/hc5761-poky-linux-musl/linux-openwrt/1.0-r0/linux-hc5761-standard-build/vmlinux \
+	./vmlinux-initramfs
+cp ./vmlinux-initramfs openwrt-ramips-mt7620-hiwifi_hc5761-initramfs-kernel.bin
+cat /opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work/hc5761-poky-linux-musl/linux-openwrt/1.0-r0/linux-hc5761-standard-build/arch/mips/boot/dts/ralink/mt7620a_hiwifi_hc5761.dtb >> openwrt-ramips-mt7620-hiwifi_hc5761-initramfs-kernel.bin
+
+/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin/lzma e openwrt-ramips-mt7620-hiwifi_hc5761-initramfs-kernel.bin -lc1 -lp2 -pb2  ./openwrt-ramips-mt7620-hiwifi_hc5761-initramfs-kernel.bin.new
+/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin/mkimage -A mips -O linux -T kernel -C gzip -a 0x80000000 -e 0x80000000 -n 'MIPS OpenWrt Linux-5.10.75'   \
+	-d openwrt-ramips-mt7620-hiwifi_hc5761-initramfs-kernel.bin.new \
+	./uImage
+
+
+
+mipsel-poky-linux-musl-gcc -Wp,-MMD,/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work/hc5761-poky-linux-musl/mac80211/0.1-r0/backports-5.15-rc6-1/net/wireless/.reg.o.d  \
+	-nostdinc -isystem \
+	/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work/hc5761-poky-linux-musl/mac80211/0.1-r0/recipe-sysroot-native/usr/bin/mipsel-poky-linux-musl/\
+	../../lib/mipsel-poky-linux-musl/gcc/mipsel-poky-linux-musl/11.2.0/include \
+	-I/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work/hc5761-poky-linux-musl/mac80211/0.1-r0/backports-5.15-rc6-1/backport-include/ \
+	-I/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work/hc5761-poky-linux-musl/mac80211/0.1-r0/backports-5.15-rc6-1/backport-include/uapi \
+	-I/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work/hc5761-poky-linux-musl/mac80211/0.1-r0/backports-5.15-rc6-1/include/ \
+	-I/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work/hc5761-poky-linux-musl/mac80211/0.1-r0/backports-5.15-rc6-1/include/uapi \
+	-include /opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work/hc5761-poky-linux-musl/mac80211/0.1-r0/backports-5.15-rc6-1/backport-include/backport/backport.h -Wno-unused-but-set-variable \
+	-DCPTCFG_VERSION=\""v5.15-rc6-1-0-gd44432d6"\" -DCPTCFG_KERNEL_VERSION=\""v5.15-rc6-0-g519d81956ee2"\" -DCPTCFG_KERNEL_NAME=\""Linux"\"   \
+	-I/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work-shared/hc5761/kernel-source/arch/mips/include -I./arch/mips/include/generated \
+	-I/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work-shared/hc5761/kernel-source/include -I./include \
+	-I/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work-shared/hc5761/kernel-source/arch/mips/include/uapi -I./arch/mips/include/generated/uapi \
+	-I/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work-shared/hc5761/kernel-source/include/uapi -I./include/generated/uapi \
+	-include /opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work-shared/hc5761/kernel-source/include/linux/kconfig.h \
+	-include /opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work-shared/hc5761/kernel-source/include/linux/compiler_types.h -D__KERNEL__ \
+	-DVMLINUX_LOAD_ADDRESS=0xffffffff80000000 -DLINKER_LOAD_ADDRESS=0x80000000 -DDATAOFFSET=0 \
+	-fmacro-prefix-map=/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work-shared/hc5761/kernel-source/= -Wall \
+	-Wundef -Werror=strict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE \
+	-Werror=implicit-function-declaration -Werror=implicit-int -Werror=return-type -Wno-format-security \
+	-std=gnu89 -mno-check-zero-division -mabi=32 -G 0 -mno-abicalls -fno-pic -pipe \
+	-mno-branch-likely -msoft-float -DGAS_HAS_SET_HARDFLOAT -Wa,-msoft-float \
+	-ffreestanding -EL -fno-stack-check -Wa,-mno-fix-loongson3-llsc \
+	-march=mips32r2 -mtune=34kc -Wa,--trap -DTOOLCHAIN_SUPPORTS_VIRT -DTOOLCHAIN_SUPPORTS_XPA \
+	-DTOOLCHAIN_SUPPORTS_CRC -DTOOLCHAIN_SUPPORTS_DSP -DTOOLCHAIN_SUPPORTS_GINV \
+	-I/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work-shared/hc5761/kernel-source/arch/mips/include/asm/mach-ralink \
+	-I/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work-shared/hc5761/kernel-source/arch/mips/include/asm/mach-ralink/mt7620 \
+	-I/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work-shared/hc5761/kernel-source/arch/mips/include/asm/mach-generic -fno-asynchronous-unwind-tables \
+	-fno-delete-null-pointer-checks -Wno-frame-address -Wno-format-truncation \
+	-Wno-format-overflow -Wno-address-of-packed-member -O2 -fno-allow-store-data-races -Wframe-larger-than=1024 \
+	-fno-stack-protector -Wimplicit-fallthrough -Wno-unused-but-set-variable -Wno-unused-const-variable \
+	-fomit-frame-pointer -Wdeclaration-after-statement -Wvla -Wno-pointer-sign \
+	-Wno-stringop-truncation -Wno-zero-length-bounds -Wno-array-bounds -Wno-stringop-overflow -Wno-restrict \
+	-Wno-maybe-uninitialized -fno-strict-overflow -fno-stack-check -fconserve-stack -Werror=date-time \
+	-Werror=incompatible-pointer-types -Werror=designated-init -Wno-packed-not-aligned -fno-pie -no-pie \
+	-I/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work/hc5761-poky-linux-musl/mac80211/0.1-r0/backports-5.15-rc6-1/include  \
+	-DMODULE -mno-long-calls  -DKBUILD_BASENAME='"reg"' -DKBUILD_MODNAME='"cfg80211"' -c -o \
+	/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work/hc5761-poky-linux-musl/mac80211/0.1-r0/backports-5.15-rc6-1/net/wireless/reg.o \
+	/opt/work/yocto/openwrt/build-openwrt-poky-honister/tmp/work/hc5761-poky-linux-musl/mac80211/0.1-r0/backports-5.15-rc6-1/net/wireless/reg.c
+
+
+
+

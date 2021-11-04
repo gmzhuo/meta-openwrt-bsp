@@ -97,4 +97,15 @@ do_configure() {
 	export PATH=${PATH_BACK}
 }
 
+PACKAGES += "kernel-module-compat kernel-module-mac80211 kernel-module-cfg80211 kernel-module-rt2800lib kernel-module-rt2800mmio kernel-module-rt2800soc kernel-module-rt2x00mmio kernel-module-rt2x00soc"
 RPROVIDES:${PN} += "kernel-module-mac80211"
+RPROVIDES:${PN}-compat += "kernel-module-mac80211-compat"
+FILES:kernel-module-compat = "lib/modules/5.10.77-yocto-standard/updates/compat/compat.ko"
+FILES:kernel-module-mac80211 = "lib/modules/5.10.77-yocto-standard/updates/net/mac80211/mac80211.ko"
+FILES:kernel-module-cfg80211 = "lib/modules/5.10.77-yocto-standard/updates/net/wireless/cfg80211.ko"
+FILES:kernel-module-rt2800lib = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2800lib.ko"
+FILES:kernel-module-rt2800mmio = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2800mmio.ko"
+FILES:kernel-module-rt2800soc = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2800soc.ko"
+FILES:kernel-module-rt2x00lib = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2x00lib.ko"
+FILES:kernel-module-rt2x00mmio = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2x00mmio.ko"
+FILES:kernel-module-rt2x00soc = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2x00soc.ko"
