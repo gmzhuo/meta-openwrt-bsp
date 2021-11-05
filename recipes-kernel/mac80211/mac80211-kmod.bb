@@ -3,6 +3,7 @@ DESCRIPTION = "${SUMMARY}"
 LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
+KERNEL_SPLIT_MODULES = "0"
 inherit module
 DEPENDS += "flex-native"
 
@@ -19,18 +20,6 @@ S = "${WORKDIR}/backports-5.15-rc6-1"
 
 # The inherit of module.bbclass will automatically name module packages with
 # "kernel-module-" prefix as required by the oe-core build environment.
-
-#make  -C "/opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/backports-5.15-rc6-1" \
-#KCFLAGS="-fmacro-prefix-map=/opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl=target-mipsel_24kc_musl" \
-#HOSTCFLAGS="-O2 -I/opt/work/yocto/openwrt/openwrt/staging_dir/host/include -I/opt/work/yocto/openwrt/openwrt/staging_dir/hostpkg/include -I/opt/work/yocto/openwrt/openwrt/staging_dir/target-mipsel_24kc_musl/host/include -Wall -Wmissing-prototypes -Wstrict-prototypes" \
-#CROSS_COMPILE="mipsel-openwrt-linux-musl-" ARCH="mips" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" \
-#KBUILD_BUILD_TIMESTAMP="Fri Oct 29 18:36:13 2021" KBUILD_BUILD_VERSION="0" HOST_LOADLIBES="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" \
-#KBUILD_HOSTLDLIBS="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" CONFIG_SHELL="bash" V=''  cmd_syscalls= \
-#KBUILD_EXTRA_SYMBOLS="/opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/symvers/gpio-button-hotplug.symvers /opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/symvers/mac80211.symvers /opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/symvers/mt76.symvers" \
-#KERNELRELEASE=5.10.75 \
-#EXTRA_CFLAGS="-I/opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/backports-5.15-rc6-1/include -fmacro-prefix-map=/opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/backports-5.15-rc6-1=backports-5.15-rc6-1" \
-#KLIB_BUILD="/opt/work/yocto/openwrt/openwrt/build_dir/target-mipsel_24kc_musl/linux-ramips_mt7620/linux-5.10.75" \
-#MODPROBE=true KLIB=/lib/modules/5.10.75 KERNEL_SUBLEVEL=10 KBUILD_LDFLAGS_MODULE_PREREQ= modules
 
 module_do_compile() {
 	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
@@ -86,15 +75,4 @@ do_configure() {
 		MODPROBE=true KLIB="${D}" CC=gcc LEX=flex allnoconfig 
 }
 
-#PACKAGES += "kernel-module-compat kernel-module-mac80211 kernel-module-cfg80211 kernel-module-rt2800lib kernel-module-rt2800mmio kernel-module-rt2800soc kernel-module-rt2x00mmio kernel-module-rt2x00soc"
 RPROVIDES:${PN} += "kernel-module-mac80211"
-#RPROVIDES:${PN}-compat += "kernel-module-mac80211-compat"
-#FILES:kernel-module-compat = "lib/modules/5.10.77-yocto-standard/updates/compat/compat.ko"
-#FILES:kernel-module-mac80211 = "lib/modules/5.10.77-yocto-standard/updates/net/mac80211/mac80211.ko"
-#FILES:kernel-module-cfg80211 = "lib/modules/5.10.77-yocto-standard/updates/net/wireless/cfg80211.ko"
-#FILES:kernel-module-rt2800lib = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2800lib.ko"
-#FILES:kernel-module-rt2800mmio = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2800mmio.ko"
-#FILES:kernel-module-rt2800soc = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2800soc.ko"
-#FILES:kernel-module-rt2x00lib = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2x00lib.ko"
-#FILES:kernel-module-rt2x00mmio = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2x00mmio.ko"
-#FILES:kernel-module-rt2x00soc = "lib/modules/5.10.77-yocto-standard/updates/drivers/net/wireless/ralink/rt2x00/rt2x00soc.ko"
