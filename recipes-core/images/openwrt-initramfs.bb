@@ -20,7 +20,7 @@ CORE_IMAGE_BASE_INSTALL = '\
 	initramfs-dev \
      '
 
-IMAGE_INSTALL ?= "${CORE_IMAGE_BASE_INSTALL}"
+IMAGE_INSTALL ?= "${CORE_IMAGE_BASE_INSTALL} swconfig "
 
 IMAGE_FSTYPES += "ext4"
 

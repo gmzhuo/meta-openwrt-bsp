@@ -21,8 +21,10 @@ KBRANCH = "linux-5.10.y "
 KERNEL_FEATURE_BSP_CONFIG ?= "config-5.10"
 OPENWRT_KERNEL_DTS_PATH ?= ""
 
-SRCREV_meta ?= "59dcdb2de6e073544ef766ca8e5b436fd82f7ffb"
+SRCREV_meta ?= "${AUTOREV}"
 KMETA = "kernel-meta"
+
+KERNEL_DEVICETREE:bananapi_bpi-r64 += "mediatek/mt7622-bananapi-bpi-r64.dtb"
 
 
 SRC_URI = " \
@@ -30,7 +32,7 @@ SRC_URI = " \
 	git://github.com/gmzhuo/openwrt-kernel-cache.git;protocol=https;type=kmeta;name=meta;branch=main;destsuffix=${KMETA} \
 	${OPENWRT_SRC_URI};type=openwrt;name=openwrt;destsuffix=openwrt \
 	file://configs/config-5.10.cfg;name=config-general \
-	file://configs/config-mt7620-5.10.cfg;name=config-machine \
+	file://configs/${KERNEL_FEATURE_BSP_CONFIG};name=config-machine \
     "
 
 SRC_URI += "file://${MACHINE_EXTERNAL_PATCH}"
@@ -66,7 +68,8 @@ do_openwrt_patch() {
 	done
 
 	if [ ! -z ${KERNEL_FEATURE_BSP_PATH} ]; then
-		cp ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/files/* ${S}/ -rfd
+		[ -d ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/files/ ] && cp ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/files/* ${S}/ -rfd
+		[ -d ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/files-5.10/ ] && cp ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/files-5.10/* ${S}/ -rfd
 		for patchpath in ${KERNEL_FEATURE_BSP_PATCH_PATHS}
 		do
 			patches=$(ls ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/${patchpath}/*)
@@ -92,7 +95,10 @@ do_openwrt_patch() {
 do_openwrt_image() {
 	vmlinux_path="vmlinux"
 	cd ${B}
-	[ -n "${vmlinux_path}" ] && {
+
+	bbnote "${KERNEL_IMAGETYPE}"
+
+	[ -n "${vmlinux_path}" -a -f ${B}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/${MACHINE_DEFAULT_DTB} -a "${KERNEL_IMAGETYPE}" == "uImage" ] && {
 		${OBJCOPY} -O binary -R .note -R .comment -S "${vmlinux_path}" linux.bin.append
 		cat ${B}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/${MACHINE_DEFAULT_DTB} >>linux.bin.append
 		/usr/bin/lzma-alone e -lc1 -lp2 -pb2 linux.bin.append linux.bin.append.lzma
@@ -111,4 +117,4 @@ addtask do_openwrt_patch after do_patch before do_configure
 
 addtask do_openwrt_image after do_bundle_initramfs before do_deploy
 
-COMPATIBLE_MACHINE += "|hc5761"
+COMPATIBLE_MACHINE += "|hc5761|bananapi_bpi-r64"
