@@ -98,7 +98,7 @@ do_openwrt_image() {
 
 	bbnote "${KERNEL_IMAGETYPE}"
 
-	[ -n "${vmlinux_path}" -a -f ${B}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/${MACHINE_DEFAULT_DTB} -a "${KERNEL_IMAGETYPE}" == "uImage" ] && {
+	[ -n "${vmlinux_path}" ] && {
 		${OBJCOPY} -O binary -R .note -R .comment -S "${vmlinux_path}" linux.bin.append
 		cat ${B}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/${MACHINE_DEFAULT_DTB} >>linux.bin.append
 		/usr/bin/lzma-alone e -lc1 -lp2 -pb2 linux.bin.append linux.bin.append.lzma
@@ -110,11 +110,9 @@ do_openwrt_image() {
 
 		uboot-mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C "lzma" -a ${UBOOT_LOADADDRESS} -e $ENTRYPOINT -n "${DISTRO_NAME}/${PV}/${MACHINE}" -d linux.bin.append.lzma ${B}/arch/${ARCH}/boot/uImage.dtb.lzma
 	}
-	bbnote "do openwrt image"
 }
 
 addtask do_openwrt_patch after do_patch before do_configure
-
 addtask do_openwrt_image after do_bundle_initramfs before do_deploy
 
 COMPATIBLE_MACHINE += "|hc5761|bananapi_bpi-r64"
