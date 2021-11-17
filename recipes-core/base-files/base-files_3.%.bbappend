@@ -4,4 +4,5 @@
 
 do_install:append () {
 	rm ${D}/etc/iproute2/ -rfd
+	install -m 0644 ${WORKDIR}/shells ${D}${sysconfdir}/shells
 }
