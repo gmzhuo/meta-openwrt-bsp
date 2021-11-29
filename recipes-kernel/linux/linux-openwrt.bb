@@ -26,6 +26,8 @@ KMETA = "kernel-meta"
 
 KERNEL_DEVICETREE:bananapi_bpi-r64 += "mediatek/mt7622-bananapi-bpi-r64.dtb"
 
+KERNEL_FEATURES:remove=" features/debug/printk.scc"
+
 
 SRC_URI = " \
     git://mirrors.tuna.tsinghua.edu.cn/git/linux-stable.git;protocol=https;branch=${KBRANCH} \
