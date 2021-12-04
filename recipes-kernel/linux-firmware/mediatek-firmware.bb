@@ -17,6 +17,8 @@ SRCREV = "${AUTOREV}"
 PACKAGES += " ${PN}-mt76x2"
 
 FILES:${PN}-mt76x2 = "/lib/firmware/mt7662_rom_patch.bin /lib/firmware/mt7662.bin /usr/share/usb_modeswitch/0e8d\:2870"
+do_configure() {
+}
 
 do_install() {
 	install -d -m 755 ${D}/lib/firmware
