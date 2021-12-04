@@ -1,0 +1,12 @@
+diff --git a/tools/imagetool.c b/tools/imagetool.c
+index ba1f64aa37..e9e8017b2f 100644
+--- a/tools/imagetool.c
++++ b/tools/imagetool.c
+@@ -94,6 +94,7 @@ int imagetool_verify_print_header_by_type(
+ 			params->cmdname, tparams->name, retval);
+ 	}
+ 
++	retval = 0;
+ 	return retval;
+ }
+ 

@@ -334,7 +334,7 @@ fitimage_assemble_sysupgrade_bbb() {
 	#
 	${UBOOT_MKIMAGE} \
 		${@'-D "${UBOOT_MKIMAGE_DTCOPTS}"' if len('${UBOOT_MKIMAGE_DTCOPTS}') else ''} \
-		-f $1 \
+		-E -B 0x1000 -p 0x1000 -f $1 \
 		arch/${ARCH}/boot/$2
 
 	#
