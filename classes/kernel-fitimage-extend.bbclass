@@ -6,17 +6,23 @@ inherit kernel-fitimage
 # $1 ... .its filename
 # $2 ... Image counter
 # $3 ... Path to rootfs image
+# $4 ... Type for Image
 fitimage_emit_section_rootfs() {
 
 	ramdisk_csum="${FIT_HASH_ALG}"
 	ramdisk_sign_algo="${FIT_SIGN_ALG}"
 	ramdisk_sign_keyname="${UBOOT_SIGN_IMG_KEYNAME}"
 
+	type_for_image=$4
+	if [ ! -n "${type_for_image}" ]; then
+		type_for_image="ramdisk"
+	fi
+
 	cat << EOF >> $1
                 rootfs-$2 {
                         description = "${INITRAMFS_IMAGE}";
                         data = /incbin/("$3");
-                        type = "filesystem";
+                        type = "${type_for_image}";
                         arch = "${UBOOT_ARCH}";
                         os = "linux";
                         compression = "none";
@@ -48,6 +54,7 @@ EOF
 # $5 ... u-boot script ID
 # $6 ... config ID
 # $7 ... default flag
+# $8 ... load type
 fitimage_emit_section_rootfs_config() {
 
 	conf_csum="${FIT_HASH_ALG}"
@@ -63,6 +70,7 @@ fitimage_emit_section_rootfs_config() {
 	bootscr_id="$5"
 	config_id="$6"
 	default_flag="$7"
+	load_type="$8"
 
 	# Test if we have any DTBs at all
 	sep=""
@@ -95,10 +103,14 @@ fitimage_emit_section_rootfs_config() {
 		fdt_line="fdt = \"fdt-$dtb_image\";"
 	fi
 
-	if [ -n "$ramdisk_id" ]; then
+	if [ -n "$ramdisk_id" -a ! "$ramdisk_id" = "0" ]; then
 		conf_desc="$conf_desc${sep}rootfs"
 		sep=", "
-		ramdisk_line="loadables = \"rootfs-$ramdisk_id\";"
+		if [ -n "${load_type}" ]; then
+			ramdisk_line="${load_type} = \"rootfs-$ramdisk_id\";"
+		else
+			ramdisk_line="ramdisk = \"rootfs-$ramdisk_id\";"
+		fi
 	fi
 
 	if [ -n "$bootscr_id" ]; then
@@ -182,12 +194,112 @@ EOF
 }
 
 #
+# Emit the fitImage ITS kernel section
+#
+# $1 ... .its filename
+# $2 ... Image counter
+# $3 ... Path to kernel image
+# $4 ... Compression type
+fitimage_emit_section_kernel_extend() {
+
+	kernel_csum="${FIT_HASH_ALG}"
+	kernel_sign_algo="${FIT_SIGN_ALG}"
+	kernel_sign_keyname="${UBOOT_SIGN_IMG_KEYNAME}"
+
+	ENTRYPOINT="${UBOOT_ENTRYPOINT}"
+	if [ -n "${UBOOT_ENTRYSYMBOL}" ]; then
+		ENTRYPOINT=`${HOST_PREFIX}nm vmlinux | \
+			awk '$3=="${UBOOT_ENTRYSYMBOL}" {print "0x"$1;exit}'`
+	fi
+
+	cat << EOF >> $1
+                kernel-$2 {
+                        description = "Linux kernel";
+                        data = /incbin/("$3");
+                        type = "kernel";
+                        arch = "${UBOOT_ARCH}";
+                        os = "linux";
+                        compression = "$4";
+                        load = <${UBOOT_LOADADDRESS}>;
+                        entry = <$ENTRYPOINT>;
+                        hash@1 {
+                            algo = "crc32";
+                        };
+						hash@2 {
+                            algo = "sha1";
+                        };
+                };
+EOF
+
+	if [ "${UBOOT_SIGN_ENABLE}" = "1" -a "${FIT_SIGN_INDIVIDUAL}" = "1" -a -n "$kernel_sign_keyname" ] ; then
+		sed -i '$ d' $1
+		cat << EOF >> $1
+                        signature-1 {
+                                algo = "$kernel_csum,$kernel_sign_algo";
+                                key-name-hint = "$kernel_sign_keyname";
+                        };
+                };
+EOF
+	fi
+}
+
+#
+# Emit the fitImage ITS DTB section
+#
+# $1 ... .its filename
+# $2 ... Image counter
+# $3 ... Path to DTB image
+fitimage_emit_section_dtb_extend() {
+
+	dtb_csum="${FIT_HASH_ALG}"
+	dtb_sign_algo="${FIT_SIGN_ALG}"
+	dtb_sign_keyname="${UBOOT_SIGN_IMG_KEYNAME}"
+
+	dtb_loadline=""
+	dtb_ext=${DTB##*.}
+	if [ "${dtb_ext}" = "dtbo" ]; then
+		if [ -n "${UBOOT_DTBO_LOADADDRESS}" ]; then
+			dtb_loadline="load = <${UBOOT_DTBO_LOADADDRESS}>;"
+		fi
+	elif [ -n "${UBOOT_DTB_LOADADDRESS}" ]; then
+		dtb_loadline="load = <${UBOOT_DTB_LOADADDRESS}>;"
+	fi
+	cat << EOF >> $1
+                fdt-$2 {
+                        description = "Flattened Device Tree blob";
+                        data = /incbin/("$3");
+                        type = "flat_dt";
+                        arch = "${UBOOT_ARCH}";
+                        compression = "none";
+                        $dtb_loadline
+                        hash@1 {
+                            algo = "crc32";
+                        };
+                        hash@2 {
+                            algo = "sha1";
+                        };
+                };
+EOF
+
+	if [ "${UBOOT_SIGN_ENABLE}" = "1" -a "${FIT_SIGN_INDIVIDUAL}" = "1" -a -n "$dtb_sign_keyname" ] ; then
+		sed -i '$ d' $1
+		cat << EOF >> $1
+                        signature-1 {
+                                algo = "$dtb_csum,$dtb_sign_algo";
+                                key-name-hint = "$dtb_sign_keyname";
+                        };
+                };
+EOF
+	fi
+}
+
+#
 # Assemble fitImage sysupgrade
 #
 # $1 ... .its filename
 # $2 ... fitImage name
 # $3 ... include ramdisk
-fitimage_assemble_sysupgrade_bbb() {
+fitimage_assemble_sysupgrade() {
 	kernelcount=1
 	dtbcount=""
 	DTBS=""
@@ -208,7 +320,7 @@ fitimage_assemble_sysupgrade_bbb() {
 	fitimage_emit_section_maint $1 imagestart
 
 	uboot_prep_kimage
-	fitimage_emit_section_kernel $1 $kernelcount linux.bin "$linux_comp"
+	fitimage_emit_section_kernel_extend $1 $kernelcount linux.bin "$linux_comp"
 
 	#
 	# Step 2: Prepare a DTB image section
@@ -234,7 +346,7 @@ fitimage_assemble_sysupgrade_bbb() {
 
 			DTB=$(echo "$DTB" | tr '/' '_')
 			DTBS="$DTBS $DTB"
-			fitimage_emit_section_dtb $1 $DTB $DTB_PATH
+			fitimage_emit_section_dtb_extend $1 $DTB $DTB_PATH
 		done
 	fi
 
@@ -243,7 +355,7 @@ fitimage_assemble_sysupgrade_bbb() {
 		for DTB in $(find "${EXTERNAL_KERNEL_DEVICETREE}" \( -name '*.dtb' -o -name '*.dtbo' \) -printf '%P\n' | sort); do
 			DTB=$(echo "$DTB" | tr '/' '_')
 			DTBS="$DTBS $DTB"
-			fitimage_emit_section_dtb $1 $DTB "${EXTERNAL_KERNEL_DEVICETREE}/$DTB"
+			fitimage_emit_section_dtb_extend $1 $DTB "${EXTERNAL_KERNEL_DEVICETREE}/$DTB"
 		done
 	fi
 
@@ -274,7 +386,7 @@ fitimage_assemble_sysupgrade_bbb() {
 	#
 	if [ "x${ramdiskcount}" = "x1" ] ; then
 		# Find and use the first initramfs image archive type we find
-		for img in squashfs-xz; do
+		for img in cpio.gz; do
 			initramfs_path="${DEPLOY_DIR_IMAGE}/${INITRAMFS_IMAGE_NAME}.$img"
 			echo -n "Searching for $initramfs_path..."
 			if [ -e "$initramfs_path" ]; then
@@ -334,7 +446,8 @@ fitimage_assemble_sysupgrade_bbb() {
 	#
 	${UBOOT_MKIMAGE} \
 		${@'-D "${UBOOT_MKIMAGE_DTCOPTS}"' if len('${UBOOT_MKIMAGE_DTCOPTS}') else ''} \
-		-E -B 0x1000 -p 0x1000 -f $1 \
+		${UBOOT_MKIMAGE_EXTERNAL} \
+		-f $1 \
 		arch/${ARCH}/boot/$2
 
 	#
@@ -357,7 +470,8 @@ fitimage_assemble_sysupgrade_bbb() {
 	fi
 }
 
-fitimage_assemble_sysupgrade() {
+
+fitimage_assemble_sysupgrade_bbb() {
 	kernelcount=1
 	dtbcount=""
 	DTBS=""
@@ -560,13 +674,19 @@ EOF
 	fi
 }
 
+RAMDISK_COUNT ?= "1"
+
 do_assemble_fitimage_sysupgrade() {
 	if echo ${KERNEL_IMAGETYPES} | grep -wq "fitImage" && \
 		test -n "${INITRAMFS_IMAGE}" ; then
 		cd ${B}
-		fitimage_assemble_sysupgrade fit-image-sysupgrade.its fitImage-${INITRAMFS_IMAGE}-sysupgrade 1
+		fitimage_assemble_sysupgrade fit-image-sysupgrade.its fitImage-${INITRAMFS_IMAGE}-sysupgrade ${RAMDISK_COUNT}
+		if test -n "${MACHINE_DO_UBI_IMAGE}"; then
+			bbnote "do ubi image"
+		fi
 	fi
 }
+
 
 kernel_do_deploy:append() {
 	# Update deploy directory

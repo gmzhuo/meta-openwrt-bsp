@@ -128,4 +128,4 @@ do_openwrt_image() {
 addtask do_openwrt_patch after do_patch before do_configure
 addtask do_openwrt_image after do_bundle_initramfs before do_deploy
 
-COMPATIBLE_MACHINE += "|ipq807x|hc5761|bananapi_bpi-r64"
+COMPATIBLE_MACHINE += "|ipq807x|hc5761|bananapi_bpi-r64|ax3600|ax9000"
