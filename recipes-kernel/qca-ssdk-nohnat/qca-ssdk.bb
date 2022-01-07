@@ -5,6 +5,8 @@ LIC_FILES_CHKSUM = "file://ChangeLog;md5=26274509bf48473d672d111c90379232"
 
 KERNEL_SPLIT_MODULES = "0"
 inherit module
+DEPENDS = "virtual/kernel"
+
 DEPENDS += "flex-native"
 
 SRC_URI = "file://qca-ssdk-2021-04-28-c9bc3bc3.tar.xz \
@@ -19,6 +21,9 @@ S = "${WORKDIR}/qca-ssdk-2021-04-28-c9bc3bc3"
 
 # The inherit of module.bbclass will automatically name module packages with
 # "kernel-module-" prefix as required by the oe-core build environment.
+
+#PACKAGES += "kernel-module-ssdk"
+
 
 module_do_compile() {
 	unset CFLAGS CPPFLAGS CXXFLAGS LDFLAGS
@@ -67,10 +72,18 @@ module_do_install() {
 	install -m 0644 ${S}/include/common/*.h ${D}${includedir}/qca-ssdk
 	install -m 0644 ${S}/include/sal/os/linux/*.h ${D}${includedir}/qca-ssdk
 	install -m 0644 ${S}/include/sal/os/*.h ${D}${includedir}/qca-ssdk	
+
+	install -d ${D}${includedir}/${BPN}/
+	install -Dm0644 ${S}/Module.symvers ${D}${includedir}/${BPN}/Module.symvers
+
+	install -d ${D}/lib/modules/${KERNEL_VERSION}/updates/
+	install -m 0644 ${S}/build/bin/*.ko ${D}/lib/modules/${KERNEL_VERSION}/updates/
 }
 
 inherit cml1
 
 do_configure() {
 }
+
+RPROVIDES:${PN} += "kernel-module-qca-ssdk"
 
