@@ -6,6 +6,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 KERNEL_SPLIT_MODULES = "0"
 inherit module
 DEPENDS += "flex-native"
+MAC80211_PACKAGE_CONFIGS ?= ""
 
 SRC_URI = "https://cdn.kernel.org/pub/linux/kernel/projects/backports/stable/v5.15-rc6/backports-5.15-rc6-1.tar.xz \
 		  file://test.cfg \
@@ -67,8 +68,14 @@ do_configure() {
 		backport-include/linux/bcm47xx_nvram.h
 
 	set -x
-	touch .config
-	merge_config.sh -m .config ${@" ".join(find_cfgs(d))}
+	>.config
+
+	for config in ${MAC80211_PACKAGE_CONFIGS}; do
+		echo $config >> .config
+	done
+	cp .config CONFIG.SEC
+
+	#merge_config.sh -m .config ${@" ".join(find_cfgs(d))}
 
 	oe_runmake CROSS_COMPILE="${CROSS_COMPILE}" ARCH="${ARCH}"  \
 		KLIB_BUILD="${STAGING_KERNEL_BUILDDIR}" \
