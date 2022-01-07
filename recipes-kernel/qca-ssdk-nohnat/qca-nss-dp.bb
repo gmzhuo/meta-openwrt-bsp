@@ -22,7 +22,7 @@ S = "${WORKDIR}/qca-nss-dp-2021-03-26-e0c89348"
 
 
 do_ls_arch_file () {
-	ln -s ${S}/hal/arch/ipq807x/nss_ipq807x.h \
+	ln -s ${S}/hal/arch/${SOC_TYPE}/nss_${SOC_TYPE}.h \
 		${S}/exports/nss_dp_arch.h
 }
 
@@ -32,15 +32,12 @@ do_configure() {
 }
 
 do_compile() {
-	SOC_TYPE="ipq807x_64"
-
-
 	make -C /opt/work/yocto/repo/build/tmp/work-shared/ax9000/kernel-source M=${S} V=1 \
 		CROSS_COMPILE='${TARGET_PREFIX}' \
 		ARCH='arm64' \
 		SUBDIRS="${S}" \
 		EXTRA_CFLAGS="-I${STAGING_INCDIR}/qca-ssdk" \
-		SoC='ipq807x_64' \
+		SoC='${SOC_TYPE_AND_WIDTH}' \
 		KBUILD_EXTRA_SYMBOLS=${STAGING_INCDIR}/qca-ssdk/Module.symvers
 }
 
