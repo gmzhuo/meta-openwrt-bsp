@@ -1,4 +1,5 @@
-SRC_URI += "file://patches/ath9k/350-ath9k_hw-reset-AHB-WMAC-interface-on-AR91xx.patch \
+SRC_URI += "file://patches/ath9k/040-ath9k-support-DT-ieee80211-freq-limit-property-to-li.patch \
+		file://patches/ath9k/350-ath9k_hw-reset-AHB-WMAC-interface-on-AR91xx.patch \
 		file://patches/ath9k/351-ath9k_hw-issue-external-reset-for-QCA955x.patch \
 		file://patches/ath9k/354-ath9k-force-rx_clear-when-disabling-rx.patch \
 		file://patches/ath9k/356-Revert-ath9k-interpret-requested-txpower-in-EIRP-dom.patch \
@@ -22,8 +23,9 @@ SRC_URI += "file://patches/ath9k/350-ath9k_hw-reset-AHB-WMAC-interface-on-AR91xx
 		file://patches/ath9k/547-ath9k_led_defstate_fix.patch \
 		file://patches/ath9k/548-ath9k_enable_gpio_chip.patch \
 		file://patches/ath9k/549-ath9k_enable_gpio_buttons.patch \
-		file://patches/ath9k/550-ath9k-disable-bands-via-dt.patch \
 		file://patches/ath9k/551-ath9k_ubnt_uap_plus_hsr.patch \
 		file://patches/ath9k/552-ath9k-ahb_of.patch \
 		file://patches/ath9k/553-ath9k_of_gpio_mask.patch \
+		file://patches/ath9k/600-v5.16-ath9k-fetch-calibration-data-via-nvmem-subsystem.patch \
+		file://patches/ath9k/601-v5.16-ath9k-owl-loader-fetch-pci-init-values-through-nvmem.patch \
 		"

@@ -8,16 +8,16 @@ inherit module
 DEPENDS += "flex-native"
 MAC80211_PACKAGE_CONFIGS ?= ""
 
-SRC_URI = "https://cdn.kernel.org/pub/linux/kernel/projects/backports/stable/v5.15-rc6/backports-5.15-rc6-1.tar.xz \
+SRC_URI = "https://cdn.kernel.org/pub/linux/kernel/projects/backports/stable/v5.15.8/backports-5.15.8-1.tar.xz \
 		  file://test.cfg \
           "
 
 include include/build.inc include/subsys.inc include/ath.inc include/ath5k.inc  include/ath9k.inc \
 	include/ath10k.inc include/ath11k.inc include/rt2x00.inc include/brcm.inc include/mwl.inc
 
-SRC_URI[sha256sum] = "9282612c4c02ef9fc9d74405303033f6b53914cd63d631eef0f43155fcd38932"
+SRC_URI[sha256sum] = "9f71b659c034f19d156532ec780fcb606cee3c4ccc42e2f8ef18dd3e9f1b6820"
 
-S = "${WORKDIR}/backports-5.15-rc6-1"
+S = "${WORKDIR}/backports-5.15.8-1"
 
 # The inherit of module.bbclass will automatically name module packages with
 # "kernel-module-" prefix as required by the oe-core build environment.
