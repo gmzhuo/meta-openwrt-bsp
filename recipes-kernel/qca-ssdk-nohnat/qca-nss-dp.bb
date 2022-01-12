@@ -2,7 +2,7 @@ DESCRIPTION = "NSS Dataplane"
 LICENSE = "ISC"
 LIC_FILES_CHKSUM = "file://${COREBASE}/meta/files/common-licenses/${LICENSE};md5=f3b90e78ea0cffb20bf5cca7947a896d"
 
-KERNEL_SPLIT_MODULES = "0"
+KERNEL_SPLIT_MODULES = "1"
 inherit module
 
 DEPENDS = "virtual/kernel qca-ssdk"
@@ -41,6 +41,7 @@ do_compile() {
 		KBUILD_EXTRA_SYMBOLS=${STAGING_INCDIR}/qca-ssdk/Module.symvers
 }
 
+#KERNEL_MODULE_AUTOLOAD += " qca-nss-dp"
 do_install() {
 	install -d ${D}${base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/${PN}
 	install -m 0644 qca-nss-dp${KERNEL_OBJECT_SUFFIX} ${D}${base_libdir}/modules/${KERNEL_VERSION}/kernel/drivers/${PN}

@@ -3,7 +3,7 @@ DESCRIPTION = "${SUMMARY}"
 LICENSE = "CLOSE"
 LIC_FILES_CHKSUM = "file://ChangeLog;md5=26274509bf48473d672d111c90379232"
 
-KERNEL_SPLIT_MODULES = "0"
+KERNEL_SPLIT_MODULES = "1"
 inherit module
 DEPENDS = "virtual/kernel"
 
@@ -34,7 +34,7 @@ module_do_compile() {
 		TARGET_NAME= TOOL_PATH="${STAGING_BINDIR_TOOLCHAIN}" \
 		SYS_PATH="${STAGING_KERNEL_BUILDDIR}" \
 		KERNEL_SRC="${STAGING_KERNEL_BUILDDIR}"/source \
-		TOOLPREFIX=aarch64-poky-linux-musl- KVER="${KERNEL_VERSION}" \
+		TOOLPREFIX=${CROSS_COMPILE} KVER="${KERNEL_VERSION}" \
 		EXTRA_CFLAGS="-fno-PIC -I${STAGING_KERNEL_BUILDDIR}/arch/arm64/include/generated/uapi/ -I${STAGING_KERNEL_BUILDDIR}/source/include/uapi/ -I${STAGING_KERNEL_BUILDDIR}/source/arch/arm64/include/uapi/ " \
 		KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" \
 		PTP_FEATURE=disable SWCONFIG_FEATURE=disable CHIP_TYPE=HPPE
@@ -72,7 +72,7 @@ module_do_install() {
 	install -m 0644 ${S}/build/bin/*.ko ${D}/lib/modules/${KERNEL_VERSION}/updates/
 }
 
-inherit cml1
+#inherit cml1
 
 do_configure() {
 }
