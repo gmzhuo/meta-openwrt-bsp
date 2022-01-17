@@ -28,9 +28,10 @@ KERNEL_DEVICETREE:bananapi_bpi-r64 += "mediatek/mt7622-bananapi-bpi-r64.dtb"
 
 KERNEL_FEATURES:remove=" features/debug/printk.scc"
 
+#git://mirrors.tuna.tsinghua.edu.cn/git/linux-stable.git;protocol=https;branch=${KBRANCH}
 
 SRC_URI = " \
-    git://mirrors.tuna.tsinghua.edu.cn/git/linux-stable.git;protocol=https;branch=${KBRANCH} \
+    	git://github.com/gregkh/linux.git;protocol=https;branch=${KBRANCH} \
 	git://github.com/gmzhuo/openwrt-kernel-cache.git;protocol=https;type=kmeta;name=meta;branch=main;destsuffix=${KMETA} \
 	${OPENWRT_SRC_URI};type=openwrt;name=openwrt;destsuffix=openwrt \
 	file://configs/config-5.10.cfg;name=config-general \

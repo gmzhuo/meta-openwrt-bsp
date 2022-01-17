@@ -15,6 +15,8 @@ SRC_URI = "https://cdn.kernel.org/pub/linux/kernel/projects/backports/stable/v5.
 include include/build.inc include/subsys.inc include/ath.inc include/ath5k.inc  include/ath9k.inc \
 	include/ath10k.inc include/ath11k.inc include/rt2x00.inc include/brcm.inc include/mwl.inc
 
+SRC_URI += " file://patches/0901-add-nl80211-debug.patch"
+
 SRC_URI[sha256sum] = "9f71b659c034f19d156532ec780fcb606cee3c4ccc42e2f8ef18dd3e9f1b6820"
 
 S = "${WORKDIR}/backports-5.15.8-1"
