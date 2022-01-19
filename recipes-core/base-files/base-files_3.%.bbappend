@@ -3,5 +3,6 @@
 # Released under the MIT license (see COPYING.MIT for the terms)
 do_install:append () {
 	rm ${D}/etc/iproute2/ -rfd
+	rm ${D}/etc/sysctl.conf -rf
 	install -m 0644 ${WORKDIR}/shells ${D}${sysconfdir}/shells
 }
