@@ -26,8 +26,11 @@ fitimage_emit_section_rootfs() {
                         arch = "${UBOOT_ARCH}";
                         os = "linux";
                         compression = "none";
-                        hash-1 {
-                                algo = "$ramdisk_csum";
+                        hash@1 {
+                            algo = "crc32";
+                        };
+                        hash@2 {
+                            algo = "sha1";
                         };
                 };
 EOF
@@ -71,6 +74,7 @@ fitimage_emit_section_rootfs_config() {
 	config_id="$6"
 	default_flag="$7"
 	load_type="$8"
+	load_id="$9"
 
 	# Test if we have any DTBs at all
 	sep=""
@@ -85,11 +89,12 @@ fitimage_emit_section_rootfs_config() {
 
 	# conf node name is selected based on dtb ID if it is present,
 	# otherwise its selected based on kernel ID
-	if [ -n "$dtb_image" ]; then
-		conf_node=$conf_node$dtb_image
-	else
-		conf_node=$conf_node$kernel_id
-	fi
+	#if [ -n "$dtb_image" ]; then
+	#	conf_node=$conf_node$dtb_image
+	#else
+	#	conf_node=$conf_node$kernel_id
+	#fi
+	conf_node="config-${load_id}"
 
 	if [ -n "$kernel_id" ]; then
 		conf_desc="Linux kernel"
@@ -127,11 +132,12 @@ fitimage_emit_section_rootfs_config() {
 	if [ "$default_flag" = "1" ]; then
 		# default node is selected based on dtb ID if it is present,
 		# otherwise its selected based on kernel ID
-		if [ -n "$dtb_image" ]; then
-			default_line="default = \"conf-$dtb_image\";"
-		else
-			default_line="default = \"conf-$kernel_id\";"
-		fi
+		#if [ -n "$dtb_image" ]; then
+		#	default_line="default = \"conf-$dtb_image\";"
+		#else
+		#	default_line="default = \"conf-$kernel_id\";"
+		#fi
+		default_line="default = \"${conf_node}\";"
 	fi
 
 	cat << EOF >> $its_file
@@ -143,9 +149,6 @@ fitimage_emit_section_rootfs_config() {
                         $ramdisk_line
                         $bootscr_line
                         $setup_line
-                        hash-1 {
-                                algo = "$conf_csum";
-                        };
 EOF
 
 	if [ -n "$conf_sign_keyname" ] ; then
@@ -222,7 +225,7 @@ fitimage_emit_section_kernel_extend() {
                         compression = "$4";
                         load = <${UBOOT_LOADADDRESS}>;
                         entry = <$ENTRYPOINT>;
-                        hash@1 {
+						hash@1 {
                             algo = "crc32";
                         };
 						hash@2 {
@@ -293,6 +296,8 @@ EOF
 	fi
 }
 
+
+FIT_IMAGE_ROOTFS_TYPE ?= "cpio.gz"
 #
 # Assemble fitImage sysupgrade
 #
@@ -386,12 +391,12 @@ fitimage_assemble_sysupgrade() {
 	#
 	if [ "x${ramdiskcount}" = "x1" ] ; then
 		# Find and use the first initramfs image archive type we find
-		for img in cpio.gz; do
+		for img in "${FIT_IMAGE_ROOTFS_TYPE}"; do
 			initramfs_path="${DEPLOY_DIR_IMAGE}/${INITRAMFS_IMAGE_NAME}.$img"
 			echo -n "Searching for $initramfs_path..."
 			if [ -e "$initramfs_path" ]; then
 				echo "found"
-				fitimage_emit_section_rootfs $1 "$ramdiskcount" "$initramfs_path"
+				fitimage_emit_section_rootfs $1 "$ramdiskcount" "$initramfs_path" "${ROOTFS_LOAD_TYPE}"
 				break
 			else
 				echo "not found"
@@ -426,15 +431,15 @@ fitimage_assemble_sysupgrade() {
 		for DTB in ${DTBS}; do
 			dtb_ext=${DTB##*.}
 			if [ "$dtb_ext" = "dtbo" ]; then
-				fitimage_emit_section_rootfs_config $1 "" "$DTB" "" "$bootscr_id" "" "`expr $i = $dtbcount`"
+				fitimage_emit_section_rootfs_config $1 "" "$DTB" "" "$bootscr_id" "" "`expr $i = $dtbcount`" "${ROOTFS_LOAD_LABLE}" "${i}"
 			else
-				fitimage_emit_section_rootfs_config $1 $kernelcount "$DTB" "$ramdiskcount" "$bootscr_id" "$setupcount" "`expr $i = $dtbcount`"
+				fitimage_emit_section_rootfs_config $1 $kernelcount "$DTB" "$ramdiskcount" "$bootscr_id" "$setupcount" "`expr $i = $dtbcount`" "${ROOTFS_LOAD_LABLE}" "${i}"
 			fi
 			i=`expr $i + 1`
 		done
 	else
 		defaultconfigcount=1
-		fitimage_emit_section_rootfs_config $1 $kernelcount "" "$ramdiskcount" "$bootscr_id"  "$setupcount" $defaultconfigcount
+		fitimage_emit_section_rootfs_config $1 $kernelcount "" "$ramdiskcount" "$bootscr_id"  "$setupcount" "$defaultconfigcount" "${ROOTFS_LOAD_LABLE}" "1"
 	fi
 
 	fitimage_emit_section_maint $1 sectend
@@ -447,210 +452,6 @@ fitimage_assemble_sysupgrade() {
 	${UBOOT_MKIMAGE} \
 		${@'-D "${UBOOT_MKIMAGE_DTCOPTS}"' if len('${UBOOT_MKIMAGE_DTCOPTS}') else ''} \
 		${UBOOT_MKIMAGE_EXTERNAL} \
-		-f $1 \
-		arch/${ARCH}/boot/$2
-
-	#
-	# Step 8: Sign the image and add public key to U-Boot dtb
-	#
-	if [ "x${UBOOT_SIGN_ENABLE}" = "x1" ] ; then
-		add_key_to_u_boot=""
-		if [ -n "${UBOOT_DTB_BINARY}" ]; then
-			# The u-boot.dtb is a symlink to UBOOT_DTB_IMAGE, so we need copy
-			# both of them, and don't dereference the symlink.
-			cp -P ${STAGING_DATADIR}/u-boot*.dtb ${B}
-			add_key_to_u_boot="-K ${B}/${UBOOT_DTB_BINARY}"
-		fi
-		${UBOOT_MKIMAGE_SIGN} \
-			${@'-D "${UBOOT_MKIMAGE_DTCOPTS}"' if len('${UBOOT_MKIMAGE_DTCOPTS}') else ''} \
-			-F -k "${UBOOT_SIGN_KEYDIR}" \
-			$add_key_to_u_boot \
-			-r arch/${ARCH}/boot/$2 \
-			${UBOOT_MKIMAGE_SIGN_ARGS}
-	fi
-}
-
-
-fitimage_assemble_sysupgrade_bbb() {
-	kernelcount=1
-	dtbcount=""
-	DTBS=""
-	its_file="$1"
-	ramdiskcount=$3
-	setupcount=""
-	bootscr_id=""
-	rm -f $1 arch/${ARCH}/boot/$2
-
-	if [ -n "${UBOOT_SIGN_IMG_KEYNAME}" -a "${UBOOT_SIGN_KEYNAME}" = "${UBOOT_SIGN_IMG_KEYNAME}" ]; then
-		bbfatal "Keys used to sign images and configuration nodes must be different."
-	fi
-
-	uboot_prep_kimage
-
-#head
-	cat << EOF >> $its_file
-/dts-v1/;
-
-/ {
-	description = "ARM64 OpenWrt FIT (Flattened Image Tree)";
-	#address-cells = <1>;
-EOF
-
-#images
-	cat << EOF >> $its_file
-	images {
-EOF
-
-#image items
-
-	cat << EOF >> $its_file
-		kernel-1 {
-			description = "ARM64 OpenWrt Linux-5.10.78";
-			data = /incbin/("linux.bin");
-			type = "kernel";
-			arch = "arm64";
-			os = "linux";
-			compression = "gzip";
-			load = <0x44000000>;
-			entry = <0x44000000>;
-			hash@1 {
-				algo = "crc32";
-			};
-			hash@2 {
-				algo = "sha1";
-			};
-		};
-
-
-		fdt-1 {
-			description = "ARM64 OpenWrt bananapi_bpi-r64 device tree blob";
-			
-			data = /incbin/("arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dtb");
-			type = "flat_dt";
-			load = <0x43ff82b6>;
-			arch = "arm64";
-			compression = "none";
-			hash@1 {
-				algo = "crc32";
-			};
-			hash@2 {
-				algo = "sha1";
-			};
-		};
-
-
-
-		fdt-mt7622-bananapi-bpi-r64-pcie1 {
-			description = "ARM64 OpenWrt bananapi_bpi-r64 device tree overlay mt7622-bananapi-bpi-r64-pcie1";
-			
-			data = /incbin/("arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64-pcie1.dtbo");
-			type = "flat_dt";
-			arch = "arm64";
-			load = <0x43ff819b>;
-			compression = "none";
-			hash@1 {
-				algo = "crc32";
-			};
-			hash@2 {
-				algo = "sha1";
-			};
-		};
-
-
-		fdt-mt7622-bananapi-bpi-r64-sata {
-			description = "ARM64 OpenWrt bananapi_bpi-r64 device tree overlay mt7622-bananapi-bpi-r64-sata";
-			
-			data = /incbin/("arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64-sata.dtbo");
-			type = "flat_dt";
-			arch = "arm64";
-			load = <0x43ff7f8b>;
-			compression = "none";
-			hash@1 {
-				algo = "crc32";
-			};
-			hash@2 {
-				algo = "sha1";
-			};
-		};
-
-
-		rootfs-1 {
-			description = "ARM64 OpenWrt bananapi_bpi-r64 rootfs";
-			
-			data = /incbin/("/opt/work/yocto/repo/build/tmp/deploy/images/bananapi_bpi-r64/openwrt-initramfs-bananapi_bpi-r64.squashfs-xz");
-			type = "filesystem";
-			arch = "arm64";
-			compression = "none";
-			hash@1 {
-				algo = "crc32";
-			};
-			hash@2 {
-				algo = "sha1";
-			};
-		};
-
-EOF
-
-
-#images end
-	cat << EOF >> $its_file
-	};
-EOF
-
-#configs
-	cat << EOF >> $its_file
-	configurations {
-		default = "config-1";
-
-EOF
-
-#config items
-	cat << EOF >> $its_file
-		config-1 {
-			description = "OpenWrt bananapi_bpi-r64";
-			kernel = "kernel-1";
-			fdt = "fdt-1";
-			loadables = "rootfs-1";
-			
-			
-		};
-		
-
-		config-mt7622-bananapi-bpi-r64-pcie1 {
-			description = "OpenWrt bananapi_bpi-r64 with mt7622-bananapi-bpi-r64-pcie1";
-			kernel = "kernel-1";
-			fdt = "fdt-1", "fdt-mt7622-bananapi-bpi-r64-pcie1";
-			loadables = "rootfs-1";
-			
-			
-		};
-	
-
-		config-mt7622-bananapi-bpi-r64-sata {
-			description = "OpenWrt bananapi_bpi-r64 with mt7622-bananapi-bpi-r64-sata";
-			kernel = "kernel-1";
-			fdt = "fdt-1", "fdt-mt7622-bananapi-bpi-r64-sata";
-			loadables = "rootfs-1";
-			
-			
-		};
-EOF
-
-#configs end
-	cat << EOF >> $its_file
-	};
-EOF
-
-#end
-	cat << EOF >> $its_file
-};
-EOF
-
-	#
-	# Step 7: Assemble the image
-	#
-	${UBOOT_MKIMAGE} \
-		-E -B 0x1000 -p 0x1000 ${@'-D "${UBOOT_MKIMAGE_DTCOPTS}"' if len('${UBOOT_MKIMAGE_DTCOPTS}') else ''} \
 		-f $1 \
 		arch/${ARCH}/boot/$2
 
