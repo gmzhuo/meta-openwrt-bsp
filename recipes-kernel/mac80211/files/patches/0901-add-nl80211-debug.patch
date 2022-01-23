@@ -744,18 +744,48 @@ Index: backports-5.15.8-1/net/wireless/nl80211.c
  static int nl80211_pre_doit(const struct genl_ops *ops, struct sk_buff *skb,
  			    struct genl_info *info)
  {
-@@ -14965,6 +15686,10 @@ static int nl80211_pre_doit(const struct
+@@ -14965,11 +15686,16 @@ static int nl80211_pre_doit(const struct
  	struct wireless_dev *wdev;
  	struct net_device *dev;
  
 +	if(debug_all) {
-+		printk("nl80211 doit %x\r\n", ops->cmd);
++		//printk("nl80211 doit %x %s\r\n", ops->cmd, nl80211_cmds[ops->cmd]?:"UNDEFINED");
 +	}
 +
  	rtnl_lock();
  	if (ops->internal_flags & NL80211_FLAG_NEED_WIPHY) {
  		rdev = cfg80211_get_dev_from_info(genl_info_net(info), info);
-@@ -15014,6 +15739,42 @@ static int nl80211_pre_doit(const struct
+ 		if (IS_ERR(rdev)) {
+ 			rtnl_unlock();
++			printk("need wifi but failed %s\r\n", nl80211_cmds[ops->cmd]?:"UNDEFINED");
+ 			return PTR_ERR(rdev);
+ 		}
+ 		info->user_ptr[0] = rdev;
+@@ -14979,6 +15705,7 @@ static int nl80211_pre_doit(const struct
+ 						  info->attrs);
+ 		if (IS_ERR(wdev)) {
+ 			rtnl_unlock();
++			printk("need wdev but failed %s\r\n", nl80211_cmds[ops->cmd]?:"UNDEFINED");
+ 			return PTR_ERR(wdev);
+ 		}
+ 
+@@ -14987,6 +15714,7 @@ static int nl80211_pre_doit(const struct
+ 
+ 		if (ops->internal_flags & NL80211_FLAG_NEED_NETDEV) {
+ 			if (!dev) {
++				printk("need netdev but failed %s\r\n", nl80211_cmds[ops->cmd]?:"UNDEFINED");
+ 				rtnl_unlock();
+ 				return -EINVAL;
+ 			}
+@@ -14998,6 +15726,7 @@ static int nl80211_pre_doit(const struct
+ 
+ 		if (ops->internal_flags & NL80211_FLAG_CHECK_NETDEV_UP &&
+ 		    !wdev_running(wdev)) {
++			printk("need netdev up but failed %s\r\n", nl80211_cmds[ops->cmd]?:"UNDEFINED");
+ 			rtnl_unlock();
+ 			return -ENETDOWN;
+ 		}
+@@ -15014,6 +15743,42 @@ static int nl80211_pre_doit(const struct
  	if (!(ops->internal_flags & NL80211_FLAG_NEED_RTNL))
  		rtnl_unlock();
  
