@@ -501,7 +501,349 @@ Index: backports-5.15.8-1/net/wireless/nl80211.c
  static int validate_beacon_tx_rate(struct cfg80211_registered_device *rdev,
  				   enum nl80211_band band,
  				   struct cfg80211_bitrate_mask *beacon_rate)
-@@ -14689,6 +15181,215 @@ static int nl80211_probe_mesh_link(struc
+@@ -5365,26 +5857,36 @@ static int nl80211_start_ap(struct sk_bu
+ 	int err;
+ 
+ 	if (dev->ieee80211_ptr->iftype != NL80211_IFTYPE_AP &&
+-	    dev->ieee80211_ptr->iftype != NL80211_IFTYPE_P2P_GO)
++	    dev->ieee80211_ptr->iftype != NL80211_IFTYPE_P2P_GO) {
++		printk("in nl80211_start_ap EOPNOTSUPP when check iftype\r\n");
+ 		return -EOPNOTSUPP;
++	}
+ 
+-	if (!rdev->ops->start_ap)
++	if (!rdev->ops->start_ap) {
++		printk("in nl80211_start_ap EOPNOTSUPP when check ops->start_ap\r\n");
+ 		return -EOPNOTSUPP;
++	}
+ 
+-	if (wdev->beacon_interval)
++	if (wdev->beacon_interval) {
++		printk("in nl80211_start_ap EOPNOTSUPP when check beacon_interval\r\n");
+ 		return -EALREADY;
++	}
+ 
+ 	memset(&params, 0, sizeof(params));
+ 
+ 	/* these are required for START_AP */
+ 	if (!info->attrs[NL80211_ATTR_BEACON_INTERVAL] ||
+ 	    !info->attrs[NL80211_ATTR_DTIM_PERIOD] ||
+-	    !info->attrs[NL80211_ATTR_BEACON_HEAD])
++	    !info->attrs[NL80211_ATTR_BEACON_HEAD]) {
++		printk("in nl80211_start_ap EOPNOTSUPP when check beacon_interval dtim period beacon head\r\n");
+ 		return -EINVAL;
++	}
+ 
+ 	err = nl80211_parse_beacon(rdev, info->attrs, &params.beacon);
+-	if (err)
++	if (err) {
++		printk("in nl80211_start_ap EOPNOTSUPP when check validate beacon\r\n");
+ 		return err;
++	}
+ 
+ 	params.beacon_interval =
+ 		nla_get_u32(info->attrs[NL80211_ATTR_BEACON_INTERVAL]);
+@@ -5393,8 +5895,10 @@ static int nl80211_start_ap(struct sk_bu
+ 
+ 	err = cfg80211_validate_beacon_int(rdev, dev->ieee80211_ptr->iftype,
+ 					   params.beacon_interval);
+-	if (err)
++	if (err) {
++		printk("in nl80211_start_ap EOPNOTSUPP when check validate beacon interval\r\n");
+ 		return err;
++	}
+ 
+ 	/*
+ 	 * In theory, some of these attributes should be required here
+@@ -5407,8 +5911,10 @@ static int nl80211_start_ap(struct sk_bu
+ 		params.ssid = nla_data(info->attrs[NL80211_ATTR_SSID]);
+ 		params.ssid_len =
+ 			nla_len(info->attrs[NL80211_ATTR_SSID]);
+-		if (params.ssid_len == 0)
++		if (params.ssid_len == 0) {
++			printk("in nl80211_start_ap EOPNOTSUPP when check bssid len\r\n");
+ 			return -EINVAL;
++		}
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_HIDDEN_SSID])
+@@ -5421,15 +5927,19 @@ static int nl80211_start_ap(struct sk_bu
+ 		params.auth_type = nla_get_u32(
+ 			info->attrs[NL80211_ATTR_AUTH_TYPE]);
+ 		if (!nl80211_valid_auth_type(rdev, params.auth_type,
+-					     NL80211_CMD_START_AP))
++					     NL80211_CMD_START_AP)) {
++			printk("in nl80211_start_ap EOPNOTSUPP when check auth type\r\n");
+ 			return -EINVAL;
++		}
+ 	} else
+ 		params.auth_type = NL80211_AUTHTYPE_AUTOMATIC;
+ 
+ 	err = nl80211_crypto_settings(rdev, info, &params.crypto,
+ 				      NL80211_MAX_NR_CIPHER_SUITES);
+-	if (err)
++	if (err) {
++		printk("in nl80211_start_ap EOPNOTSUPP when check crypto settings\r\n");
+ 		return err;
++	}
+ 
+ 	if (info->attrs[NL80211_ATTR_INACTIVITY_TIMEOUT]) {
+ 		if (!(rdev->wiphy.features & NL80211_FEATURE_INACTIVITY_TIMER))
+@@ -5439,8 +5949,10 @@ static int nl80211_start_ap(struct sk_bu
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_P2P_CTWINDOW]) {
+-		if (dev->ieee80211_ptr->iftype != NL80211_IFTYPE_P2P_GO)
++		if (dev->ieee80211_ptr->iftype != NL80211_IFTYPE_P2P_GO) {
++			printk("in nl80211_start_ap EOPNOTSUPP when check iftype for P2P\r\n");
+ 			return -EINVAL;
++		}
+ 		params.p2p_ctwindow =
+ 			nla_get_u8(info->attrs[NL80211_ATTR_P2P_CTWINDOW]);
+ 		if (params.p2p_ctwindow != 0 &&
+@@ -5462,12 +5974,16 @@ static int nl80211_start_ap(struct sk_bu
+ 
+ 	if (info->attrs[NL80211_ATTR_WIPHY_FREQ]) {
+ 		err = nl80211_parse_chandef(rdev, info, &params.chandef);
+-		if (err)
++		if (err) {
++			printk("in nl80211_start_ap EOPNOTSUPP when check WIFI FREQ\r\n");
+ 			return err;
++		}
+ 	} else if (wdev->preset_chandef.chan) {
+ 		params.chandef = wdev->preset_chandef;
+-	} else if (!nl80211_get_ap_channel(rdev, &params))
++	} else if (!nl80211_get_ap_channel(rdev, &params)) {
++		printk("in nl80211_start_ap EOPNOTSUPP when check channel\r\n");
+ 		return -EINVAL;
++	}
+ 
+ 	if (!cfg80211_reg_can_beacon_relax(&rdev->wiphy, &params.chandef,
+ 					   wdev->iftype))
+@@ -5483,8 +5999,10 @@ static int nl80211_start_ap(struct sk_bu
+ 
+ 		err = validate_beacon_tx_rate(rdev, params.chandef.chan->band,
+ 					      &params.beacon_rate);
+-		if (err)
++		if (err) {
++			printk("in nl80211_start_ap EOPNOTSUPP when check validate_beacon_tx_rate\r\n");
+ 			return err;
++		}
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_SMPS_MODE]) {
+@@ -5495,13 +6013,17 @@ static int nl80211_start_ap(struct sk_bu
+ 			break;
+ 		case NL80211_SMPS_STATIC:
+ 			if (!(rdev->wiphy.features &
+-			      NL80211_FEATURE_STATIC_SMPS))
++			      NL80211_FEATURE_STATIC_SMPS)) {
++				printk("in nl80211_start_ap EOPNOTSUPP when check NL80211_FEATURE_STATIC_SMPS\r\n");
+ 				return -EINVAL;
++			}
+ 			break;
+ 		case NL80211_SMPS_DYNAMIC:
+ 			if (!(rdev->wiphy.features &
+-			      NL80211_FEATURE_DYNAMIC_SMPS))
++			      NL80211_FEATURE_DYNAMIC_SMPS)) {
++				printk("in nl80211_start_ap EOPNOTSUPP when check NL80211_FEATURE_DYNAMIC_SMPS\r\n");
+ 				return -EINVAL;
++			}
+ 			break;
+ 		default:
+ 			return -EINVAL;
+@@ -5511,13 +6033,17 @@ static int nl80211_start_ap(struct sk_bu
+ 	}
+ 
+ 	params.pbss = nla_get_flag(info->attrs[NL80211_ATTR_PBSS]);
+-	if (params.pbss && !rdev->wiphy.bands[NL80211_BAND_60GHZ])
++	if (params.pbss && !rdev->wiphy.bands[NL80211_BAND_60GHZ]) {
++		printk("in nl80211_start_ap EOPNOTSUPP when check NL80211_ATTR_PBSS band not support for 60G\r\n");
+ 		return -EOPNOTSUPP;
++	}
+ 
+ 	if (info->attrs[NL80211_ATTR_ACL_POLICY]) {
+ 		params.acl = parse_acl_data(&rdev->wiphy, info);
+-		if (IS_ERR(params.acl))
++		if (IS_ERR(params.acl)) {
++			printk("in nl80211_start_ap EOPNOTSUPP when check failed to get acl\r\n");
+ 			return PTR_ERR(params.acl);
++		}
+ 	}
+ 
+ 	params.twt_responder =
+@@ -5527,32 +6053,40 @@ static int nl80211_start_ap(struct sk_bu
+ 		err = nl80211_parse_he_obss_pd(
+ 					info->attrs[NL80211_ATTR_HE_OBSS_PD],
+ 					&params.he_obss_pd);
+-		if (err)
++		if (err) {
++			printk("in nl80211_start_ap nl80211_parse_he_obss_pd\r\n");
+ 			goto out;
++		}
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_HE_BSS_COLOR]) {
+ 		err = nl80211_parse_he_bss_color(
+ 					info->attrs[NL80211_ATTR_HE_BSS_COLOR],
+ 					&params.he_bss_color);
+-		if (err)
++		if (err) {
++			printk("in nl80211_start_ap nl80211_parse_he_bss_color\r\n");
+ 			goto out;
++		}
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_FILS_DISCOVERY]) {
+ 		err = nl80211_parse_fils_discovery(rdev,
+ 						   info->attrs[NL80211_ATTR_FILS_DISCOVERY],
+ 						   &params);
+-		if (err)
++		if (err) {
++			printk("in nl80211_start_ap nl80211_parse_fils_discovery\r\n");
+ 			goto out;
++		}
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_UNSOL_BCAST_PROBE_RESP]) {
+ 		err = nl80211_parse_unsol_bcast_probe_resp(
+ 			rdev, info->attrs[NL80211_ATTR_UNSOL_BCAST_PROBE_RESP],
+ 			&params);
+-		if (err)
++		if (err) {
++			printk("in nl80211_start_ap nl80211_parse_unsol_bcast_probe_resp\r\n");
+ 			goto out;
++		}
+ 	}
+ 
+ 	nl80211_calculate_ap_params(&params);
+@@ -5562,6 +6096,7 @@ static int nl80211_start_ap(struct sk_bu
+ 
+ 	wdev_lock(wdev);
+ 	err = rdev_start_ap(rdev, dev, &params);
++	printk("in nl80211_start_ap rdev_start_ap result %d\r\n", err);
+ 	if (!err) {
+ 		wdev->preset_chandef = params.chandef;
+ 		wdev->beacon_interval = params.beacon_interval;
+@@ -9904,8 +10439,10 @@ static int nl80211_crypto_settings(struc
+ 			info->attrs[NL80211_ATTR_CONTROL_PORT_ETHERTYPE]);
+ 		settings->control_port_ethertype = cpu_to_be16(proto);
+ 		if (!(rdev->wiphy.flags & WIPHY_FLAG_CONTROL_PORT_PROTOCOL) &&
+-		    proto != ETH_P_PAE)
++		    proto != ETH_P_PAE) {
++			printk("in nl80211_crypto_settings check proto\r\n");
+ 			return -EINVAL;
++		}
+ 		if (info->attrs[NL80211_ATTR_CONTROL_PORT_NO_ENCRYPT])
+ 			settings->control_port_no_encrypt = true;
+ 	} else
+@@ -9914,8 +10451,10 @@ static int nl80211_crypto_settings(struc
+ 	if (info->attrs[NL80211_ATTR_CONTROL_PORT_OVER_NL80211]) {
+ 		int r = validate_pae_over_nl80211(rdev, info);
+ 
+-		if (r < 0)
++		if (r < 0) {
++			printk("in nl80211_crypto_settings check validate_pae_over_nl80211\r\n");
+ 			return r;
++		}
+ 
+ 		settings->control_port_over_nl80211 = true;
+ 
+@@ -9931,19 +10470,25 @@ static int nl80211_crypto_settings(struc
+ 		len = nla_len(info->attrs[NL80211_ATTR_CIPHER_SUITES_PAIRWISE]);
+ 		settings->n_ciphers_pairwise = len / sizeof(u32);
+ 
+-		if (len % sizeof(u32))
++		if (len % sizeof(u32)) {
++			printk("in nl80211_crypto_settings check SUITES_PAIRWISE not align 32bit\r\n");
+ 			return -EINVAL;
++		}
+ 
+-		if (settings->n_ciphers_pairwise > cipher_limit)
++		if (settings->n_ciphers_pairwise > cipher_limit) {
++			printk("in nl80211_crypto_settings check pairwise exceeds cipher_limit\r\n");
+ 			return -EINVAL;
++		}
+ 
+ 		memcpy(settings->ciphers_pairwise, data, len);
+ 
+ 		for (i = 0; i < settings->n_ciphers_pairwise; i++)
+ 			if (!cfg80211_supported_cipher_suite(
+ 					&rdev->wiphy,
+-					settings->ciphers_pairwise[i]))
++					settings->ciphers_pairwise[i])) {
++				printk("in nl80211_crypto_settings not support ciphers_pairwise %08x\r\n", settings->ciphers_pairwise[i]);
+ 				return -EINVAL;
++			}
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_CIPHER_SUITE_GROUP]) {
+@@ -9951,14 +10496,19 @@ static int nl80211_crypto_settings(struc
+ 			nla_get_u32(info->attrs[NL80211_ATTR_CIPHER_SUITE_GROUP]);
+ 		if (!cfg80211_supported_cipher_suite(&rdev->wiphy,
+ 						     settings->cipher_group))
++		{
++			printk("in nl80211_crypto_settings not support cipher_group %08x\r\n", settings->cipher_group);
+ 			return -EINVAL;
++		}
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_WPA_VERSIONS]) {
+ 		settings->wpa_versions =
+ 			nla_get_u32(info->attrs[NL80211_ATTR_WPA_VERSIONS]);
+-		if (!nl80211_valid_wpa_versions(settings->wpa_versions))
++		if (!nl80211_valid_wpa_versions(settings->wpa_versions)) {
++			printk("in nl80211_crypto_settings not support wpa_versions %d\r\n", settings->wpa_versions);
+ 			return -EINVAL;
++		}
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_AKM_SUITES]) {
+@@ -9969,23 +10519,31 @@ static int nl80211_crypto_settings(struc
+ 		len = nla_len(info->attrs[NL80211_ATTR_AKM_SUITES]);
+ 		settings->n_akm_suites = len / sizeof(u32);
+ 
+-		if (len % sizeof(u32))
++		if (len % sizeof(u32)){
++			printk("in nl80211_crypto_settings check NL80211_ATTR_AKM_SUITES not align 32bit\r\n");
+ 			return -EINVAL;
++		}
+ 
+-		if (settings->n_akm_suites > NL80211_MAX_NR_AKM_SUITES)
++		if (settings->n_akm_suites > NL80211_MAX_NR_AKM_SUITES) {
++			printk("in nl80211_crypto_settings check settings->n_akm_suites failed\r\n");
+ 			return -EINVAL;
++		}
+ 
+ 		memcpy(settings->akm_suites, data, len);
+ 	}
+ 
+ 	if (info->attrs[NL80211_ATTR_PMK]) {
+-		if (nla_len(info->attrs[NL80211_ATTR_PMK]) != WLAN_PMK_LEN)
++		if (nla_len(info->attrs[NL80211_ATTR_PMK]) != WLAN_PMK_LEN) {
++			printk("in nl80211_crypto_settings check length of NL80211_ATTR_PMK\r\n");
+ 			return -EINVAL;
++		}
+ 		if (!wiphy_ext_feature_isset(&rdev->wiphy,
+ 					     NL80211_EXT_FEATURE_4WAY_HANDSHAKE_STA_PSK) &&
+ 		    !wiphy_ext_feature_isset(&rdev->wiphy,
+-					     NL80211_EXT_FEATURE_4WAY_HANDSHAKE_AP_PSK))
++					     NL80211_EXT_FEATURE_4WAY_HANDSHAKE_AP_PSK)) {
++			printk("in nl80211_crypto_settings check wiphy_ext_feature_isset 1\r\n");
+ 			return -EINVAL;
++		}
+ 		settings->psk = nla_data(info->attrs[NL80211_ATTR_PMK]);
+ 	}
+ 
+@@ -9994,6 +10552,7 @@ static int nl80211_crypto_settings(struc
+ 					     NL80211_EXT_FEATURE_SAE_OFFLOAD) &&
+ 		    !wiphy_ext_feature_isset(&rdev->wiphy,
+ 					     NL80211_EXT_FEATURE_SAE_OFFLOAD_AP))
++			printk("in nl80211_crypto_settings check wiphy_ext_feature_isset 2\r\n");
+ 			return -EINVAL;
+ 		settings->sae_pwd =
+ 			nla_data(info->attrs[NL80211_ATTR_SAE_PASSWORD]);
+@@ -14689,6 +15248,215 @@ static int nl80211_probe_mesh_link(struc
  	return rdev_probe_mesh_link(rdev, dev, dest, buf, len);
  }
  
@@ -717,7 +1059,7 @@ Index: backports-5.15.8-1/net/wireless/nl80211.c
  static int parse_tid_conf(struct cfg80211_registered_device *rdev,
  			  struct nlattr *attrs[], struct net_device *dev,
  			  struct cfg80211_tid_cfg *tid_conf,
-@@ -14958,6 +15659,26 @@ out:
+@@ -14958,6 +15726,26 @@ out:
  #define NL80211_FLAG_CLEAR_SKB		0x20
  #define NL80211_FLAG_NO_WIPHY_MTX	0x40
  
@@ -744,7 +1086,7 @@ Index: backports-5.15.8-1/net/wireless/nl80211.c
  static int nl80211_pre_doit(const struct genl_ops *ops, struct sk_buff *skb,
  			    struct genl_info *info)
  {
-@@ -14965,11 +15686,16 @@ static int nl80211_pre_doit(const struct
+@@ -14965,11 +15753,16 @@ static int nl80211_pre_doit(const struct
  	struct wireless_dev *wdev;
  	struct net_device *dev;
  
@@ -761,7 +1103,7 @@ Index: backports-5.15.8-1/net/wireless/nl80211.c
  			return PTR_ERR(rdev);
  		}
  		info->user_ptr[0] = rdev;
-@@ -14979,6 +15705,7 @@ static int nl80211_pre_doit(const struct
+@@ -14979,6 +15772,7 @@ static int nl80211_pre_doit(const struct
  						  info->attrs);
  		if (IS_ERR(wdev)) {
  			rtnl_unlock();
@@ -769,7 +1111,7 @@ Index: backports-5.15.8-1/net/wireless/nl80211.c
  			return PTR_ERR(wdev);
  		}
  
-@@ -14987,6 +15714,7 @@ static int nl80211_pre_doit(const struct
+@@ -14987,6 +15781,7 @@ static int nl80211_pre_doit(const struct
  
  		if (ops->internal_flags & NL80211_FLAG_NEED_NETDEV) {
  			if (!dev) {
@@ -777,7 +1119,7 @@ Index: backports-5.15.8-1/net/wireless/nl80211.c
  				rtnl_unlock();
  				return -EINVAL;
  			}
-@@ -14998,6 +15726,7 @@ static int nl80211_pre_doit(const struct
+@@ -14998,6 +15793,7 @@ static int nl80211_pre_doit(const struct
  
  		if (ops->internal_flags & NL80211_FLAG_CHECK_NETDEV_UP &&
  		    !wdev_running(wdev)) {
@@ -785,7 +1127,7 @@ Index: backports-5.15.8-1/net/wireless/nl80211.c
  			rtnl_unlock();
  			return -ENETDOWN;
  		}
-@@ -15014,6 +15743,42 @@ static int nl80211_pre_doit(const struct
+@@ -15014,6 +15810,42 @@ static int nl80211_pre_doit(const struct
  	if (!(ops->internal_flags & NL80211_FLAG_NEED_RTNL))
  		rtnl_unlock();
  

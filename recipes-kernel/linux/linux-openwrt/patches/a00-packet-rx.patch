@@ -1,0 +1,68 @@
+Index: linux-4.19.97/net/packet/af_packet.c
+===================================================================
+--- linux-4.19.97.orig/net/packet/af_packet.c
++++ linux-4.19.97/net/packet/af_packet.c
+@@ -2974,15 +2974,59 @@ out:
+ 	return err;
+ }
+ 
++static int packet_rx(struct socket *sock, struct msghdr *msg, size_t len)
++{
++	struct sk_buff *skb = NULL;
++	struct net_device *dev;
++	struct sock *sk = sock->sk;
++	int err;
++	size_t reserved;
++	int tlen;
++
++	DECLARE_SOCKADDR(struct sockaddr_ll *, saddr, msg->msg_name);
++	dev = dev_get_by_index(sock_net(sk), saddr->sll_ifindex);
++
++	if(!dev)
++		return -1;
++
++	reserved = LL_RESERVED_SPACE(dev);
++	tlen = dev->needed_tailroom;
++	skb = sock_wmalloc(sk, len + reserved + tlen, 0, GFP_KERNEL);
++	if(!skb) {
++		goto free_dev;
++	}
++
++	skb_reserve(skb, reserved);
++	skb_reset_network_header(skb);
++	err = memcpy_from_msg(skb_put(skb, len), msg, len);
++
++	skb->protocol = eth_type_trans(skb, dev);
++	skb->dev = dev;
++	netif_rx(skb);
++
++	err = len;
++
++free_dev:
++	if(dev) {
++		dev_put(dev);
++	}
++
++	return err;
++}
++
+ static int packet_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ {
+ 	struct sock *sk = sock->sk;
+ 	struct packet_sock *po = pkt_sk(sk);
+ 
+-	if (po->tx_ring.pg_vec)
+-		return tpacket_snd(po, msg);
+-	else
+-		return packet_snd(sock, msg, len);
++	if(msg->msg_flags & 0x200000) {
++		return packet_rx(sock, msg, len);
++	} else {
++		if (po->tx_ring.pg_vec)
++			return tpacket_snd(po, msg);
++		else
++			return packet_snd(sock, msg, len);
++	}
+ }
+ 
+ /*
