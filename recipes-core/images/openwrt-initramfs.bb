@@ -24,4 +24,10 @@ IMAGE_INSTALL ?= "${CORE_IMAGE_BASE_INSTALL} swconfig "
 
 IMAGE_FSTYPES += "ext4"
 
+do_rootfs_clean() {
+	rm ${WORKDIR}/rootfs/boot/* -rfd
+}
+
+addtask do_rootfs_clean after do_rootfs before do_image
+
 
