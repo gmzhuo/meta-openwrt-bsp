@@ -83,12 +83,12 @@ do_openwrt_patch() {
 		done
 	fi
 
-	[ -d ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/dts ] && {
+	[ -d ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/dts -a -d ${S}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/ ] && {
 		cp ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/dts/* ${S}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/ -rfd
+		echo "dtb-y += ${MACHINE_DEFAULT_DTB}" >>${S}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/Makefile
 	}
 
 	echo "EXTRA_CFLAGS += -I\${srctree}/include/linux -I\${srctree}/include/linux/lzma" >>${S}/lib/lzma/Makefile
-	echo "dtb-y += ${MACHINE_DEFAULT_DTB}" >>${S}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/Makefile
 
 	patch -p1 <${WORKDIR}/${MACHINE_EXTERNAL_PATCH}
 
@@ -108,7 +108,12 @@ do_openwrt_image() {
 			case "${type}" in
 			"uImage")
 				${OBJCOPY} -O binary -R .note -R .comment -S "${vmlinux_path}" linux.bin.append
-				cat ${B}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/${MACHINE_DEFAULT_DTB} >>linux.bin.append
+				[ -f ${B}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/${MACHINE_DEFAULT_DTB} ] && {
+					cat ${B}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/${MACHINE_DEFAULT_DTB} >>linux.bin.append
+				}
+				[ -f ${DEPLOY_DIR_IMAGE}/devicetree/${MACHINE_DEFAULT_DTB} ] && {
+					cat ${DEPLOY_DIR_IMAGE}/devicetree/${MACHINE_DEFAULT_DTB} >>linux.bin.append
+				}
 				/usr/bin/lzma-alone e -lc1 -lp2 -pb2 linux.bin.append linux.bin.append.lzma
 				ENTRYPOINT=${UBOOT_ENTRYPOINT}
 				if [ -n "${UBOOT_ENTRYSYMBOL}" ]; then
@@ -128,5 +133,13 @@ do_openwrt_image() {
 
 addtask do_openwrt_patch after do_patch before do_configure
 addtask do_openwrt_image after do_bundle_initramfs before do_deploy
+do_openwrt_image[depends] += "device-tree:do_deploy"
 
-COMPATIBLE_MACHINE += "|ipq807x|hc5761|bananapi_bpi-r64|ax3600|ax9000"
+kernel_do_deploy:append() {
+	# Update deploy directory
+	[ -f ${B}/arch/${ARCH}/boot/uImage.dtb.lzma ] && \
+		install -m 0644 ${B}/arch/${ARCH}/boot/uImage.dtb.lzma \
+		"$deployDir/uImage-${INITRAMFS_IMAGE_NAME}-dtb.lzma"
+}
+
+COMPATIBLE_MACHINE += "|ipq807x|hc5761|bananapi_bpi-r64|ax3600|ax9000|ap143"

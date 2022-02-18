@@ -1,0 +1,18 @@
+#include "qca9533_qca_ap143-16m.dts"
+/ {
+	/delete-node/ virtual_flash;
+};
+
+&partitions {
+	/delete-node/ partition@50000;
+	/delete-node/ partition@e80000;
+	/delete-node/ partition@e90000;
+
+	partition@50000 {
+		label = "firmware";
+		reg = <0x50000 0xfa0000>;
+		compatible = "openwrt,uimage", "denx,uimage";
+		openwrt,ih-magic = <0x27051956>;
+		openwrt,ih-type = <IH_TYPE_KERNEL>;
+	};
+};
