@@ -65,6 +65,38 @@ do_openwrt_firmware_lzma() {
 		${WORKDIR}/linux-vmlinux/tmp/firmare.bin
 }
 
+do_openwrt_firmware_gzip() {
+	bbnote gzip ${1} ${2}
+
+	gzip \
+		${WORKDIR}/linux-vmlinux/tmp/firmare.bin
+
+	mv ${WORKDIR}/linux-vmlinux/tmp/firmare.bin.gz \
+		${WORKDIR}/linux-vmlinux/tmp/firmare.bin
+}
+
+RAMDISK_COUNT ??= "1"
+
+do_openwrt_firmware_fit() {
+	bbnote fit ${1} ${2}
+
+	linux_comp=${2}
+	fitimage_assemble_sysupgrade fit-image-sysupgrade.its \
+		fitImage-${INITRAMFS_IMAGE}-sysupgrade ${RAMDISK_COUNT} \
+		${WORKDIR}/linux-vmlinux/tmp/firmare.tmp
+	if test -n "${MACHINE_DO_UBI_IMAGE}"; then
+		bbnote "do ubi image"
+	fi
+
+	mv ${WORKDIR}/linux-vmlinux/tmp/firmare.tmp \
+		${WORKDIR}/linux-vmlinux/tmp/firmare.bin
+}
+
+do_openwrt_firmware_add_metadata() {
+	
+}
+
+
 do_openwrt_firmware_uImage() {
 	bbnote uImage ${1}
 
@@ -126,6 +158,9 @@ do_openwrt_firmware_image() {
 		do_openwrt_firmware_lzma
 		do_openwrt_firmware_uImage
 		do_openwrt_firmware_add_rootfs
+		do_openwrt_firmware_gzip
+		do_openwrt_firmware_fit
+		do_openwrt_firmware_add_metadata
 	}
 
 	cp "${vmlinux_path}" ${WORKDIR}/linux-vmlinux/tmp/firmare.bin
@@ -133,7 +168,7 @@ do_openwrt_firmware_image() {
 	rootfs_cmdlines=""
 	cmd_func=""
 
-	for sub_cmdline in ${OPENWRT_IMAGE_CMDLINES}
+	for sub_cmdline in ${OPENWRT_IMAGE_CMDLINES};
 	do
 		if [ "${sub_cmdline}" == "," ]; then
 			do_openwrt_firmware_image_one_line "${cmd_func}" "${rootfs_cmdlines}"
@@ -145,7 +180,7 @@ do_openwrt_firmware_image() {
 			else
 				rootfs_cmdlines="${rootfs_cmdlines} ${sub_cmdline}"
 			fi
-		fi
+		fi;
 	done
 
 	do_openwrt_firmware_image_one_line "${cmd_func}" "${rootfs_cmdlines}"

@@ -137,9 +137,10 @@ do_openwrt_image[depends] += "device-tree:do_deploy"
 
 kernel_do_deploy:append() {
 	# Update deploy directory
-	[ -f ${B}/arch/${ARCH}/boot/uImage.dtb.lzma ] && \
+	if [ -f ${B}/arch/${ARCH}/boot/uImage.dtb.lzma ]; then
 		install -m 0644 ${B}/arch/${ARCH}/boot/uImage.dtb.lzma \
 		"$deployDir/uImage-${INITRAMFS_IMAGE_NAME}-dtb.lzma"
+	fi
 }
 
 COMPATIBLE_MACHINE += "|ipq807x|hc5761|bananapi_bpi-r64|ax3600|ax9000|ap143"
