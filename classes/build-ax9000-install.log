@@ -1,0 +1,413 @@
+make[2]: Entering directory '/opt/work/yocto/openwrt/openwrt/scripts/config'
+make[2]: 'conf' is up to date.
+make[2]: Leaving directory '/opt/work/yocto/openwrt/openwrt/scripts/config'
+make[1]: Entering directory '/opt/work/yocto/openwrt/openwrt'
+make[2]: Entering directory '/opt/work/yocto/openwrt/openwrt/target/linux'
+make[3]: Entering directory '/opt/work/yocto/openwrt/openwrt/target/linux/ipq807x'
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/localversion
+/opt/work/yocto/openwrt/openwrt/scripts/kconfig.pl  + /opt/work/yocto/openwrt/openwrt/target/linux/generic/config-5.10 /opt/work/yocto/openwrt/openwrt/target/linux/ipq807x/config-5.10 > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.target
+awk '/^(#[[:space:]]+)?CONFIG_KERNEL/{sub("CONFIG_KERNEL_","CONFIG_");print}' /opt/work/yocto/openwrt/openwrt/.config >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.target
+echo "# CONFIG_KALLSYMS_EXTRA_PASS is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.target
+echo "# CONFIG_KALLSYMS_ALL is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.target
+echo "CONFIG_KALLSYMS_UNCOMPRESSED=y" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.target
+/opt/work/yocto/openwrt/openwrt/scripts/package-metadata.pl kconfig /opt/work/yocto/openwrt/openwrt/tmp/.packageinfo /opt/work/yocto/openwrt/openwrt/.config 5.10 > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.override
+/opt/work/yocto/openwrt/openwrt/scripts/kconfig.pl 'm+' '+' /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.target /dev/null /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.override > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.set
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.set /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.old
+grep -v INITRAMFS /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.old > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.set
+echo 'CONFIG_INITRAMFS_SOURCE=""' >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.set
+echo '# CONFIG_INITRAMFS_FORCE is not set' >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.set
+rm -rf /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/modules
+cmp -s /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.set /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.prev || { cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.set /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config; cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.set /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.prev; }
+export MAKEFLAGS= ; [ -d /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/user_headers ] || make -C /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83 KCFLAGS="-fmacro-prefix-map=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl=target-aarch64_cortex-a53_musl" HOSTCFLAGS="-O2 -I/opt/work/yocto/openwrt/openwrt/staging_dir/host/include  -Wall -Wmissing-prototypes -Wstrict-prototypes" CROSS_COMPILE="aarch64-openwrt-linux-musl-" ARCH="arm64" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" KBUILD_BUILD_TIMESTAMP="Wed Dec 15 20:50:37 2021" KBUILD_BUILD_VERSION="0" HOST_LOADLIBES="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" KBUILD_HOSTLDLIBS="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" CONFIG_SHELL="bash" V=''  cmd_syscalls=  KERNELRELEASE=5.10.83 CC="aarch64-openwrt-linux-musl-gcc" INSTALL_HDR_PATH=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/user_headers headers_install
+grep '=[ym]' /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.set | LC_ALL=C sort | /opt/work/yocto/openwrt/openwrt/staging_dir/host/bin/mkhash md5 > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.vermagic
+touch /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.configured
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root-ipq807x/init
+make -C /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83 KCFLAGS="-fmacro-prefix-map=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl=target-aarch64_cortex-a53_musl" HOSTCFLAGS="-O2 -I/opt/work/yocto/openwrt/openwrt/staging_dir/host/include  -Wall -Wmissing-prototypes -Wstrict-prototypes" CROSS_COMPILE="aarch64-openwrt-linux-musl-" ARCH="arm64" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" KBUILD_BUILD_TIMESTAMP="Wed Dec 15 20:50:37 2021" KBUILD_BUILD_VERSION="0" HOST_LOADLIBES="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" KBUILD_HOSTLDLIBS="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" CONFIG_SHELL="bash" V=''  cmd_syscalls=  KERNELRELEASE=5.10.83 CC="aarch64-openwrt-linux-musl-gcc"  Image dtbs modules
+make[4]: Entering directory '/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83'
+  SYNC    include/config/auto.conf.cmd
+  CALL    scripts/checksyscalls.sh
+  CALL    scripts/atomic/check-atomics.sh
+  CHK     include/generated/compile.h
+  GEN     usr/initramfs_data.cpio
+  SHIPPED usr/initramfs_inc_data
+  AS      usr/initramfs_data.o
+  AR      usr/built-in.a
+  GEN     .version
+  CHK     include/generated/compile.h
+  LD      vmlinux.o
+  MODPOST vmlinux.symvers
+  MODINFO modules.builtin.modinfo
+  GEN     modules.builtin
+  LD      .tmp_vmlinux.kallsyms1
+  KSYMS   .tmp_vmlinux.kallsyms1.S
+  AS      .tmp_vmlinux.kallsyms1.S
+  LD      .tmp_vmlinux.kallsyms2
+  KSYMS   .tmp_vmlinux.kallsyms2.S
+  AS      .tmp_vmlinux.kallsyms2.S
+  LD      vmlinux
+  SORTTAB vmlinux
+  SYSMAP  System.map
+  OBJCOPY arch/arm64/boot/Image
+  MODPOST modules-only.symvers
+  GEN     Module.symvers
+make[4]: Leaving directory '/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83'
+cmp -s /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/vmlinux.debug || { aarch64-openwrt-linux-musl-objcopy -O binary -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/vmlinux; aarch64-openwrt-linux-musl-objcopy -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/vmlinux.elf; cp -fpR /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/vmlinux.debug;  cp -fpR /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot//Image /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/Image;  }
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.prev
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.old
+grep -v -e INITRAMFS -e CONFIG_RD_ -e CONFIG_BLK_DEV_INITRD /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config.old > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo 'CONFIG_BLK_DEV_INITRD=y' >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo 'CONFIG_INITRAMFS_SOURCE="/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root-ipq807x /opt/work/yocto/openwrt/openwrt/target/linux/generic/image/initramfs-base-files.txt"' >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo 'CONFIG_INITRAMFS_ROOT_UID=1000' >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo 'CONFIG_INITRAMFS_ROOT_GID=1000' >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo "# CONFIG_INITRAMFS_FORCE is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo "CONFIG_INITRAMFS_COMPRESSION_NONE=y" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_GZIP is not set\n# CONFIG_RD_GZIP is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_BZIP2 is not set\n# CONFIG_RD_BZIP2 is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_LZMA is not set\n# CONFIG_RD_LZMA is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_LZO is not set\n# CONFIG_RD_LZO is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_XZ is not set\n# CONFIG_RD_XZ is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_LZ4 is not set\n# CONFIG_RD_LZ4 is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_ZSTD is not set\n# CONFIG_RD_ZSTD is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.config
+cp -fpR /opt/work/yocto/openwrt/openwrt/target/linux/generic/other-files/init /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root-ipq807x/init
+touch -hcd "@1639601437" /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root-ipq807x/init
+rm -rf /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/usr/initramfs_data.cpio*
+make -C /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83 KCFLAGS="-fmacro-prefix-map=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl=target-aarch64_cortex-a53_musl" HOSTCFLAGS="-O2 -I/opt/work/yocto/openwrt/openwrt/staging_dir/host/include  -Wall -Wmissing-prototypes -Wstrict-prototypes" CROSS_COMPILE="aarch64-openwrt-linux-musl-" ARCH="arm64" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" KBUILD_BUILD_TIMESTAMP="Wed Dec 15 20:50:37 2021" KBUILD_BUILD_VERSION="0" HOST_LOADLIBES="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" KBUILD_HOSTLDLIBS="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" CONFIG_SHELL="bash" V=''  cmd_syscalls=  KERNELRELEASE=5.10.83 CC="aarch64-openwrt-linux-musl-gcc"  Image dtbs modules
+make[4]: Entering directory '/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83'
+  SYNC    include/config/auto.conf.cmd
+  CALL    scripts/checksyscalls.sh
+  CALL    scripts/atomic/check-atomics.sh
+  CHK     include/generated/compile.h
+  GEN     usr/initramfs_data.cpio
+  SHIPPED usr/initramfs_inc_data
+  AS      usr/initramfs_data.o
+  AR      usr/built-in.a
+  GEN     .version
+  CHK     include/generated/compile.h
+  LD      vmlinux.o
+  MODPOST vmlinux.symvers
+  MODINFO modules.builtin.modinfo
+  GEN     modules.builtin
+  LD      .tmp_vmlinux.kallsyms1
+  KSYMS   .tmp_vmlinux.kallsyms1.S
+  AS      .tmp_vmlinux.kallsyms1.S
+  LD      .tmp_vmlinux.kallsyms2
+  KSYMS   .tmp_vmlinux.kallsyms2.S
+  AS      .tmp_vmlinux.kallsyms2.S
+  LD      vmlinux
+  SORTTAB vmlinux
+  SYSMAP  System.map
+  OBJCOPY arch/arm64/boot/Image
+  MODPOST modules-only.symvers
+  GEN     Module.symvers
+make[4]: Leaving directory '/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83'
+cmp -s /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/vmlinux-initramfs.debug || { aarch64-openwrt-linux-musl-objcopy -O binary -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/vmlinux-initramfs; aarch64-openwrt-linux-musl-objcopy -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/vmlinux-initramfs.elf; cp -fpR /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/vmlinux-initramfs.debug;  cp -fpR /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot//Image /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/Image-initramfs;  }
+touch /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/.image
+make -C image compile install TARGET_BUILD=
+make[4]: Entering directory '/opt/work/yocto/openwrt/openwrt/target/linux/ipq807x/image'
+make[4]: Nothing to be done for 'compile'.
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8070-cax1800.dtb.tmp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ipq8070-cax1800.dts
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/scripts/dtc/dtc -O dtb -i/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address   -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8070-cax1800.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8070-cax1800.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8070-cax1800.dtb.tmp
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8072-301w.dtb.tmp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ipq8072-301w.dts
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/scripts/dtc/dtc -O dtb -i/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address   -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8072-301w.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8072-301w.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8072-301w.dtb.tmp
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8071-ax6.dtb.tmp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ipq8071-ax6.dts
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/scripts/dtc/dtc -O dtb -i/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address   -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8071-ax6.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8071-ax6.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8071-ax6.dtb.tmp
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8071-ax3600.dtb.tmp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ipq8071-ax3600.dts
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/scripts/dtc/dtc -O dtb -i/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address   -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8071-ax3600.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8071-ax3600.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8071-ax3600.dtb.tmp
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8072-ax9000.dtb.tmp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ipq8072-ax9000.dts
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/scripts/dtc/dtc -O dtb -i/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address   -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8072-ax9000.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8072-ax9000.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/image-ipq8072-ax9000.dtb.tmp
+mkdir -p /opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp
+rm -rf /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files
+/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin/mksquashfs4 /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root-ipq807x /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs -nopad -noappend -root-owned -comp xz -Xpreset 9 -Xe -Xlc 0 -Xlp 2 -Xpb 2  -b 256k -p '/dev d 755 0 0' -p '/dev/console c 600 0 0 5 1' -no-xattrs -processors 1
+Parallel mksquashfs: Using 1 processor
+Creating 4.0 filesystem on /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs, block size 262144.
+[===============================================================\] 779/779 100%
+
+Exportable Squashfs 4.0 filesystem, xz compressed, data block size 262144
+	compressed data, compressed metadata, compressed fragments,
+	no xattrs, compressed ids
+	duplicates are removed
+Filesystem size 5765.86 Kbytes (5.63 Mbytes)
+	31.76% of uncompressed filesystem size (18155.66 Kbytes)
+Inode table size 6994 bytes (6.83 Kbytes)
+	20.53% of uncompressed inode table size (34070 bytes)
+Directory table size 9842 bytes (9.61 Kbytes)
+	44.95% of uncompressed directory table size (21896 bytes)
+Number of duplicate files found 121
+Number of inodes 1020
+Number of files 743
+Number of fragments 26
+Number of symbolic links  194
+Number of device nodes 1
+Number of fifo nodes 0
+Number of socket nodes 0
+Number of directories 82
+Number of ids (unique uids + gids) 1
+Number of uids 1
+	root (0)
+Number of gids 1
+	root (0)
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/Image-initramfs /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb
+gzip -f -9n -c /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb  > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb.new
+/opt/work/yocto/openwrt/openwrt/scripts/mkits.sh -D xiaomi_ax9000 -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb.its -k /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb -C gzip   -d /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ipq8072-ax9000.dtb   -a 0x41000000 -e 0x41000000    -c config@hk14 -A arm64 -v 5.10.83
+PATH=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/scripts/dtc:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/home/gmzhuo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin mkimage  -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb.its /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb.new
+FIT description: ARM64 OpenWrt FIT (Flattened Image Tree)
+Created:         Wed Dec 15 20:50:37 2021
+ Image 0 (kernel-1)
+  Description:  ARM64 OpenWrt Linux-5.10.83
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Kernel Image
+  Compression:  gzip compressed
+  Data Size:    11966553 Bytes = 11686.09 KiB = 11.41 MiB
+  Architecture: AArch64
+  OS:           Linux
+  Load Address: 0x41000000
+  Entry Point:  0x41000000
+  Hash algo:    crc32
+  Hash value:   82542625
+  Hash algo:    sha1
+  Hash value:   e4279270b3e97c6727e67a70cd4bbaeca4fb5952
+ Image 1 (fdt-1)
+  Description:  ARM64 OpenWrt xiaomi_ax9000 device tree blob
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    40354 Bytes = 39.41 KiB = 0.04 MiB
+  Architecture: AArch64
+  Hash algo:    crc32
+  Hash value:   792e7c4b
+  Hash algo:    sha1
+  Hash value:   97a56d7e58b5f57a6cb560a841502fdd8adfc5bc
+ Default Configuration: 'config@hk14'
+ Configuration 0 (config@hk14)
+  Description:  OpenWrt xiaomi_ax9000
+  Kernel:       kernel-1
+  FDT:          fdt-1
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb /opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb
+DEVICE_ID="xiaomi_ax9000" BIN_DIR="/opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic" SOURCE_DATE_EPOCH=1639601437 FILE_NAME="openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb" FILE_TYPE="kernel" FILE_FILESYSTEM="initramfs" DEVICE_IMG_PREFIX="openwrt-ipq807x-generic-xiaomi_ax9000" DEVICE_VENDOR="Xiaomi" DEVICE_MODEL="AX9000" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_TITLE="Xiaomi AX9000" DEVICE_PACKAGES="ipq-wifi-xiaomi_ax9000 kmod-ath10k-ct ath10k-firmware-qca9887-ct uboot-envtools " TARGET="ipq807x" SUBTARGET="generic" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r18429-6ccdf9a7f1" SUPPORTED_DEVICES="xiaomi,ax9000" /opt/work/yocto/openwrt/openwrt/scripts/json_add_image_info.py /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb.json
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/Image /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb
+gzip -f -9n -c /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb  > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb.new
+/opt/work/yocto/openwrt/openwrt/scripts/mkits.sh -D xiaomi_ax9000 -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb.its -k /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb -C gzip   -d /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ipq8072-ax9000.dtb   -a 0x41000000 -e 0x41000000    -c config@hk14 -A arm64 -v 5.10.83
+PATH=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/scripts/dtc:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/home/gmzhuo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin mkimage  -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb.its /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb.new
+FIT description: ARM64 OpenWrt FIT (Flattened Image Tree)
+Created:         Wed Dec 15 20:50:37 2021
+ Image 0 (kernel-1)
+  Description:  ARM64 OpenWrt Linux-5.10.83
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Kernel Image
+  Compression:  gzip compressed
+  Data Size:    4444002 Bytes = 4339.85 KiB = 4.24 MiB
+  Architecture: AArch64
+  OS:           Linux
+  Load Address: 0x41000000
+  Entry Point:  0x41000000
+  Hash algo:    crc32
+  Hash value:   d8057ccc
+  Hash algo:    sha1
+  Hash value:   ee9dbb017aea23fc324d4fda46b720e1c0824a6c
+ Image 1 (fdt-1)
+  Description:  ARM64 OpenWrt xiaomi_ax9000 device tree blob
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    40354 Bytes = 39.41 KiB = 0.04 MiB
+  Architecture: AArch64
+  Hash algo:    crc32
+  Hash value:   792e7c4b
+  Hash algo:    sha1
+  Hash value:   97a56d7e58b5f57a6cb560a841502fdd8adfc5bc
+ Default Configuration: 'config@hk14'
+ Configuration 0 (config@hk14)
+  Description:  OpenWrt xiaomi_ax9000
+  Kernel:       kernel-1
+  FDT:          fdt-1
+[ -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb -a -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs ]
+sh /opt/work/yocto/openwrt/openwrt/scripts/ubinize-image.sh  --kernel /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb  --rootfs /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi.tmp -p 128KiB -m 2048   
+[kernel]
+mode=ubi
+vol_id=0
+vol_type=dynamic
+vol_name=kernel
+image=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb
+[rootfs]
+mode=ubi
+vol_id=1
+vol_type=dynamic
+vol_name=rootfs
+image=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs
+vol_size=5904384
+[rootfs_data]
+mode=ubi
+vol_id=2
+vol_type=dynamic
+vol_name=rootfs_data
+vol_size=1MiB
+vol_flags=autoresize
+ubinize: volume size was not specified in section "kernel", assume minimum to fit image "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb"4486260 bytes (4.2 MiB)
+-Q 1639601437 -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi.tmp -p 128KiB -m 2048 /opt/work/yocto/openwrt/openwrt/tmp/tmp.wDnQxK8Xoi
+[kernel]
+mode=ubi
+vol_id=0
+vol_type=dynamic
+vol_name=kernel
+image=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb
+[rootfs]
+mode=ubi
+vol_id=1
+vol_type=dynamic
+vol_name=rootfs
+image=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs
+vol_size=5904384
+[rootfs_data]
+mode=ubi
+vol_id=2
+vol_type=dynamic
+vol_name=rootfs_data
+vol_size=1MiB
+vol_flags=autoresize
+cat /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi.tmp >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi
+rm /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi.tmp
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi /opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi
+DEVICE_ID="xiaomi_ax9000" BIN_DIR="/opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic" SOURCE_DATE_EPOCH=1639601437 FILE_NAME="openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi" FILE_TYPE=nand-factory FILE_FILESYSTEM="squashfs" DEVICE_IMG_PREFIX="openwrt-ipq807x-generic-xiaomi_ax9000" DEVICE_VENDOR="Xiaomi" DEVICE_MODEL="AX9000" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_TITLE="Xiaomi AX9000" DEVICE_PACKAGES="ipq-wifi-xiaomi_ax9000 kmod-ath10k-ct ath10k-firmware-qca9887-ct uboot-envtools " TARGET="ipq807x" SUBTARGET="generic" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r18429-6ccdf9a7f1" SUPPORTED_DEVICES="xiaomi,ax9000" /opt/work/yocto/openwrt/openwrt/scripts/json_add_image_info.py /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi.json
+[ -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb -a -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs ]
+sh /opt/work/yocto/openwrt/openwrt/scripts/sysupgrade-tar.sh --board xiaomi_ax9000 --kernel /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb --rootfs /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin
+sysupgrade-xiaomi_ax9000/
+sysupgrade-xiaomi_ax9000/CONTROL
+sysupgrade-xiaomi_ax9000/kernel
+sysupgrade-xiaomi_ax9000/root
+echo '{  "metadata_version": "1.1", "compat_version": "1.0",   "supported_devices":["xiaomi,ax9000"], "version": { "dist": "OpenWrt", "version": "SNAPSHOT", "revision": "r18429-6ccdf9a7f1", "target": "ipq807x/generic", "board": "xiaomi_ax9000" } }' | fwtool -I - /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin
+[ ! -s "/opt/work/yocto/openwrt/openwrt/key-build" -o ! -s "/opt/work/yocto/openwrt/openwrt/key-build.ucert" -o ! -s "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin" ] || { cp "/opt/work/yocto/openwrt/openwrt/key-build.ucert" "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin.ucert" ; usign -S -m "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin" -s "/opt/work/yocto/openwrt/openwrt/key-build" -x "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin.sig" ; ucert -A -c "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin.ucert" -x "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin.sig" ; fwtool -S "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin.ucert" "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin" ; }
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin /opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin
+DEVICE_ID="xiaomi_ax9000" BIN_DIR="/opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic" SOURCE_DATE_EPOCH=1639601437 FILE_NAME="openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin" FILE_TYPE=nand-sysupgrade FILE_FILESYSTEM="squashfs" DEVICE_IMG_PREFIX="openwrt-ipq807x-generic-xiaomi_ax9000" DEVICE_VENDOR="Xiaomi" DEVICE_MODEL="AX9000" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_TITLE="Xiaomi AX9000" DEVICE_PACKAGES="ipq-wifi-xiaomi_ax9000 kmod-ath10k-ct ath10k-firmware-qca9887-ct uboot-envtools " TARGET="ipq807x" SUBTARGET="generic" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r18429-6ccdf9a7f1" SUPPORTED_DEVICES="xiaomi,ax9000" /opt/work/yocto/openwrt/openwrt/scripts/json_add_image_info.py /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin.json
+IPKG_NO_SCRIPT=1 IPKG_INSTROOT=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root.orig-ipq807x TMPDIR=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root.orig-ipq807x/tmp /opt/work/yocto/openwrt/openwrt/staging_dir/host/bin/opkg --offline-root /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root.orig-ipq807x --force-postinstall --add-dest root:/ --add-arch all:100 --add-arch aarch64_cortex-a53:200 list-installed > /opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic/openwrt-ipq807x-generic-xiaomi_ax9000.manifest
+make[4]: Leaving directory '/opt/work/yocto/openwrt/openwrt/target/linux/ipq807x/image'
+make[3]: Leaving directory '/opt/work/yocto/openwrt/openwrt/target/linux/ipq807x'
+make[2]: Leaving directory '/opt/work/yocto/openwrt/openwrt/target/linux'
+time: target/linux/install#48.94#14.53#60.75
+make[1]: Leaving directory '/opt/work/yocto/openwrt/openwrt'
+
+
+/opt/work/yocto/openwrt/openwrt/scripts/mkits.sh \
+	-D xiaomi_ax9000 \
+	-o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb.its \
+	-k /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb \
+	-C gzip   -d /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ipq8072-ax9000.dtb   \
+	-a 0x41000000 -e 0x41000000    -c config@hk14 -A arm64 -v 5.10.83
+
+PATH=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/scripts/dtc:\
+	/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:\
+	/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:\
+	/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/home/gmzhuo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:\
+	/usr/games:/usr/local/games:/snap/bin \
+	mkimage  \
+	-f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb.its \
+	/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-initramfs-fit-uImage.itb.new
+
+
+/opt/work/yocto/openwrt/openwrt/scripts/mkits.sh \
+	-D xiaomi_ax9000 \
+	-o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb.its \
+	-k /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb \
+	-C gzip   -d /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/arch/arm64/boot/dts/qcom/ipq8072-ax9000.dtb   \
+	-a 0x41000000 -e 0x41000000    -c config@hk14 -A arm64 -v 5.10.83
+PATH=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/linux-5.10.83/scripts/dtc:\
+	/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:\
+	/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:\
+	/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/home/gmzhuo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:\
+	/usr/games:/usr/local/games:/snap/bin \
+	mkimage  \
+	-f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb.its \
+	/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb.new
+
+-f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb 
+-a -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs
+
+sh /opt/work/yocto/openwrt/openwrt/scripts/ubinize-image.sh  \
+		--kernel /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb  \
+		--rootfs /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs \
+		/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi.tmp \
+		-p 128KiB -m 2048   
+
+-f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb -a \
+	-f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs
+	
+sh /opt/work/yocto/openwrt/openwrt/scripts/sysupgrade-tar.sh \
+	--board xiaomi_ax9000 \
+	--kernel /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb \
+	--rootfs /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs \
+	/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin
+
+	
+[kernel]
+mode=ubi
+vol_id=0
+vol_type=dynamic
+vol_name=kernel
+image=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb
+[rootfs]
+mode=ubi
+vol_id=1
+vol_type=dynamic
+vol_name=rootfs
+image=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs
+vol_size=5904384
+[rootfs_data]
+mode=ubi
+vol_id=2
+vol_type=dynamic
+vol_name=rootfs_data
+vol_size=1MiB
+vol_flags=autoresize
+ubinize: volume size was not specified in section "kernel", assume minimum to fit image "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb"4486260 bytes (4.2 MiB)
+-Q 1639601437 -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi.tmp -p 128KiB -m 2048 /opt/work/yocto/openwrt/openwrt/tmp/tmp.wDnQxK8Xoi
+[kernel]
+mode=ubi
+vol_id=0
+vol_type=dynamic
+vol_name=kernel
+image=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb
+[rootfs]
+mode=ubi
+vol_id=1
+vol_type=dynamic
+vol_name=rootfs
+image=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs
+vol_size=5904384
+[rootfs_data]
+mode=ubi
+vol_id=2
+vol_type=dynamic
+vol_name=rootfs_data
+vol_size=1MiB
+vol_flags=autoresize
+cat /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi.tmp >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi
+rm /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi.tmp
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi /opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi
+DEVICE_ID="xiaomi_ax9000" BIN_DIR="/opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic" SOURCE_DATE_EPOCH=1639601437 FILE_NAME="openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi" FILE_TYPE=nand-factory FILE_FILESYSTEM="squashfs" DEVICE_IMG_PREFIX="openwrt-ipq807x-generic-xiaomi_ax9000" DEVICE_VENDOR="Xiaomi" DEVICE_MODEL="AX9000" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_TITLE="Xiaomi AX9000" DEVICE_PACKAGES="ipq-wifi-xiaomi_ax9000 kmod-ath10k-ct ath10k-firmware-qca9887-ct uboot-envtools " TARGET="ipq807x" SUBTARGET="generic" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r18429-6ccdf9a7f1" SUPPORTED_DEVICES="xiaomi,ax9000" /opt/work/yocto/openwrt/openwrt/scripts/json_add_image_info.py /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-factory.ubi.json
+[ -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb -a -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs ]
+sh /opt/work/yocto/openwrt/openwrt/scripts/sysupgrade-tar.sh --board xiaomi_ax9000 --kernel /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/xiaomi_ax9000-fit-uImage.itb --rootfs /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/root.squashfs /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin
+sysupgrade-xiaomi_ax9000/
+sysupgrade-xiaomi_ax9000/CONTROL
+sysupgrade-xiaomi_ax9000/kernel
+sysupgrade-xiaomi_ax9000/root
+echo '{  "metadata_version": "1.1", "compat_version": "1.0",   "supported_devices":["xiaomi,ax9000"], "version": { "dist": "OpenWrt", "version": "SNAPSHOT", "revision": "r18429-6ccdf9a7f1", "target": "ipq807x/generic", "board": "xiaomi_ax9000" } }' | fwtool -I - /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin
+[ ! -s "/opt/work/yocto/openwrt/openwrt/key-build" -o ! -s "/opt/work/yocto/openwrt/openwrt/key-build.ucert" -o ! -s "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin" ] || { cp "/opt/work/yocto/openwrt/openwrt/key-build.ucert" "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin.ucert" ; usign -S -m "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin" -s "/opt/work/yocto/openwrt/openwrt/key-build" -x "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin.sig" ; ucert -A -c "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin.ucert" -x "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin.sig" ; fwtool -S "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin.ucert" "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin" ; }
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-ipq807x_generic/tmp/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin /opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin
+DEVICE_ID="xiaomi_ax9000" BIN_DIR="/opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic" SOURCE_DATE_EPOCH=1639601437 FILE_NAME="openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin" FILE_TYPE=nand-sysupgrade FILE_FILESYSTEM="squashfs" DEVICE_IMG_PREFIX="openwrt-ipq807x-generic-xiaomi_ax9000" DEVICE_VENDOR="Xiaomi" DEVICE_MODEL="AX9000" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_TITLE="Xiaomi AX9000" DEVICE_PACKAGES="ipq-wifi-xiaomi_ax9000 kmod-ath10k-ct ath10k-firmware-qca9887-ct uboot-envtools " TARGET="ipq807x" SUBTARGET="generic" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r18429-6ccdf9a7f1" SUPPORTED_DEVICES="xiaomi,ax9000" /opt/work/yocto/openwrt/openwrt/scripts/json_add_image_info.py /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-ipq807x-generic-xiaomi_ax9000-squashfs-nand-sysupgrade.bin.json
+IPKG_NO_SCRIPT=1 IPKG_INSTROOT=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root.orig-ipq807x TMPDIR=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root.orig-ipq807x/tmp /opt/work/yocto/openwrt/openwrt/staging_dir/host/bin/opkg --offline-root /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root.orig-ipq807x --force-postinstall --add-dest root:/ --add-arch all:100 --add-arch aarch64_cortex-a53:200 list-installed > /opt/work/yocto/openwrt/openwrt/bin/targets/ipq807x/generic/openwrt-ipq807x-generic-xiaomi_ax9000.manifest
+make[4]: Leaving directory '/opt/work/yocto/openwrt/openwrt/target/linux/ipq807x/image'
+make[3]: Leaving directory '/opt/work/yocto/openwrt/openwrt/target/linux/ipq807x'
+make[2]: Leaving directory '/opt/work/yocto/openwrt/openwrt/target/linux'
+time: target/linux/install#48.94#14.53#60.75
+make[1]: Leaving directory '/opt/work/yocto/openwrt/openwrt'
+
+
+
+
+

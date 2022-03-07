@@ -1,0 +1,460 @@
+make[2]: Entering directory '/opt/work/yocto/openwrt/openwrt/scripts/config'
+make[2]: 'conf' is up to date.
+make[2]: Leaving directory '/opt/work/yocto/openwrt/openwrt/scripts/config'
+make[1]: Entering directory '/opt/work/yocto/openwrt/openwrt'
+make[2]: Entering directory '/opt/work/yocto/openwrt/openwrt/target/linux'
+make[3]: Entering directory '/opt/work/yocto/openwrt/openwrt/target/linux/mediatek'
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/localversion
+/opt/work/yocto/openwrt/openwrt/scripts/kconfig.pl  + /opt/work/yocto/openwrt/openwrt/target/linux/generic/config-5.10 /opt/work/yocto/openwrt/openwrt/target/linux/mediatek/mt7622/config-5.10 > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.target
+awk '/^(#[[:space:]]+)?CONFIG_KERNEL/{sub("CONFIG_KERNEL_","CONFIG_");print}' /opt/work/yocto/openwrt/openwrt/.config >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.target
+echo "# CONFIG_KALLSYMS_EXTRA_PASS is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.target
+echo "# CONFIG_KALLSYMS_ALL is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.target
+echo "CONFIG_KALLSYMS_UNCOMPRESSED=y" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.target
+/opt/work/yocto/openwrt/openwrt/scripts/package-metadata.pl kconfig /opt/work/yocto/openwrt/openwrt/tmp/.packageinfo /opt/work/yocto/openwrt/openwrt/.config 5.10 > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.override
+/opt/work/yocto/openwrt/openwrt/scripts/kconfig.pl 'm+' '+' /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.target /dev/null /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.override > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.set
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.set /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.old
+grep -v INITRAMFS /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.old > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.set
+echo 'CONFIG_INITRAMFS_SOURCE=""' >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.set
+echo '# CONFIG_INITRAMFS_FORCE is not set' >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.set
+rm -rf /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/modules
+cmp -s /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.set /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.prev || { cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.set /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config; cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.set /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.prev; }
+export MAKEFLAGS= ; [ -d /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/user_headers ] || make -C /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83 KCFLAGS="-fmacro-prefix-map=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl=target-aarch64_cortex-a53_musl" HOSTCFLAGS="-O2 -I/opt/work/yocto/openwrt/openwrt/staging_dir/host/include  -Wall -Wmissing-prototypes -Wstrict-prototypes" CROSS_COMPILE="aarch64-openwrt-linux-musl-" ARCH="arm64" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" KBUILD_BUILD_TIMESTAMP="Wed Dec 15 20:50:37 2021" KBUILD_BUILD_VERSION="0" HOST_LOADLIBES="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" KBUILD_HOSTLDLIBS="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" CONFIG_SHELL="bash" V=''  cmd_syscalls=  KERNELRELEASE=5.10.83 CC="aarch64-openwrt-linux-musl-gcc" INSTALL_HDR_PATH=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/user_headers headers_install
+grep '=[ym]' /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.set | LC_ALL=C sort | /opt/work/yocto/openwrt/openwrt/staging_dir/host/bin/mkhash md5 > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.vermagic
+touch /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.configured
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek/init
+make -C /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83 KCFLAGS="-fmacro-prefix-map=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl=target-aarch64_cortex-a53_musl" HOSTCFLAGS="-O2 -I/opt/work/yocto/openwrt/openwrt/staging_dir/host/include  -Wall -Wmissing-prototypes -Wstrict-prototypes" CROSS_COMPILE="aarch64-openwrt-linux-musl-" ARCH="arm64" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" KBUILD_BUILD_TIMESTAMP="Wed Dec 15 20:50:37 2021" KBUILD_BUILD_VERSION="0" HOST_LOADLIBES="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" KBUILD_HOSTLDLIBS="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" CONFIG_SHELL="bash" V=''  cmd_syscalls=  KERNELRELEASE=5.10.83 CC="aarch64-openwrt-linux-musl-gcc"  Image dtbs modules
+make[4]: Entering directory '/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83'
+  SYNC    include/config/auto.conf.cmd
+  CALL    scripts/atomic/check-atomics.sh
+  CALL    scripts/checksyscalls.sh
+  CHK     include/generated/compile.h
+  CC      lib/decompress.o
+  UPD     kernel/config_data
+  GZIP    kernel/config_data.gz
+  CC      kernel/configs.o
+  AR      lib/lib.a
+  AR      kernel/built-in.a
+  GEN     .version
+  CHK     include/generated/compile.h
+  LD      vmlinux.o
+  MODPOST vmlinux.symvers
+  MODINFO modules.builtin.modinfo
+  GEN     modules.builtin
+  LD      .tmp_vmlinux.kallsyms1
+  KSYMS   .tmp_vmlinux.kallsyms1.S
+  AS      .tmp_vmlinux.kallsyms1.S
+  LD      .tmp_vmlinux.kallsyms2
+  KSYMS   .tmp_vmlinux.kallsyms2.S
+  AS      .tmp_vmlinux.kallsyms2.S
+  LD      vmlinux
+  SORTTAB vmlinux
+  SYSMAP  System.map
+  MODPOST modules-only.symvers
+  OBJCOPY arch/arm64/boot/Image
+  GEN     Module.symvers
+make[4]: Leaving directory '/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83'
+cmp -s /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/vmlinux.debug || { aarch64-openwrt-linux-musl-objcopy -O binary -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/vmlinux; aarch64-openwrt-linux-musl-objcopy -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/vmlinux.elf; cp -fpR /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/vmlinux.debug;  cp -fpR /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot//Image /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/Image;  }
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.prev
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.old
+grep -v -e CONFIG_BLK_DEV_INITRD /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config.old > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config
+echo 'CONFIG_BLK_DEV_INITRD=y' >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config
+echo 'CONFIG_INITRAMFS_SOURCE=""' >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config
+echo "# CONFIG_INITRAMFS_FORCE is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config
+echo "# CONFIG_INITRAMFS_COMPRESSION_NONE is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_GZIP is not set\n# CONFIG_RD_GZIP is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_BZIP2 is not set\n# CONFIG_RD_BZIP2 is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_LZMA is not set\n# CONFIG_RD_LZMA is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_LZO is not set\n# CONFIG_RD_LZO is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config
+echo -e "CONFIG_INITRAMFS_COMPRESSION_XZ=y\nCONFIG_RD_XZ=y" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_LZ4 is not set\n# CONFIG_RD_LZ4 is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_ZSTD is not set\n# CONFIG_RD_ZSTD is not set" >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.config
+cp -fpR /opt/work/yocto/openwrt/openwrt/target/linux/generic/other-files/init /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek/init
+touch -hcd "@1639601437" /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek/init
+rm -rf /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/usr/initramfs_data.cpio*
+( cd /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek; find . | /opt/work/yocto/openwrt/openwrt/staging_dir/host/bin/cpio -o -H newc -R 0:0 > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/initrd.cpio )
+/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin/xz -9 -fz --check=crc32 /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/initrd.cpio
+make -C /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83 KCFLAGS="-fmacro-prefix-map=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl=target-aarch64_cortex-a53_musl" HOSTCFLAGS="-O2 -I/opt/work/yocto/openwrt/openwrt/staging_dir/host/include  -Wall -Wmissing-prototypes -Wstrict-prototypes" CROSS_COMPILE="aarch64-openwrt-linux-musl-" ARCH="arm64" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" KBUILD_BUILD_TIMESTAMP="Wed Dec 15 20:50:37 2021" KBUILD_BUILD_VERSION="0" HOST_LOADLIBES="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" KBUILD_HOSTLDLIBS="-L/opt/work/yocto/openwrt/openwrt/staging_dir/host/lib" CONFIG_SHELL="bash" V=''  cmd_syscalls=  KERNELRELEASE=5.10.83 CC="aarch64-openwrt-linux-musl-gcc"  Image dtbs modules
+make[4]: Entering directory '/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83'
+  SYNC    include/config/auto.conf.cmd
+  CALL    scripts/atomic/check-atomics.sh
+  CALL    scripts/checksyscalls.sh
+  GEN     usr/initramfs_data.cpio
+  CHK     include/generated/compile.h
+  SHIPPED usr/initramfs_inc_data
+  AS      usr/initramfs_data.o
+  AR      usr/built-in.a
+  CC      lib/decompress.o
+  UPD     kernel/config_data
+  GZIP    kernel/config_data.gz
+  CC      kernel/configs.o
+  AR      lib/lib.a
+  AR      kernel/built-in.a
+  GEN     .version
+  CHK     include/generated/compile.h
+  LD      vmlinux.o
+  MODPOST vmlinux.symvers
+  MODINFO modules.builtin.modinfo
+  GEN     modules.builtin
+  LD      .tmp_vmlinux.kallsyms1
+  KSYMS   .tmp_vmlinux.kallsyms1.S
+  AS      .tmp_vmlinux.kallsyms1.S
+  LD      .tmp_vmlinux.kallsyms2
+  KSYMS   .tmp_vmlinux.kallsyms2.S
+  AS      .tmp_vmlinux.kallsyms2.S
+  LD      vmlinux
+  SORTTAB vmlinux
+  SYSMAP  System.map
+  OBJCOPY arch/arm64/boot/Image
+  MODPOST modules-only.symvers
+  GEN     Module.symvers
+make[4]: Leaving directory '/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83'
+cmp -s /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/vmlinux-initramfs.debug || { aarch64-openwrt-linux-musl-objcopy -O binary -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/vmlinux-initramfs; aarch64-openwrt-linux-musl-objcopy -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/vmlinux-initramfs.elf; cp -fpR /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/vmlinux /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/vmlinux-initramfs.debug;  cp -fpR /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot//Image /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/Image-initramfs;  }
+touch /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/.image
+make -C image compile install TARGET_BUILD=
+make[4]: Entering directory '/opt/work/yocto/openwrt/openwrt/target/linux/mediatek/image'
+make[4]: Nothing to be done for 'compile'.
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64.dtb.tmp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-pcie1.dtb.tmp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64-pcie1.dts
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-sata.dtb.tmp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64-sata.dts
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-buffalo-wsr-2533dhp2.dtb.tmp ../dts/mt7622-buffalo-wsr-2533dhp2.dts
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-elecom-wrc-2533gent.dtb.tmp ../dts/mt7622-elecom-wrc-2533gent.dts
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-linksys-e8450.dtb.tmp ../dts/mt7622-linksys-e8450.dts
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-linksys-e8450-ubi.dtb.tmp ../dts/mt7622-linksys-e8450-ubi.dts
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-rfb1.dtb.tmp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-rfb1-ubi.dtb.tmp ../dts/mt7622-rfb1-ubi.dts
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-totolink-a8000ru.dtb.tmp ../dts/mt7622-totolink-a8000ru.dts
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-ubnt-unifi-6-lr.dtb.tmp ../dts/mt7622-ubnt-unifi-6-lr.dts
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/include -I/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/include/ -undef -D__DTS__  -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-ubnt-unifi-6-lr-ubootmod.dtb.tmp ../dts/mt7622-ubnt-unifi-6-lr-ubootmod.dts
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc/dtc -O dtb -i../dts/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address  -@ -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-linksys-e8450.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-linksys-e8450.dtb.tmp
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc/dtc -O dtb -i../dts/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address  -@ -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-elecom-wrc-2533gent.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-elecom-wrc-2533gent.dtb.tmp
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc/dtc -O dtb -i../dts/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address  -@ -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-buffalo-wsr-2533dhp2.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-buffalo-wsr-2533dhp2.dtb.tmp
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc/dtc -O dtb -i../dts/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address  -@ -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-linksys-e8450-ubi.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-linksys-e8450-ubi.dtb.tmp
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc/dtc -O dtb -i/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address  -@ -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-pcie1.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-pcie1.dtb.tmp
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc/dtc -O dtb -i/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address  -@ -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-sata.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-sata.dtb.tmp
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc/dtc -O dtb -i/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address  -@ -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64.dtb.tmp
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc/dtc -O dtb -i/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address  -@ -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-rfb1.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-rfb1.dtb.tmp
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc/dtc -O dtb -i../dts/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address  -@ -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-rfb1-ubi.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-rfb1-ubi.dtb.tmp
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc/dtc -O dtb -i../dts/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address  -@ -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-ubnt-unifi-6-lr-ubootmod.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-ubnt-unifi-6-lr-ubootmod.dtb.tmp
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc/dtc -O dtb -i../dts/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address  -@ -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-ubnt-unifi-6-lr.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-ubnt-unifi-6-lr.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-pcie1.dtb.tmp
+/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc/dtc -O dtb -i../dts/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address  -@ -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-totolink-a8000ru.dtb /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-totolink-a8000ru.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-sata.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-linksys-e8450.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-buffalo-wsr-2533dhp2.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-elecom-wrc-2533gent.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-linksys-e8450-ubi.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-ubnt-unifi-6-lr-ubootmod.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-ubnt-unifi-6-lr.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-totolink-a8000ru.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-rfb1.dtb.tmp
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-rfb1-ubi.dtb.tmp
+mkdir -p /opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622 /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp
+rm -rf /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files
+# For UBI we want only one extra block
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/ubi_mark
+echo -ne '\xde\xad\xc0\xde' > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/ubi_mark
+/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin/mksquashfs4 /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root-mediatek /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/root.squashfs -nopad -noappend -root-owned -comp xz -Xpreset 9 -Xe -Xlc 0 -Xlp 2 -Xpb 2  -b 256k -p '/dev d 755 0 0' -p '/dev/console c 600 0 0 5 1' -no-xattrs -processors 1
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb
+rm -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/bananapi_bpi-r64-kernel.bin
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/Image-initramfs /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/Image /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/bananapi_bpi-r64-kernel.bin
+/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin/lzma e /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb -lc1 -lp2 -pb2  /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb.new
+gzip -f -9n -c /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/bananapi_bpi-r64-kernel.bin  > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/bananapi_bpi-r64-kernel.bin.new
+Parallel mksquashfs: Using 1 processor
+Creating 4.0 filesystem on /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/root.squashfs, block size 262144.
+[===============================================================|] 809/809 100%
+
+Exportable Squashfs 4.0 filesystem, xz compressed, data block size 262144
+	compressed data, compressed metadata, compressed fragments,
+	no xattrs, compressed ids
+	duplicates are removed
+Filesystem size 4555.84 Kbytes (4.45 Mbytes)
+	36.56% of uncompressed filesystem size (12460.80 Kbytes)
+Inode table size 7290 bytes (7.12 Kbytes)
+	20.16% of uncompressed inode table size (36158 bytes)
+Directory table size 10306 bytes (10.06 Kbytes)
+	44.24% of uncompressed directory table size (23294 bytes)
+Number of duplicate files found 138
+Number of inodes 1085
+Number of files 797
+Number of fragments 26
+Number of symbolic links  211
+Number of device nodes 1
+Number of fifo nodes 0
+Number of socket nodes 0
+Number of directories 76
+Number of ids (unique uids + gids) 1
+Number of uids 1
+	root (0)
+Number of gids 1
+	root (0)
+[ -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/bananapi_bpi-r64-kernel.bin -a -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/root.squashfs ]
+dd if=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/bananapi_bpi-r64-kernel.bin >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb
+/opt/work/yocto/openwrt/openwrt/scripts/mkits.sh -D bananapi_bpi-r64 -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.its -k /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb -C gzip  -d /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-$(basename /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dtb) -r /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/root.squashfs  -a 0x44000000 -e 0x44000000    -O mt7622-bananapi-bpi-r64-pcie1:/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-pcie1.dtb  -O mt7622-bananapi-bpi-r64-sata:/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-sata.dtb -c "config-1" -A arm64 -v 5.10.83
+PATH=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/home/gmzhuo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin mkimage  -E -B 0x1000 -p 0x1000 -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.its /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.new
+FIT description: ARM64 OpenWrt FIT (Flattened Image Tree)
+Created:         Wed Dec 15 20:50:37 2021
+ Image 0 (kernel-1)
+  Description:  ARM64 OpenWrt Linux-5.10.83
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Kernel Image
+  Compression:  gzip compressed
+  Data Size:    5126032 Bytes = 5005.89 KiB = 4.89 MiB
+  Architecture: AArch64
+  OS:           Linux
+  Load Address: 0x44000000
+  Entry Point:  0x44000000
+  Hash algo:    crc32
+  Hash value:   7a44e934
+  Hash algo:    sha1
+  Hash value:   03a4f9114049c29f508969153aa801552d174b72
+ Image 1 (fdt-1)
+  Description:  ARM64 OpenWrt bananapi_bpi-r64 device tree blob
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    32074 Bytes = 31.32 KiB = 0.03 MiB
+  Architecture: AArch64
+  Load Address: 0x43ff82b6
+  Hash algo:    crc32
+  Hash value:   909bde9f
+  Hash algo:    sha1
+  Hash value:   8e757cf466bf21d4888cb0df6fdf2566bdad7e59
+ Image 2 (fdt-mt7622-bananapi-bpi-r64-pcie1)
+  Description:  ARM64 OpenWrt bananapi_bpi-r64 device tree overlay mt7622-bananapi-bpi-r64-pcie1
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    283 Bytes = 0.28 KiB = 0.00 MiB
+  Architecture: AArch64
+  Load Address: 0x43ff819b
+  Hash algo:    crc32
+  Hash value:   c301d7bf
+  Hash algo:    sha1
+  Hash value:   4570450170275628bd33eab2b11283bdd8326c57
+ Image 3 (fdt-mt7622-bananapi-bpi-r64-sata)
+  Description:  ARM64 OpenWrt bananapi_bpi-r64 device tree overlay mt7622-bananapi-bpi-r64-sata
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    528 Bytes = 0.52 KiB = 0.00 MiB
+  Architecture: AArch64
+  Load Address: 0x43ff7f8b
+  Hash algo:    crc32
+  Hash value:   d1228cce
+  Hash algo:    sha1
+  Hash value:   ea347a04ef2b0a1d3a2388bb69da29b091e8ef45
+ Image 4 (rootfs-1)
+  Description:  ARM64 OpenWrt bananapi_bpi-r64 rootfs
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Filesystem Image
+  Compression:  uncompressed
+  Data Size:    4665344 Bytes = 4556.00 KiB = 4.45 MiB
+  Hash algo:    crc32
+  Hash value:   2a1ebb28
+  Hash algo:    sha1
+  Hash value:   7283c62e4dad87072226ee9fa62d2b3e392ca899
+ Default Configuration: 'config-1'
+ Configuration 0 (config-1)
+  Description:  OpenWrt bananapi_bpi-r64
+  Kernel:       kernel-1
+  FDT:          fdt-1
+  Loadables:    rootfs-1
+ Configuration 1 (config-mt7622-bananapi-bpi-r64-pcie1)
+  Description:  OpenWrt bananapi_bpi-r64 with mt7622-bananapi-bpi-r64-pcie1
+  Kernel:       kernel-1
+  FDT:          fdt-1
+                fdt-mt7622-bananapi-bpi-r64-pcie1
+  Loadables:    rootfs-1
+ Configuration 2 (config-mt7622-bananapi-bpi-r64-sata)
+  Description:  OpenWrt bananapi_bpi-r64 with mt7622-bananapi-bpi-r64-sata
+  Kernel:       kernel-1
+  FDT:          fdt-1
+                fdt-mt7622-bananapi-bpi-r64-sata
+  Loadables:    rootfs-1
+echo '{  "metadata_version": "1.1", "compat_version": "1.0",   "supported_devices":["bananapi,bpi-r64"], "version": { "dist": "OpenWrt", "version": "SNAPSHOT", "revision": "r18429-6ccdf9a7f1", "target": "mediatek/mt7622", "board": "bananapi_bpi-r64" } }' | fwtool -I - /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb
+[ ! -s "/opt/work/yocto/openwrt/openwrt/key-build" -o ! -s "/opt/work/yocto/openwrt/openwrt/key-build.ucert" -o ! -s "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb" ] || { cp "/opt/work/yocto/openwrt/openwrt/key-build.ucert" "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.ucert" ; usign -S -m "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb" -s "/opt/work/yocto/openwrt/openwrt/key-build" -x "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.sig" ; ucert -A -c "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.ucert" -x "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.sig" ; fwtool -S "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.ucert" "/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb" ; }
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb /opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb
+DEVICE_ID="bananapi_bpi-r64" BIN_DIR="/opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622" SOURCE_DATE_EPOCH=1639601437 FILE_NAME="openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb" FILE_TYPE=sysupgrade FILE_FILESYSTEM="squashfs" DEVICE_IMG_PREFIX="openwrt-mediatek-mt7622-bananapi_bpi-r64" DEVICE_VENDOR="Bananapi" DEVICE_MODEL="BPi-R64" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_TITLE="Bananapi BPi-R64" DEVICE_PACKAGES="kmod-ata-ahci-mtk kmod-btmtkuart kmod-usb3 e2fsprogs mkf2fs f2fsck " TARGET="mediatek" SUBTARGET="mt7622" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r18429-6ccdf9a7f1" SUPPORTED_DEVICES="bananapi,bpi-r64" /opt/work/yocto/openwrt/openwrt/scripts/json_add_image_info.py /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.json
+/opt/work/yocto/openwrt/openwrt/scripts/mkits.sh -D bananapi_bpi-r64 -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb.its -k /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb -C lzma  -d /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-$(basename /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dtb)    -i /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/initrd.cpio.xz -a 0x44000000 -e 0x44000000    -O mt7622-bananapi-bpi-r64-pcie1:/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-pcie1.dtb  -O mt7622-bananapi-bpi-r64-sata:/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-sata.dtb -c "config-1" -A arm64 -v 5.10.83
+PATH=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/home/gmzhuo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin mkimage  -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb.its /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb.new
+FIT description: ARM64 OpenWrt FIT (Flattened Image Tree)
+Created:         Wed Dec 15 20:50:37 2021
+ Image 0 (kernel-1)
+  Description:  ARM64 OpenWrt Linux-5.10.83
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Kernel Image
+  Compression:  lzma compressed
+  Data Size:    3779892 Bytes = 3691.30 KiB = 3.60 MiB
+  Architecture: AArch64
+  OS:           Linux
+  Load Address: 0x44000000
+  Entry Point:  0x44000000
+  Hash algo:    crc32
+  Hash value:   e5a86a74
+  Hash algo:    sha1
+  Hash value:   92fbe80f3e0767237264f5092ca7d4d19765d5f8
+ Image 1 (initrd-1)
+  Description:  ARM64 OpenWrt bananapi_bpi-r64 initrd
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         RAMDisk Image
+  Compression:  Unknown Compression
+  Data Size:    4346136 Bytes = 4244.27 KiB = 4.14 MiB
+  Architecture: AArch64
+  OS:           Linux
+  Load Address: unavailable
+  Entry Point:  unavailable
+  Hash algo:    crc32
+  Hash value:   4f71e107
+  Hash algo:    sha1
+  Hash value:   230f398160d9bc26644113da0c34d44a6564c6c0
+ Image 2 (fdt-1)
+  Description:  ARM64 OpenWrt bananapi_bpi-r64 device tree blob
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    32074 Bytes = 31.32 KiB = 0.03 MiB
+  Architecture: AArch64
+  Load Address: 0x43ff82b6
+  Hash algo:    crc32
+  Hash value:   909bde9f
+  Hash algo:    sha1
+  Hash value:   8e757cf466bf21d4888cb0df6fdf2566bdad7e59
+ Image 3 (fdt-mt7622-bananapi-bpi-r64-pcie1)
+  Description:  ARM64 OpenWrt bananapi_bpi-r64 device tree overlay mt7622-bananapi-bpi-r64-pcie1
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    283 Bytes = 0.28 KiB = 0.00 MiB
+  Architecture: AArch64
+  Load Address: 0x43ff819b
+  Hash algo:    crc32
+  Hash value:   c301d7bf
+  Hash algo:    sha1
+  Hash value:   4570450170275628bd33eab2b11283bdd8326c57
+ Image 4 (fdt-mt7622-bananapi-bpi-r64-sata)
+  Description:  ARM64 OpenWrt bananapi_bpi-r64 device tree overlay mt7622-bananapi-bpi-r64-sata
+  Created:      Wed Dec 15 20:50:37 2021
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    528 Bytes = 0.52 KiB = 0.00 MiB
+  Architecture: AArch64
+  Load Address: 0x43ff7f8b
+  Hash algo:    crc32
+  Hash value:   d1228cce
+  Hash algo:    sha1
+  Hash value:   ea347a04ef2b0a1d3a2388bb69da29b091e8ef45
+ Default Configuration: 'config-1'
+ Configuration 0 (config-1)
+  Description:  OpenWrt bananapi_bpi-r64
+  Kernel:       kernel-1
+  Init Ramdisk: initrd-1
+  FDT:          fdt-1
+ Configuration 1 (config-mt7622-bananapi-bpi-r64-pcie1)
+  Description:  OpenWrt bananapi_bpi-r64 with mt7622-bananapi-bpi-r64-pcie1
+  Kernel:       kernel-1
+  Init Ramdisk: initrd-1
+  FDT:          fdt-1
+                fdt-mt7622-bananapi-bpi-r64-pcie1
+ Configuration 2 (config-mt7622-bananapi-bpi-r64-sata)
+  Description:  OpenWrt bananapi_bpi-r64 with mt7622-bananapi-bpi-r64-sata
+  Kernel:       kernel-1
+  Init Ramdisk: initrd-1
+  FDT:          fdt-1
+                fdt-mt7622-bananapi-bpi-r64-sata
+dd if=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb of=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb.new bs=128k conv=sync
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb.new /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb /opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb
+DEVICE_ID="bananapi_bpi-r64" BIN_DIR="/opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622" SOURCE_DATE_EPOCH=1639601437 FILE_NAME="openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb" FILE_TYPE="kernel" FILE_FILESYSTEM="initramfs" DEVICE_IMG_PREFIX="openwrt-mediatek-mt7622-bananapi_bpi-r64" DEVICE_VENDOR="Bananapi" DEVICE_MODEL="BPi-R64" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_TITLE="Bananapi BPi-R64" DEVICE_PACKAGES="kmod-ata-ahci-mtk kmod-btmtkuart kmod-usb3 e2fsprogs mkf2fs f2fsck " TARGET="mediatek" SUBTARGET="mt7622" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r18429-6ccdf9a7f1" SUPPORTED_DEVICES="bananapi,bpi-r64" /opt/work/yocto/openwrt/openwrt/scripts/json_add_image_info.py /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb.json
+cat /opt/work/yocto/openwrt/openwrt/staging_dir/target-aarch64_cortex-a53_musl/image/mt7622-emmc-2ddr-bl2.img >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-emmc-preloader.bin
+cat /opt/work/yocto/openwrt/openwrt/staging_dir/target-aarch64_cortex-a53_musl/image/mt7622_bananapi_bpi-r64-emmc-u-boot.fip >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-emmc-bl31-uboot.fip
+cat /opt/work/yocto/openwrt/openwrt/staging_dir/target-aarch64_cortex-a53_musl/image/mt7622-snand-2ddr-bl2.img >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-snand-preloader.bin
+cat /opt/work/yocto/openwrt/openwrt/staging_dir/target-aarch64_cortex-a53_musl/image/mt7622_bananapi_bpi-r64-snand-u-boot.fip >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-snand-bl31-uboot.fip
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-emmc-preloader.bin /opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622/openwrt-mediatek-mt7622-bananapi_bpi-r64-emmc-preloader.bin
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.tmp 2>/dev/null || true
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-emmc-bl31-uboot.fip /opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622/openwrt-mediatek-mt7622-bananapi_bpi-r64-emmc-bl31-uboot.fip
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-snand-preloader.bin /opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622/openwrt-mediatek-mt7622-bananapi_bpi-r64-snand-preloader.bin
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-snand-bl31-uboot.fip /opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622/openwrt-mediatek-mt7622-bananapi_bpi-r64-snand-bl31-uboot.fip
+ptgen -g -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.tmp -a 1 -l 1024  -H -t 0x83	-N bl2		-r	-p 512k@512k  -t 0xef	-N fip		-r	-p 2M@2M -t 0x83	-N ubootenv	-r	-p 1M@4M -N recovery	-r	-p 32M@6M  -N install	-r	-p 7M@38M -t 0x2e -N production		-p 211M@45M  
+524288
+524288
+2097152
+2097152
+4194304
+1048576
+6291456
+33554432
+39845888
+7340032
+47185920
+221249536
+cat /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.tmp >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+DEVICE_ID="bananapi_bpi-r64" BIN_DIR="/opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622" SOURCE_DATE_EPOCH=1639601437 FILE_NAME="openwrt-mediatek-mt7622-bananapi_bpi-r64-emmc-preloader.bin" FILE_TYPE="emmc-preloader.bin" DEVICE_IMG_PREFIX="openwrt-mediatek-mt7622-bananapi_bpi-r64" DEVICE_VENDOR="Bananapi" DEVICE_MODEL="BPi-R64" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_TITLE="Bananapi BPi-R64" DEVICE_PACKAGES="kmod-ata-ahci-mtk kmod-btmtkuart kmod-usb3 e2fsprogs mkf2fs f2fsck " TARGET="mediatek" SUBTARGET="mt7622" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r18429-6ccdf9a7f1" SUPPORTED_DEVICES="bananapi,bpi-r64" /opt/work/yocto/openwrt/openwrt/scripts/json_add_image_info.py /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-mediatek-mt7622-bananapi_bpi-r64-emmc-preloader.bin.json
+rm /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.tmp
+DEVICE_ID="bananapi_bpi-r64" BIN_DIR="/opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622" SOURCE_DATE_EPOCH=1639601437 FILE_NAME="openwrt-mediatek-mt7622-bananapi_bpi-r64-emmc-bl31-uboot.fip" FILE_TYPE="emmc-bl31-uboot.fip" DEVICE_IMG_PREFIX="openwrt-mediatek-mt7622-bananapi_bpi-r64" DEVICE_VENDOR="Bananapi" DEVICE_MODEL="BPi-R64" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_TITLE="Bananapi BPi-R64" DEVICE_PACKAGES="kmod-ata-ahci-mtk kmod-btmtkuart kmod-usb3 e2fsprogs mkf2fs f2fsck " TARGET="mediatek" SUBTARGET="mt7622" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r18429-6ccdf9a7f1" SUPPORTED_DEVICES="bananapi,bpi-r64" /opt/work/yocto/openwrt/openwrt/scripts/json_add_image_info.py /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-mediatek-mt7622-bananapi_bpi-r64-emmc-bl31-uboot.fip.json
+dd if=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz of=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new bs=512k conv=sync
+DEVICE_ID="bananapi_bpi-r64" BIN_DIR="/opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622" SOURCE_DATE_EPOCH=1639601437 FILE_NAME="openwrt-mediatek-mt7622-bananapi_bpi-r64-snand-preloader.bin" FILE_TYPE="snand-preloader.bin" DEVICE_IMG_PREFIX="openwrt-mediatek-mt7622-bananapi_bpi-r64" DEVICE_VENDOR="Bananapi" DEVICE_MODEL="BPi-R64" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_TITLE="Bananapi BPi-R64" DEVICE_PACKAGES="kmod-ata-ahci-mtk kmod-btmtkuart kmod-usb3 e2fsprogs mkf2fs f2fsck " TARGET="mediatek" SUBTARGET="mt7622" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r18429-6ccdf9a7f1" SUPPORTED_DEVICES="bananapi,bpi-r64" /opt/work/yocto/openwrt/openwrt/scripts/json_add_image_info.py /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-mediatek-mt7622-bananapi_bpi-r64-snand-preloader.bin.json
+DEVICE_ID="bananapi_bpi-r64" BIN_DIR="/opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622" SOURCE_DATE_EPOCH=1639601437 FILE_NAME="openwrt-mediatek-mt7622-bananapi_bpi-r64-snand-bl31-uboot.fip" FILE_TYPE="snand-bl31-uboot.fip" DEVICE_IMG_PREFIX="openwrt-mediatek-mt7622-bananapi_bpi-r64" DEVICE_VENDOR="Bananapi" DEVICE_MODEL="BPi-R64" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_TITLE="Bananapi BPi-R64" DEVICE_PACKAGES="kmod-ata-ahci-mtk kmod-btmtkuart kmod-usb3 e2fsprogs mkf2fs f2fsck " TARGET="mediatek" SUBTARGET="mt7622" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r18429-6ccdf9a7f1" SUPPORTED_DEVICES="bananapi,bpi-r64" /opt/work/yocto/openwrt/openwrt/scripts/json_add_image_info.py /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-mediatek-mt7622-bananapi_bpi-r64-snand-bl31-uboot.fip.json
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+cat /opt/work/yocto/openwrt/openwrt/staging_dir/target-aarch64_cortex-a53_musl/image/mt7622-sdmmc-2ddr-bl2.img >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+dd if=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz of=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new bs=2048k conv=sync
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+cat /opt/work/yocto/openwrt/openwrt/staging_dir/target-aarch64_cortex-a53_musl/image/mt7622_bananapi_bpi-r64-sdmmc-u-boot.fip >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+dd if=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz of=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new bs=6144k conv=sync
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+dd if=/opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb of=/opt/work/yocto/openwrt/openwrt/staging_dir/target-aarch64_cortex-a53_musl/image/mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb
+dd if=/opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+dd if=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz of=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new bs=38912k conv=sync
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.tmp 2>/dev/null || true
+ptgen -g -o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.tmp -a 1 -l 1024  -t 0xef	-N fip		-r	-p 2M@2M -t 0x83	-N ubootenv	-r	-p 1M@4M -N recovery	-r	-p 32M@6M   -t 0x2e -N production		-p 980M@40M 
+2097152
+2097152
+4194304
+1048576
+6291456
+33554432
+41943040
+1027604480
+cat /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.tmp >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+rm /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.tmp
+dd if=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz of=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new bs=39424k conv=sync
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+cat /opt/work/yocto/openwrt/openwrt/staging_dir/target-aarch64_cortex-a53_musl/image/mt7622-emmc-2ddr-bl2.img >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+dd if=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz of=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new bs=40960k conv=sync
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+cat /opt/work/yocto/openwrt/openwrt/staging_dir/target-aarch64_cortex-a53_musl/image/mt7622_bananapi_bpi-r64-emmc-u-boot.fip >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+dd if=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz of=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new bs=43008k conv=sync
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+cat /opt/work/yocto/openwrt/openwrt/staging_dir/target-aarch64_cortex-a53_musl/image/mt7622-snand-2ddr-bl2.img >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+dd if=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz of=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new bs=43520k conv=sync
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+cat /opt/work/yocto/openwrt/openwrt/staging_dir/target-aarch64_cortex-a53_musl/image/mt7622_bananapi_bpi-r64-snand-u-boot.fip >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+dd if=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz of=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new bs=46080k conv=sync
+mv /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+dd if=/opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb >> /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+gzip -f -9n -c /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz  > /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.new
+cp /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz /opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz
+DEVICE_ID="bananapi_bpi-r64" BIN_DIR="/opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622" SOURCE_DATE_EPOCH=1639601437 FILE_NAME="openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz" FILE_TYPE="sdcard.img.gz" DEVICE_IMG_PREFIX="openwrt-mediatek-mt7622-bananapi_bpi-r64" DEVICE_VENDOR="Bananapi" DEVICE_MODEL="BPi-R64" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_TITLE="Bananapi BPi-R64" DEVICE_PACKAGES="kmod-ata-ahci-mtk kmod-btmtkuart kmod-usb3 e2fsprogs mkf2fs f2fsck " TARGET="mediatek" SUBTARGET="mt7622" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r18429-6ccdf9a7f1" SUPPORTED_DEVICES="bananapi,bpi-r64" /opt/work/yocto/openwrt/openwrt/scripts/json_add_image_info.py /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-mediatek-mt7622-bananapi_bpi-r64-sdcard.img.gz.json
+IPKG_NO_SCRIPT=1 IPKG_INSTROOT=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root.orig-mediatek TMPDIR=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root.orig-mediatek/tmp /opt/work/yocto/openwrt/openwrt/staging_dir/host/bin/opkg --offline-root /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/root.orig-mediatek --force-postinstall --add-dest root:/ --add-arch all:100 --add-arch aarch64_cortex-a53:200 list-installed > /opt/work/yocto/openwrt/openwrt/bin/targets/mediatek/mt7622/openwrt-mediatek-mt7622-bananapi_bpi-r64.manifest
+make[4]: Leaving directory '/opt/work/yocto/openwrt/openwrt/target/linux/mediatek/image'
+make[3]: Leaving directory '/opt/work/yocto/openwrt/openwrt/target/linux/mediatek'
+make[2]: Leaving directory '/opt/work/yocto/openwrt/openwrt/target/linux'
+time: target/linux/install#50.87#14.06#35.06
+make[1]: Leaving directory '/opt/work/yocto/openwrt/openwrt'
+
+
+/opt/work/yocto/openwrt/openwrt/scripts/mkits.sh \
+	-D bananapi_bpi-r64 \
+	-o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.its \
+	-k /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb \
+	-C gzip  \
+	-d /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-$(basename /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dtb) \
+	-r /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/root.squashfs  \
+	-a 0x44000000 -e 0x44000000    \
+	-O mt7622-bananapi-bpi-r64-pcie1:/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-pcie1.dtb  \
+	-O mt7622-bananapi-bpi-r64-sata:/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-sata.dtb \
+	-c "config-1" -A arm64 -v 5.10.83
+
+PATH=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/home/gmzhuo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin mkimage  -E -B 0x1000 -p 0x1000 -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.its /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.new
