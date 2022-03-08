@@ -36,9 +36,9 @@ do_compile () {
 
 do_install () {
 	# Specify install commands here
-	install -d ${D}/usr/bin
+	install -d ${D}${bindir}
 	echo ${D}
-	install -m 0755 CPP/7zip/Compress/LZMA_Alone/lzma ${D}/usr/bin/lzma-alone
+	install -m 0755 CPP/7zip/Compress/LZMA_Alone/lzma ${D}${bindir}/lzma-alone
 }
 
 

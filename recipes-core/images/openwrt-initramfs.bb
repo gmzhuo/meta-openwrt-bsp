@@ -58,7 +58,7 @@ do_openwrt_firmware_add_dtb() {
 do_openwrt_firmware_lzma() {
 	bbnote lzma ${1} ${2}
 
-	/usr/bin/lzma-alone e -lc1 -lp2 -pb2 \
+	lzma-alone e -lc1 -lp2 -pb2 \
 		${WORKDIR}/linux-vmlinux/tmp/firmare.bin \
 		${WORKDIR}/linux-vmlinux/tmp/firmare.tmp
 
@@ -104,9 +104,7 @@ do_openwrt_firmware_fit() {
 
 	WITH_ROOTFS_ARGS=""
 	WITH_DTS_OVERLAY_ARGS=""
-	CHECK_WITH_ROOTFS=$(echo $@|grep "with-rootfs")
-	bbnote ${CHECK_WITH_ROOTFS}
-	if [ -n "${CHECK_WITH_ROOTFS}" ]; then
+	if [[ $@ == *"with-rootfs"* ]]; then
 		rootfs_paths=$(ls ${IMGDEPLOYDIR}/*.squashfs*)
 		bbnote get  WITH_ROOTFS_ARGS ${rootfs_paths}
 
@@ -160,13 +158,13 @@ do_openwrt_firmware_ubinize() {
 			count="1"
 
 
-			/usr/bin/sysupgrade-tar.sh \
+			sysupgrade-tar.sh \
 				--board ${OPENWRT_DEVICE_NAME} \
 				--kernel ${WORKDIR}/linux-vmlinux/tmp/firmare.bin \
 				--rootfs ${rootfs_path} \
 				${WORKDIR}/linux-vmlinux/tmp/openwrt-${OPENWRT_DEVICE_NAME}-nand-sysupgrade.bin
 
-			/usr/bin/ubinize-image.sh  \
+			ubinize-image.sh  \
 				--kernel ${WORKDIR}/linux-vmlinux/tmp/firmare.bin  \
 				--rootfs ${rootfs_path} \
 				${WORKDIR}/linux-vmlinux/tmp/openwrt-${OPENWRT_DEVICE_NAME}-nand-factory.ubi.tmp \
