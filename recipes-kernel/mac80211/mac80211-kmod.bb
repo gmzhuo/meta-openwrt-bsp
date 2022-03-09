@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=6bc538ed5bd9a7fc9398086aedcd7e46"
 
 KERNEL_SPLIT_MODULES = "1"
 inherit module
-DEPENDS += "flex-native"
+DEPENDS += "flex-native ncurses-native"
 MAC80211_PACKAGE_CONFIGS ?= ""
 
 SRC_URI = "https://cdn.kernel.org/pub/linux/kernel/projects/backports/stable/v5.15.8/backports-5.15.8-1.tar.xz \

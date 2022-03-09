@@ -10,7 +10,7 @@ LICENSE = "MIT"
 export IMAGE_BASENAME = "${MLPREFIX}openwrt-initramfs"
 
 inherit core-image openwrt openwrt-kmods openwrt-services fitimage-rootfs mkits uboot-config
-DEPENDS += " lzma-native u-boot-tools-native mtd-utils-native"
+DEPENDS += " lzma-native padjffs2-native u-boot-tools-native mtd-utils-native"
 
 CORE_IMAGE_BASE_INSTALL = '\
     packagegroup-core-boot \
@@ -221,6 +221,15 @@ do_openwrt_firmware_add_rootfs() {
 		${WORKDIR}/linux-vmlinux/tmp/firmare.bin
 }
 
+do_openwrt_firmware_pad_rootfs() {
+	cat ${WORKDIR}/linux-vmlinux/tmp/firmare.bin \
+		>${WORKDIR}/linux-vmlinux/tmp/firmare.tmp
+
+	padjffs2 ${WORKDIR}/linux-vmlinux/tmp/firmare.tmp $@
+	mv ${WORKDIR}/linux-vmlinux/tmp/firmare.tmp \
+		${WORKDIR}/linux-vmlinux/tmp/firmare.bin
+}
+
 do_openwrt_firmware_image_one_line() {
 	bbnote func $1 parameters $2 p3 $3
 	do_openwrt_firmware_${1} $2
@@ -246,6 +255,7 @@ do_openwrt_firmware_image() {
 		do_openwrt_firmware_fit
 		do_openwrt_firmware_add_metadata
 		do_openwrt_firmware_ubinize
+		do_openwrt_firmware_pad_rootfs
 	}
 
 	cp "${vmlinux_path}" ${WORKDIR}/linux-vmlinux/tmp/firmare.bin

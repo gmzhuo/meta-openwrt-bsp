@@ -11,7 +11,7 @@ do_dts_copy() {
 		cp ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/dts/* ${WORKDIR}/dts/ -rf
 	fi
 
-	if [ -d ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts ]; then
+	if [ -d ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH} ]; then
 		cp ${STAGING_KERNEL_DIR}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/* ${WORKDIR}/dts/ -rf
 	fi
 }
