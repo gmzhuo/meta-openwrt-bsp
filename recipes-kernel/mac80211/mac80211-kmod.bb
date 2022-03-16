@@ -21,6 +21,9 @@ SRC_URI[sha256sum] = "9f71b659c034f19d156532ec780fcb606cee3c4ccc42e2f8ef18dd3e9f
 
 S = "${WORKDIR}/backports-5.15.8-1"
 
+FILES:${PN}-dev += " /usr/include/*"
+
+
 # The inherit of module.bbclass will automatically name module packages with
 # "kernel-module-" prefix as required by the oe-core build environment.
 
@@ -50,6 +53,18 @@ module_do_install() {
 		# clear them out to avoid confusion
 		sed -e 's:${B}/::g' -i ${D}${includedir}/${BPN}/Module.symvers
 	fi
+
+	mkdir -p \
+		${D}/usr/include/mac80211 \
+		${D}/usr/include/mac80211-backport \
+		${D}/usr/include/mac80211/ath \
+		${D}/usr/include/net/mac80211
+
+	cp ${S}/net/mac80211/*.h ${S}/include/* ${D}/usr/include/mac80211/ -rf
+	cp ${S}/backport-include/* ${D}/usr/include/mac80211-backport/ -rf
+	cp ${S}/net/mac80211/rate.h ${D}/usr/include/net/mac80211/ -rf
+	cp ${S}/drivers/net/wireless/ath/*.h ${D}/usr/include/mac80211/ath/ -rf
+	rm -f ${D}/usr/include/mac80211-backport/linux/module.h
 }
 
 inherit cml1

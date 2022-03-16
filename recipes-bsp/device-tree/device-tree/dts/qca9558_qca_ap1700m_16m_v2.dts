@@ -1,0 +1,12 @@
+// SPDX-License-Identifier: GPL-2.0-or-later OR MIT
+/dts-v1/;
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+#include "qca9558_qca_ap1700-v2.dtsi"
+
+/ {
+	compatible = "qca,ap1700-v2", "qca,qca9557";
+	model = "qca AP1700-9558 v2";
+};

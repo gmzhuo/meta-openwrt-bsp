@@ -143,4 +143,4 @@ kernel_do_deploy:append() {
 	fi
 }
 
-COMPATIBLE_MACHINE += "|ipq807x|hc5761|bananapi_bpi-r64|ax3600|ax9000|ap143"
+COMPATIBLE_MACHINE += "|ipq807x|hc5761|bananapi_bpi-r64|ax3600|ax9000|ap143|ap1700v2"
