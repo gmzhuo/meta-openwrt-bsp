@@ -139,6 +139,7 @@ do_openwrt_firmware_fit() {
 		-c "${OPENWRT_DEVICE_DTS_CONFIG}"  -A ${UBOOT_ARCH} -v "${@oe.utils.read_file('${STAGING_KERNEL_BUILDDIR}/kernel-abiversion')}"
 
 	${UBOOT_MKIMAGE} \
+		${UBOOT_MKIMAGE_EXTERNAL} \
 		-f ${WORKDIR}/linux-vmlinux/tmp/openwrt-${OPENWRT_DEVICE_NAME}-fit-uImage.itb.its \
 		${WORKDIR}/linux-vmlinux/tmp/firmare.bin.tmp
 

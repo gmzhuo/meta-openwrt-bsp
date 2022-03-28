@@ -132,15 +132,15 @@ do_openwrt_image() {
 }
 
 addtask do_openwrt_patch after do_patch before do_configure
-addtask do_openwrt_image after do_bundle_initramfs before do_deploy
-do_openwrt_image[depends] += "device-tree:do_deploy"
+#addtask do_openwrt_image after do_bundle_initramfs before do_deploy
+#do_openwrt_image[depends] += "device-tree:do_deploy"
 
-kernel_do_deploy:append() {
-	# Update deploy directory
-	if [ -f ${B}/arch/${ARCH}/boot/uImage.dtb.lzma ]; then
-		install -m 0644 ${B}/arch/${ARCH}/boot/uImage.dtb.lzma \
-		"$deployDir/uImage-${INITRAMFS_IMAGE_NAME}-dtb.lzma"
-	fi
-}
+#kernel_do_deploy:append() {
+#	# Update deploy directory
+#	if [ -f ${B}/arch/${ARCH}/boot/uImage.dtb.lzma ]; then
+#		install -m 0644 ${B}/arch/${ARCH}/boot/uImage.dtb.lzma \
+#		"$deployDir/uImage-${INITRAMFS_IMAGE_NAME}-dtb.lzma"
+#	fi
+#}
 
 COMPATIBLE_MACHINE += "|ipq807x|hc5761|bananapi_bpi-r64|ax3600|ax9000|ap143|ap1700v2"
