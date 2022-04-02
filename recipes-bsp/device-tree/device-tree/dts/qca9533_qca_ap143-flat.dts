@@ -10,9 +10,14 @@
 
 	partition@50000 {
 		label = "firmware";
-		reg = <0x50000 0xfa0000>;
+		reg = <0x50000 0xe00000>;
 		compatible = "openwrt,uimage", "denx,uimage";
 		openwrt,ih-magic = <0x27051956>;
 		openwrt,ih-type = <IH_TYPE_KERNEL>;
+	};
+
+	partition@e50000 {
+		label = "rootfs_data";
+		reg = <0xe50000 0x1a0000>;
 	};
 };

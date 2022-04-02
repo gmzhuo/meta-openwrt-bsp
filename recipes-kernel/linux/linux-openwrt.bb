@@ -30,6 +30,7 @@ KERNEL_FEATURES:remove=" features/debug/printk.scc"
 
 #git://mirrors.tuna.tsinghua.edu.cn/git/linux-stable.git;protocol=https;branch=${KBRANCH}
 
+
 SRC_URI = " \
     	git://github.com/gregkh/linux.git;protocol=https;branch=${KBRANCH} \
 	git://github.com/gmzhuo/openwrt-kernel-cache.git;protocol=https;type=kmeta;name=meta;branch=main;destsuffix=${KMETA} \
@@ -40,6 +41,7 @@ SRC_URI = " \
 
 SRC_URI += "file://${MACHINE_EXTERNAL_PATCH}"
 
+SRCREV_first = "47667effb7d2f54dab3be33749c5a05152c07db0"
 SRCREV = "${AUTOREV}"
 
 do_openwrt_patch() {
