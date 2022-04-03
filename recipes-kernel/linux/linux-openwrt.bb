@@ -37,6 +37,7 @@ SRC_URI = " \
 	${OPENWRT_SRC_URI};type=openwrt;name=openwrt;destsuffix=openwrt \
 	file://configs/config-5.10.cfg;name=config-general \
 	file://configs/${KERNEL_FEATURE_BSP_CONFIG};name=config-machine \
+	file://patches/a00-packet-rx.patch \
     "
 
 SRC_URI += "file://${MACHINE_EXTERNAL_PATCH}"
@@ -97,52 +98,7 @@ do_openwrt_patch() {
 	bbnote "config adjust done"
 }
 
-do_openwrt_image() {
-	vmlinux_path="vmlinux"
-	cd ${B}
-
-	bbnote "${KERNEL_IMAGETYPE}"
-
-	[ -n "${vmlinux_path}" ] && {
-		for type in ${KERNEL_IMAGETYPE} ;
-		do
-			bbnote handle type ${type}
-			case "${type}" in
-			"uImage")
-				${OBJCOPY} -O binary -R .note -R .comment -S "${vmlinux_path}" linux.bin.append
-				[ -f ${B}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/${MACHINE_DEFAULT_DTB} ] && {
-					cat ${B}/arch/${ARCH}/boot/dts/${OPENWRT_KERNEL_DTS_PATH}/${MACHINE_DEFAULT_DTB} >>linux.bin.append
-				}
-				[ -f ${DEPLOY_DIR_IMAGE}/devicetree/${MACHINE_DEFAULT_DTB} ] && {
-					cat ${DEPLOY_DIR_IMAGE}/devicetree/${MACHINE_DEFAULT_DTB} >>linux.bin.append
-				}
-				/usr/bin/lzma-alone e -lc1 -lp2 -pb2 linux.bin.append linux.bin.append.lzma
-				ENTRYPOINT=${UBOOT_ENTRYPOINT}
-				if [ -n "${UBOOT_ENTRYSYMBOL}" ]; then
-					ENTRYPOINT=`${HOST_PREFIX}nm ${B}/vmlinux | \
-						awk '$3=="${UBOOT_ENTRYSYMBOL}" {print "0x"$1;exit}'`
-				fi
-
-				uboot-mkimage -A ${UBOOT_ARCH} -O linux -T kernel -C "lzma" -a ${UBOOT_LOADADDRESS} -e $ENTRYPOINT -n "${DISTRO_NAME}/${PV}/${MACHINE}" -d linux.bin.append.lzma ${B}/arch/${ARCH}/boot/uImage.dtb.lzma
-			;;
-			*)
-				bbnote "not defined ${type}"
-			;;
-			esac
-		done
-	}
-}
-
 addtask do_openwrt_patch after do_patch before do_configure
-#addtask do_openwrt_image after do_bundle_initramfs before do_deploy
-#do_openwrt_image[depends] += "device-tree:do_deploy"
 
-#kernel_do_deploy:append() {
-#	# Update deploy directory
-#	if [ -f ${B}/arch/${ARCH}/boot/uImage.dtb.lzma ]; then
-#		install -m 0644 ${B}/arch/${ARCH}/boot/uImage.dtb.lzma \
-#		"$deployDir/uImage-${INITRAMFS_IMAGE_NAME}-dtb.lzma"
-#	fi
-#}
 
 COMPATIBLE_MACHINE += "|ipq807x|hc5761|bananapi_bpi-r64|ax3600|ax9000|ap143|ap1700v2"

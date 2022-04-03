@@ -1,8 +1,8 @@
-Index: linux-4.19.97/net/packet/af_packet.c
-===================================================================
---- linux-4.19.97.orig/net/packet/af_packet.c
-+++ linux-4.19.97/net/packet/af_packet.c
-@@ -2974,15 +2974,59 @@ out:
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index d0c95d7dd292..48ddf7e3b9d3 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3035,11 +3037,54 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
  	return err;
  }
  
@@ -51,18 +51,9 @@ Index: linux-4.19.97/net/packet/af_packet.c
  	struct sock *sk = sock->sk;
  	struct packet_sock *po = pkt_sk(sk);
  
--	if (po->tx_ring.pg_vec)
--		return tpacket_snd(po, msg);
--	else
--		return packet_snd(sock, msg, len);
-+	if(msg->msg_flags & 0x200000) {
++	if(msg->msg_flags & 0x200000)
 +		return packet_rx(sock, msg, len);
-+	} else {
-+		if (po->tx_ring.pg_vec)
-+			return tpacket_snd(po, msg);
-+		else
-+			return packet_snd(sock, msg, len);
-+	}
- }
- 
- /*
++
+ 	/* Reading tx_ring.pg_vec without holding pg_vec_lock is racy.
+ 	 * tpacket_snd() will redo the check safely.
+ 	 */
