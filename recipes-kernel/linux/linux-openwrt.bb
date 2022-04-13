@@ -32,7 +32,7 @@ KERNEL_FEATURES:remove=" features/debug/printk.scc"
 
 
 SRC_URI = " \
-    	git://github.com/gregkh/linux.git;protocol=https;branch=${KBRANCH} \
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git;protocol=https;branch=${KBRANCH} \
 	git://github.com/gmzhuo/openwrt-kernel-cache.git;protocol=https;type=kmeta;name=meta;branch=main;destsuffix=${KMETA} \
 	${OPENWRT_SRC_URI};type=openwrt;name=openwrt;destsuffix=openwrt \
 	file://configs/config-5.10.cfg;name=config-general \
