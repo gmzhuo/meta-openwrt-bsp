@@ -42,7 +42,7 @@ SRC_URI = " \
 
 SRC_URI += "file://${MACHINE_EXTERNAL_PATCH}"
 
-SRCREV_first = "e331eb6e67a0b3a0b40e269f9099f0140542ab95"
+SRCREV_first = "49b60cb9c8b8eb094c5910b66a099f538f69ddf6"
 SRCREV = "${AUTOREV}"
 
 do_openwrt_patch() {
