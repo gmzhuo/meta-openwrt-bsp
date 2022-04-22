@@ -2,20 +2,58 @@ Index: backports-5.15.8-1/net/mac80211/rx.c
 ===================================================================
 --- backports-5.15.8-1.orig/net/mac80211/rx.c
 +++ backports-5.15.8-1/net/mac80211/rx.c
-@@ -2092,6 +2092,13 @@ ieee80211_rx_h_decrypt(struct ieee80211_
+@@ -33,6 +33,9 @@
+ #include "wme.h"
+ #include "rate.h"
+ 
++#define RX_PASS_THROUGH		((__force ieee80211_rx_result) 5u)
++#define IEEE80211_RX_PASS_THROUGH BIT(2)
++
+ /*
+  * monitor mode reception
+  *
+@@ -2092,7 +2095,7 @@ ieee80211_rx_h_decrypt(struct ieee80211_
  
  		/* TODO: add threshold stuff again */
  	} else {
-+#define ETH_P_80211 0x0055
-+		//here we deliver to netif  rx
-+		skb = skb_clone(skb, GFP_ATOMIC);
-+		if(skb) {
-+			skb->protocol = __constant_htons(ETH_P_80211);
-+			netif_receive_skb(skb);
-+		}
- 		return RX_DROP_MONITOR;
+-		return RX_DROP_MONITOR;
++		return RX_PASS_THROUGH;
  	}
  
+ 	switch (rx->key->conf.cipher) {
+@@ -3815,7 +3818,7 @@ static void ieee80211_rx_cooked_monitor(
+ 	rx->flags |= IEEE80211_RX_CMNTR;
+ 
+ 	/* If there are no cooked monitor interfaces, just free the SKB */
+-	if (!local->cooked_mntrs)
++	if (!local->cooked_mntrs && !(rx->flags & IEEE80211_RX_PASS_THROUGH))
+ 		goto out_free_skb;
+ 
+ 	/* vendor data is long removed here */
+@@ -3836,6 +3839,13 @@ static void ieee80211_rx_cooked_monitor(
+ 	skb->pkt_type = PACKET_OTHERHOST;
+ 	skb->protocol = htons(ETH_P_802_2);
+ 
++	if(rx->flags & IEEE80211_RX_PASS_THROUGH) {
++		prev_dev = rx->sdata->dev;
++		if(prev_dev) {
++			dev_sw_netstats_rx_add(prev_dev, skb->len);
++		}
++	}
++
+ 	list_for_each_entry_rcu(sdata, &local->interfaces, list) {
+ 		if (!ieee80211_sdata_running(sdata))
+ 			continue;
+@@ -3875,6 +3885,9 @@ static void ieee80211_rx_handlers_result
+ 		if (rx->sta)
+ 			rx->sta->rx_stats.dropped++;
+ 		fallthrough;
++	case RX_PASS_THROUGH:
++		rx->flags |= IEEE80211_RX_PASS_THROUGH;
++		fallthrough;
+ 	case RX_CONTINUE: {
+ 		struct ieee80211_rate *rate = NULL;
+ 		struct ieee80211_supported_band *sband;
 Index: backports-5.15.8-1/net/mac80211/tx.c
 ===================================================================
 --- backports-5.15.8-1.orig/net/mac80211/tx.c

@@ -291,5 +291,7 @@ do_openwrt_firmware_image[depends] += "device-tree:do_deploy"
 addtask do_rootfs_clean after do_rootfs before do_image
 addtask do_openwrt_firmware_image after do_image_complete before do_populate_lic_deploy
 
-
+do_image_qa() {
+	bbnote "no qa check"
+}
 
