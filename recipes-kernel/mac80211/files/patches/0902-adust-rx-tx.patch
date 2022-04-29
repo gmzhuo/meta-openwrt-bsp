@@ -91,93 +91,427 @@ Index: backports-5.15.8-1/net/mac80211/tx.c
 ===================================================================
 --- backports-5.15.8-1.orig/net/mac80211/tx.c
 +++ backports-5.15.8-1/net/mac80211/tx.c
-@@ -2035,7 +2035,10 @@ void ieee80211_xmit(struct ieee80211_sub
+@@ -37,6 +37,8 @@
+ #include "wme.h"
+ #include "rate.h"
+ 
++const u32 IEEE80211_TX_CTRL_INJECT_PACKET = BIT(10);
++
+ /* misc utils */
+ 
+ static __le16 ieee80211_duration(struct ieee80211_tx_data *tx,
+@@ -1821,6 +1823,10 @@ static int invoke_tx_handlers_late(struc
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(tx->skb);
+ 	ieee80211_tx_result res = TX_CONTINUE;
+ 
++	if (info->flags & IEEE80211_TX_INTFL_DONT_ENCRYPT){
++		//printk("in invoke_tx_handlers_late\r\n");
++	}
++
+ 	if (!ieee80211_hw_check(&tx->local->hw, HAS_RATE_CONTROL))
+ 		CALL_TXH(ieee80211_tx_h_rate_ctrl);
+ 
+@@ -1830,10 +1836,19 @@ static int invoke_tx_handlers_late(struc
+ 		goto txh_done;
+ 	}
+ 
++	if (info->flags & IEEE80211_TX_INTFL_DONT_ENCRYPT){
++		//printk("in invoke_tx_handlers_late ieee80211_tx_h_michael_mic_add\r\n");
++	}
++
+ 	CALL_TXH(ieee80211_tx_h_michael_mic_add);
+ 	CALL_TXH(ieee80211_tx_h_sequence);
+ 	CALL_TXH(ieee80211_tx_h_fragment);
+ 	/* handlers after fragment must be aware of tx info fragmentation! */
++
++	if (info->flags & IEEE80211_TX_INTFL_DONT_ENCRYPT){
++		//printk("in invoke_tx_handlers_late ieee80211_tx_h_stats\r\n");
++	}
++
+ 	CALL_TXH(ieee80211_tx_h_stats);
+ 	CALL_TXH(ieee80211_tx_h_encrypt);
+ 	if (!ieee80211_hw_check(&tx->local->hw, HAS_RATE_CONTROL))
+@@ -1841,6 +1856,7 @@ static int invoke_tx_handlers_late(struc
+ #undef CALL_TXH
+ 
+  txh_done:
++
+ 	if (unlikely(res == TX_DROP)) {
+ 		I802_DEBUG_INC(tx->local->tx_handlers_drop);
+ 		if (tx->skb)
+@@ -1853,6 +1869,22 @@ static int invoke_tx_handlers_late(struc
+ 		return -1;
+ 	}
+ 
++	if (info->flags & IEEE80211_TX_INTFL_DONT_ENCRYPT){
++#if 0
++		int j = 0;
++		struct sk_buff *skb;
++		static char buf[4096];
++		printk("in invoke_tx_handlers_late done success\r\n");
++		skb_queue_walk(&tx->skbs, skb) {
++			for(j = 0; j < skb->len; ++j) {
++				sprintf(&buf[j*2], "%02X", (unsigned char)skb->data[j]);
++			}
++			buf[j*2] = 0;
++			printk("%s\r\n", buf);
++		}
++#endif
++	}
++
+ 	return 0;
+ }
+ 
+@@ -1940,6 +1972,19 @@ static bool ieee80211_tx(struct ieee8021
+ 	if (invoke_tx_handlers_early(&tx))
+ 		return true;
+ 
++	if (info->flags & IEEE80211_TX_INTFL_DONT_ENCRYPT){
++#if 0
++		int j = 0;
++		static char buf[4096];
++		printk("to call ieee80211_queue_skb\r\n");
++		for(j = 0; j < skb->len; ++j) {
++			sprintf(&buf[j*2], "%02X", (unsigned char)skb->data[j]);
++		}
++		buf[j*2] = 0;
++		printk("%s\r\n", buf);
++#endif
++	}
++
+ 	if (ieee80211_queue_skb(local, sdata, tx.sta, tx.skb))
+ 		return true;
+ 
+@@ -2035,7 +2080,20 @@ void ieee80211_xmit(struct ieee80211_sub
  		}
  	}
  
 -	ieee80211_set_qos_hdr(sdata, skb);
-+	if(!(ieee80211_has_protected(hdr->frame_control)
-+			&& encrypt == ENCRYPT_NO)) {
++	if(!(info->flags & IEEE80211_TX_INTFL_DONT_ENCRYPT)) {
 +		ieee80211_set_qos_hdr(sdata, skb);
++	} else {
++#if 0
++		int j = 0;
++		static char buf[4096];
++		printk("to call ieee80211 tx\r\n");
++		for(j = 0; j < skb->len; ++j) {
++			sprintf(&buf[j*2], "%02X", (unsigned char)skb->data[j]);
++		}
++		buf[j*2] = 0;
++		printk("%s\r\n", buf);
++#endif
 +	}
  	ieee80211_tx(sdata, sta, skb, false);
  }
  
-@@ -4157,6 +4160,9 @@ void ieee80211_txq_schedule_start(struct
- }
- EXPORT_SYMBOL(ieee80211_txq_schedule_start);
+@@ -2558,7 +2616,7 @@ static struct sk_buff *ieee80211_build_h
+ 	int head_need;
+ 	u16 ethertype, hdrlen,  meshhdrlen = 0;
+ 	__le16 fc;
+-	struct ieee80211_hdr hdr;
++	struct ieee80211_hdr hdr, *phdr;
+ 	struct ieee80211s_hdr mesh_hdr __maybe_unused;
+ 	struct mesh_path __maybe_unused *mppath = NULL, *mpath = NULL;
+ 	const u8 *encaps_data;
+@@ -2571,10 +2629,18 @@ static struct sk_buff *ieee80211_build_h
+ 	struct ieee80211_sub_if_data *ap_sdata;
+ 	enum nl80211_band band;
+ 	int ret;
++	bool is_injected = false;
  
-+
-+#define ETH_P_80211 0x0055
-+
- void __ieee80211_subif_start_xmit(struct sk_buff *skb,
- 				  struct net_device *dev,
- 				  u32 info_flags,
-@@ -4230,16 +4236,51 @@ void __ieee80211_subif_start_xmit(struct
- 	}
+ 	if (IS_ERR(sta))
+ 		sta = NULL;
  
- 	skb_list_walk_safe(skb, skb, next) {
-+		struct ethhdr *ehdr = (struct ethhdr *)skb->data;
- 		skb_mark_not_on_list(skb);
- 
- 		if (skb->protocol == sdata->control_port_protocol)
- 			ctrl_flags |= IEEE80211_TX_CTRL_SKIP_MPATH_LOOKUP;
- 
--		skb = ieee80211_build_hdr(sdata, skb, info_flags,
--					  sta, ctrl_flags, cookie);
--		if (IS_ERR(skb)) {
--			kfree_skb_list(next);
--			goto out;
-+		if(skb->protocol == __constant_htons(ETH_P_802_2)) {
-+			struct ieee80211_tx_info *info;
-+			struct ieee80211_sub_if_data *ap_sdata;
-+			struct ieee80211_chanctx_conf *chanctx_conf;
-+			enum nl80211_band band;
-+			u16 info_id = 0;
-+
-+			ap_sdata = container_of(sdata->bss, struct ieee80211_sub_if_data,
-+					u.ap);
-+			chanctx_conf = rcu_dereference(ap_sdata->vif.chanctx_conf);
-+			if (!chanctx_conf) {
-+				kfree_skb(skb);
-+				kfree_skb_list(next);
-+				goto out;
-+			}
-+
-+			band = chanctx_conf->def.chan->band;
-+
-+			info = IEEE80211_SKB_CB(skb);
-+			memset(info, 0, sizeof(*info));
-+
-+			//set some flags here
-+			info->flags = info_flags;
-+			info->ack_frame_id = info_id;
-+			info->band = band;
-+			info->control.flags = ctrl_flags;
-+
-+			info->flags = IEEE80211_TX_CTL_REQ_TX_STATUS |
-+		      IEEE80211_TX_CTL_INJECTED;
-+
-+			info->flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT |
-+				IEEE80211_TX_CTL_DONTFRAG;
-+		} else {
-+			skb = ieee80211_build_hdr(sdata, skb, info_flags,
-+						  sta, ctrl_flags, cookie);
-+			if (IS_ERR(skb)) {
-+				kfree_skb_list(next);
-+				goto out;
-+			}
- 		}
- 
- 		dev_sw_netstats_tx_add(dev, 1, skb->len);
-@@ -4516,6 +4557,10 @@ netdev_tx_t ieee80211_subif_start_xmit_8
- 
- 	rcu_read_lock();
- 
-+	if(skb->protocol == __constant_htons(ETH_P_802_2)) {
-+		goto skip_offload;
++	if(info_flags & IEEE80211_TX_INTFL_DONT_ENCRYPT) {
++		phdr = (struct ieee80211_hdr*)skb->data;
++		is_injected = true;
++	} else {
++		phdr = &hdr;
 +	}
 +
- 	if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
+ #ifdef CPTCFG_MAC80211_DEBUGFS
+ 	if (local->force_tx_status)
+ 		info_flags |= IEEE80211_TX_CTL_REQ_TX_STATUS;
+@@ -2771,7 +2837,7 @@ static struct sk_buff *ieee80211_build_h
+ 		goto free;
+ 	}
+ 
+-	multicast = is_multicast_ether_addr(hdr.addr1);
++	multicast = is_multicast_ether_addr(phdr->addr1);
+ 
+ 	/* sta is always NULL for mesh */
+ 	if (sta) {
+@@ -2799,7 +2865,7 @@ static struct sk_buff *ieee80211_build_h
+ 		      !ether_addr_equal(sdata->vif.addr, skb->data + ETH_ALEN)))) {
+ #ifdef CPTCFG_MAC80211_VERBOSE_DEBUG
+ 		net_info_ratelimited("%s: dropped frame to %pM (unauthorized port)\n",
+-				    sdata->name, hdr.addr1);
++				    sdata->name, phdr->addr1);
+ #endif
+ 
+ 		I802_DEBUG_INC(local->tx_handlers_drop_unauth_port);
+@@ -2832,72 +2898,74 @@ static struct sk_buff *ieee80211_build_h
+ 		}
+ 	}
+ 
+-	hdr.frame_control = fc;
+-	hdr.duration_id = 0;
+-	hdr.seq_ctrl = 0;
+-
+-	skip_header_bytes = ETH_HLEN;
+-	if (ethertype == ETH_P_AARP || ethertype == ETH_P_IPX) {
+-		encaps_data = bridge_tunnel_header;
+-		encaps_len = sizeof(bridge_tunnel_header);
+-		skip_header_bytes -= 2;
+-	} else if (ethertype >= ETH_P_802_3_MIN) {
+-		encaps_data = rfc1042_header;
+-		encaps_len = sizeof(rfc1042_header);
+-		skip_header_bytes -= 2;
+-	} else {
+-		encaps_data = NULL;
+-		encaps_len = 0;
+-	}
++	if(!is_injected) {
++		hdr.frame_control = fc;
++		hdr.duration_id = 0;
++		hdr.seq_ctrl = 0;
++
++		skip_header_bytes = ETH_HLEN;
++		if (ethertype == ETH_P_AARP || ethertype == ETH_P_IPX) {
++			encaps_data = bridge_tunnel_header;
++			encaps_len = sizeof(bridge_tunnel_header);
++			skip_header_bytes -= 2;
++		} else if (ethertype >= ETH_P_802_3_MIN) {
++			encaps_data = rfc1042_header;
++			encaps_len = sizeof(rfc1042_header);
++			skip_header_bytes -= 2;
++		} else {
++			encaps_data = NULL;
++			encaps_len = 0;
++		}
+ 
+-	skb_pull(skb, skip_header_bytes);
+-	head_need = hdrlen + encaps_len + meshhdrlen - skb_headroom(skb);
++		skb_pull(skb, skip_header_bytes);
++		head_need = hdrlen + encaps_len + meshhdrlen - skb_headroom(skb);
+ 
+-	/*
+-	 * So we need to modify the skb header and hence need a copy of
+-	 * that. The head_need variable above doesn't, so far, include
+-	 * the needed header space that we don't need right away. If we
+-	 * can, then we don't reallocate right now but only after the
+-	 * frame arrives at the master device (if it does...)
+-	 *
+-	 * If we cannot, however, then we will reallocate to include all
+-	 * the ever needed space. Also, if we need to reallocate it anyway,
+-	 * make it big enough for everything we may ever need.
+-	 */
++		/*
++		 * So we need to modify the skb header and hence need a copy of
++		 * that. The head_need variable above doesn't, so far, include
++		 * the needed header space that we don't need right away. If we
++		 * can, then we don't reallocate right now but only after the
++		 * frame arrives at the master device (if it does...)
++		 *
++		 * If we cannot, however, then we will reallocate to include all
++		 * the ever needed space. Also, if we need to reallocate it anyway,
++		 * make it big enough for everything we may ever need.
++		 */
+ 
+-	if (head_need > 0 || skb_cloned(skb)) {
+-		head_need += sdata->encrypt_headroom;
+-		head_need += local->tx_headroom;
+-		head_need = max_t(int, 0, head_need);
+-		if (ieee80211_skb_resize(sdata, skb, head_need, ENCRYPT_DATA)) {
+-			ieee80211_free_txskb(&local->hw, skb);
+-			skb = NULL;
+-			return ERR_PTR(-ENOMEM);
++		if (head_need > 0 || skb_cloned(skb)) {
++			head_need += sdata->encrypt_headroom;
++			head_need += local->tx_headroom;
++			head_need = max_t(int, 0, head_need);
++			if (ieee80211_skb_resize(sdata, skb, head_need, ENCRYPT_DATA)) {
++				ieee80211_free_txskb(&local->hw, skb);
++				skb = NULL;
++				return ERR_PTR(-ENOMEM);
++			}
+ 		}
+-	}
+ 
+-	if (encaps_data)
+-		memcpy(skb_push(skb, encaps_len), encaps_data, encaps_len);
++		if (encaps_data)
++			memcpy(skb_push(skb, encaps_len), encaps_data, encaps_len);
+ 
+-#ifdef CPTCFG_MAC80211_MESH
+-	if (meshhdrlen > 0)
+-		memcpy(skb_push(skb, meshhdrlen), &mesh_hdr, meshhdrlen);
+-#endif
++	#ifdef CPTCFG_MAC80211_MESH
++		if (meshhdrlen > 0)
++			memcpy(skb_push(skb, meshhdrlen), &mesh_hdr, meshhdrlen);
++	#endif
+ 
+-	if (ieee80211_is_data_qos(fc)) {
+-		__le16 *qos_control;
++		if (ieee80211_is_data_qos(fc)) {
++			__le16 *qos_control;
+ 
+-		qos_control = skb_push(skb, 2);
+-		memcpy(skb_push(skb, hdrlen - 2), &hdr, hdrlen - 2);
+-		/*
+-		 * Maybe we could actually set some fields here, for now just
+-		 * initialise to zero to indicate no special operation.
+-		 */
+-		*qos_control = 0;
+-	} else
+-		memcpy(skb_push(skb, hdrlen), &hdr, hdrlen);
++			qos_control = skb_push(skb, 2);
++			memcpy(skb_push(skb, hdrlen - 2), &hdr, hdrlen - 2);
++			/*
++			 * Maybe we could actually set some fields here, for now just
++			 * initialise to zero to indicate no special operation.
++			 */
++			*qos_control = 0;
++		} else
++			memcpy(skb_push(skb, hdrlen), &hdr, hdrlen);
+ 
+-	skb_reset_mac_header(skb);
++		skb_reset_mac_header(skb);
++	}
+ 
+ 	info = IEEE80211_SKB_CB(skb);
+ 	memset(info, 0, sizeof(*info));
+@@ -4168,6 +4236,7 @@ void __ieee80211_subif_start_xmit(struct
+ 	struct sta_info *sta;
+ 	struct sk_buff *next;
+ 	int len = skb->len;
++	struct ieee80211_hdr *hdr = NULL;
+ 
+ 	if (unlikely(skb->len < ETH_HLEN)) {
  		kfree_skb(skb);
- 		goto out;
+@@ -4175,12 +4244,58 @@ void __ieee80211_subif_start_xmit(struct
+ 	}
+ 
+ 	rcu_read_lock();
++#if 0
++	if(skb->data[0] == 0x88 && skb->data[1] == 0x42) {
++		printk("got encrypted data\r\n");
++	}
++#endif
+ 
+-	if (ieee80211_lookup_ra_sta(sdata, skb, &sta))
+-		goto out_free;
++	if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
++#if 0
++		int j = 0;
++		static char buf[4096];
++		hdr = (struct ieee80211_hdr *)skb->data;
++		//to do more check, what if we finded a addr;
++		//maybe we should set a flag for the vif
++#endif
++		sta = sta_info_get_bss(sdata, hdr->addr1);
++		if(!sta)
++			goto out_free;
++		info_flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT;
++#if 0
++		printk("got transmit no need to encrypt\r\n");
++		printk("to call ieee80211 tx\r\n");
++		for(j = 0; j < skb->len; ++j) {
++			sprintf(&buf[j*2], "%02X", (unsigned char)skb->data[j]);
++		}
++		buf[j*2] = 0;
++		printk("%s\r\n", buf);
++#endif
++	}
+ 
+-	if (IS_ERR(sta))
+-		sta = NULL;
++	if (IS_ERR(sta)) {
++#if 0
++		int j = 0;
++		static char buf[4096];
++#endif
++		hdr = (struct ieee80211_hdr *)skb->data;
++		//to do more check, what if we finded a addr;
++		//maybe we should set a flag for the vif
++		sta = sta_info_get_bss(sdata, hdr->addr1);
++		if(sta) {
++			info_flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT;
++#if 0
++			printk("got transmit no need to encrypt in no sta\r\n");
++			for(j = 0; j < skb->len; ++j) {
++				sprintf(&buf[j*2], "%02X", (unsigned char)skb->data[j]);
++			}
++			buf[j*2] = 0;
++			printk("%s\r\n", buf);
++#endif
++		} else {
++			sta = NULL;
++		}
++	}
+ 
+ 	if (local->ops->wake_tx_queue) {
+ 		u16 queue = __ieee80211_select_queue(sdata, sta, skb);
+@@ -4190,7 +4305,7 @@ void __ieee80211_subif_start_xmit(struct
+ 
+ 	ieee80211_aggr_check(sdata, sta, skb);
+ 
+-	if (sta) {
++	if (sta && !hdr) { //no fast xmit if no tx
+ 		struct ieee80211_fast_tx *fast_tx;
+ 
+ 		sk_pacing_shift_update(skb->sk, sdata->local->hw.tx_sk_pacing_shift);
+@@ -4221,7 +4336,7 @@ void __ieee80211_subif_start_xmit(struct
+ 		 * things so we cannot really handle checksum offload with it -
+ 		 * fix it up in software before we handle anything else.
+ 		 */
+-		if (skb->ip_summed == CHECKSUM_PARTIAL) {
++		if (!hdr && skb->ip_summed == CHECKSUM_PARTIAL) {
+ 			skb_set_transport_header(skb,
+ 						 skb_checksum_start_offset(skb));
+ 			if (skb_checksum_help(skb))
+@@ -4229,6 +4344,12 @@ void __ieee80211_subif_start_xmit(struct
+ 		}
+ 	}
+ 
++#if 0
++	if(info_flags & IEEE80211_TX_INTFL_DONT_ENCRYPT) {
++		printk("walk skb to call ieee80211_xmit\r\n");
++	}
++#endif
++
+ 	skb_list_walk_safe(skb, skb, next) {
+ 		skb_mark_not_on_list(skb);
+ 
+@@ -4244,6 +4365,11 @@ void __ieee80211_subif_start_xmit(struct
+ 
+ 		dev_sw_netstats_tx_add(dev, 1, skb->len);
+ 
++#if 0
++		if(info_flags & IEEE80211_TX_INTFL_DONT_ENCRYPT) {
++			printk("after build hdr, call ieee80211_xmit\r\n");
++		}
++#endif
+ 		ieee80211_xmit(sdata, sta, skb);
+ 	}
+ 	goto out;
+@@ -4514,11 +4640,16 @@ netdev_tx_t ieee80211_subif_start_xmit_8
+ 		return NETDEV_TX_OK;
+ 	}
+ 
++#if 0
++	if(skb->data[0] == 0x88 && skb->data[1] == 0x41) {
++		printk("got encrypted data in ieee80211_subif_start_xmit_8023\r\n");
++	}
++#endif
++
+ 	rcu_read_lock();
+ 
+ 	if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
+-		kfree_skb(skb);
+-		goto out;
++		goto skip_offload;
+ 	}
+ 
+ 	if (unlikely(IS_ERR_OR_NULL(sta) || !sta->uploaded ||
