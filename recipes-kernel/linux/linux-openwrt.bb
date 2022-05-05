@@ -15,10 +15,10 @@ COMPATIBLE_MACHINE ?= "invalid"
 
 S = "${WORKDIR}/git"
 
-LINUX_VERSION ?= "5.10"
+LINUX_VERSION ?= "5.15"
 KERNEL_VERSION_SANITY_SKIP = "1"
-KBRANCH = "linux-5.10.y "
-KERNEL_FEATURE_BSP_CONFIG ?= "config-5.10"
+KBRANCH = "linux-5.15.y "
+KERNEL_FEATURE_BSP_CONFIG ?= "config-5.15"
 OPENWRT_KERNEL_DTS_PATH ?= ""
 
 SRCREV_meta ?= "${AUTOREV}"
@@ -42,7 +42,7 @@ SRC_URI = " \
 
 SRC_URI += "file://${MACHINE_EXTERNAL_PATCH}"
 
-SRCREV_first = "5a10ff67818495c5471ad2a1988e1fa644c024e3"
+SRCREV_first = "81d8d30c35edf29c5c70186ccb14dac4a5ca38a8"
 SRCREV = "${AUTOREV}"
 
 do_openwrt_patch() {
@@ -52,21 +52,21 @@ do_openwrt_patch() {
 	bbnote "$PWD"
 
 	cp ${WORKDIR}/openwrt/target/linux/generic/files/* ${S}/ -rfd
-	patches=$(ls ${WORKDIR}/openwrt/target/linux/generic/back*5.10/*)
+	patches=$(ls ${WORKDIR}/openwrt/target/linux/generic/back*5.15/*)
 	for patche in ${patches}
 	do
 		bbnote "to apply $patche in $PWD"
 		patch -p1 <${patche}
 	done
 
-	patches=$(ls ${WORKDIR}/openwrt/target/linux/generic/pen*5.10/*)
+	patches=$(ls ${WORKDIR}/openwrt/target/linux/generic/pen*5.15/*)
 	for patche in ${patches}
 	do
 		bbnote "to apply $patche in $PWD"
 		patch -p1 <${patche}
 	done
 
-	patches=$(ls ${WORKDIR}/openwrt/target/linux/generic/hack*5.10/*)
+	patches=$(ls ${WORKDIR}/openwrt/target/linux/generic/hack*5.15/*)
 	for patche in ${patches}
 	do
 		bbnote "to apply $patche in $PWD"
@@ -92,6 +92,8 @@ do_openwrt_patch() {
 	}
 
 	echo "EXTRA_CFLAGS += -I\${srctree}/include/linux -I\${srctree}/include/linux/lzma" >>${S}/lib/lzma/Makefile
+	echo "ccflags-y += -I\${srctree}/drivers/net/phy/rtk/rtl8367c/include" >>${S}/drivers/net/phy/rtk/Makefile
+	echo "ccflags-y += -I\${srctree}/include/linux/" >>${S}/drivers/net/phy/rtk/Makefile
 
 	patch -p1 <${WORKDIR}/${MACHINE_EXTERNAL_PATCH}
 
