@@ -8,7 +8,7 @@ inherit module
 DEPENDS += "flex-native ncurses-native"
 MAC80211_PACKAGE_CONFIGS ?= ""
 
-SRC_URI = "https://cdn.kernel.org/pub/linux/kernel/projects/backports/stable/v5.15.8/backports-5.15.8-1.tar.xz \
+SRC_URI = "https://cdn.kernel.org/pub/linux/kernel/projects/backports/stable/v5.15.33/backports-5.15.33-1.tar.xz \
 		  file://test.cfg \
           "
 
@@ -17,9 +17,9 @@ include include/build.inc include/subsys.inc include/ath.inc include/ath5k.inc  
 
 SRC_URI += " file://patches/0901-add-nl80211-debug.patch file://patches/0902-adust-rx-tx.patch"
 
-SRC_URI[sha256sum] = "9f71b659c034f19d156532ec780fcb606cee3c4ccc42e2f8ef18dd3e9f1b6820"
+SRC_URI[sha256sum] = "1b6b3bded4c81814ebebe2d194c2f8966d2399005b85ebb0557285b6e73f5422"
 
-S = "${WORKDIR}/backports-5.15.8-1"
+S = "${WORKDIR}/backports-5.15.33-1"
 
 FILES:${PN}-dev += " /usr/include/*"
 

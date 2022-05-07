@@ -26,6 +26,7 @@ SRC_URI += "file://patches/ath9k/040-ath9k-support-DT-ieee80211-freq-limit-prope
 		file://patches/ath9k/551-ath9k_ubnt_uap_plus_hsr.patch \
 		file://patches/ath9k/552-ath9k-ahb_of.patch \
 		file://patches/ath9k/553-ath9k_of_gpio_mask.patch \
+		file://patches/ath9k/580-ath9k_ar9561_fix_bias_level.patch \
 		file://patches/ath9k/600-v5.16-ath9k-fetch-calibration-data-via-nvmem-subsystem.patch \
 		file://patches/ath9k/601-v5.16-ath9k-owl-loader-fetch-pci-init-values-through-nvmem.patch \
 		"

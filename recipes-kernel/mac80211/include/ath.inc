@@ -6,4 +6,4 @@ SRC_URI += "file://patches/ath/070-ath_common_config.patch \
 		  file://patches/ath/405-ath_regd_us.patch \
 		  file://patches/ath/406-ath_relax_default_regd.patch \
 		  file://patches/ath/431-add_platform_eeprom_support_to_ath5k.patch \
-		  " 
+		  "

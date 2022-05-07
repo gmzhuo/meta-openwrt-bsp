@@ -6,4 +6,5 @@ SRC_URI += "file://patches/ath10k/080-ath10k_thermal_config.patch \
 		file://patches/ath10k/975-ath10k-use-tpt-trigger-by-default.patch \
 		file://patches/ath10k/981-ath10k-adjust-tx-power-reduction-for-US-regulatory-d.patch \
 		file://patches/ath10k/984-ath10k-Try-to-get-mac-address-from-dts.patch \
+		file://patches/ath10k/990-ath10k-small-buffers.patch \
 		"
