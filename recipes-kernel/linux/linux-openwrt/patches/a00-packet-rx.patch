@@ -1,8 +1,28 @@
+From fc87ddffca8354e375c7797e80d5c281d2f2eec2 Mon Sep 17 00:00:00 2001
+From: "gm.zhuo" <18414710@qq.com>
+Date: Fri, 6 May 2022 15:28:30 +0800
+Subject: [PATCH] check proto when set size_mas
+
+---
+ net/packet/af_packet.c | 47 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+
 diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index d0c95d7dd292..48ddf7e3b9d3 100644
+index c0d4a65931de..de2a51b90015 100644
 --- a/net/packet/af_packet.c
 +++ b/net/packet/af_packet.c
-@@ -3035,11 +3037,54 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
+@@ -2733,6 +2733,10 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
+ 	if ((size_max > dev->mtu + reserve + VLAN_HLEN) && !po->has_vnet_hdr)
+ 		size_max = dev->mtu + reserve + VLAN_HLEN;
+ 
++	if(proto == htons(ETH_P_802_2)) {
++		size_max += 28;
++	}
++
+ 	reinit_completion(&po->skb_completion);
+ 
+ 	do {
+@@ -3037,11 +3041,54 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
  	return err;
  }
  
@@ -57,3 +77,6 @@ index d0c95d7dd292..48ddf7e3b9d3 100644
  	/* Reading tx_ring.pg_vec without holding pg_vec_lock is racy.
  	 * tpacket_snd() will redo the check safely.
  	 */
+-- 
+2.25.1
+

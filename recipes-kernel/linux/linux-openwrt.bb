@@ -35,7 +35,7 @@ SRC_URI = " \
 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git;protocol=https;name=first;branch=${KBRANCH} \
 	git://github.com/gmzhuo/openwrt-kernel-cache.git;protocol=https;type=kmeta;name=meta;branch=main;destsuffix=${KMETA} \
 	${OPENWRT_SRC_URI};type=openwrt;name=openwrt;destsuffix=openwrt \
-	file://configs/config-5.10.cfg;name=config-general \
+	file://configs/config-5.15.cfg;name=config-general \
 	file://configs/${KERNEL_FEATURE_BSP_CONFIG};name=config-machine \
 	file://patches/a00-packet-rx.patch \
     "
@@ -75,7 +75,6 @@ do_openwrt_patch() {
 
 	if [ ! -z ${KERNEL_FEATURE_BSP_PATH} ]; then
 		[ -d ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/files/ ] && cp ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/files/* ${S}/ -rfd
-		[ -d ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/files-5.10/ ] && cp ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/files-5.10/* ${S}/ -rfd
 		for patchpath in ${KERNEL_FEATURE_BSP_PATCH_PATHS}
 		do
 			patches=$(ls ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/${patchpath}/*)
@@ -92,8 +91,10 @@ do_openwrt_patch() {
 	}
 
 	echo "EXTRA_CFLAGS += -I\${srctree}/include/linux -I\${srctree}/include/linux/lzma" >>${S}/lib/lzma/Makefile
-	echo "ccflags-y += -I\${srctree}/drivers/net/phy/rtk/rtl8367c/include" >>${S}/drivers/net/phy/rtk/Makefile
-	echo "ccflags-y += -I\${srctree}/include/linux/" >>${S}/drivers/net/phy/rtk/Makefile
+	if [ -f ${S}/drivers/net/phy/rtk/Makefile ]; then
+		echo "ccflags-y += -I\${srctree}/drivers/net/phy/rtk/rtl8367c/include" >>${S}/drivers/net/phy/rtk/Makefile
+		echo "ccflags-y += -I\${srctree}/include/linux/" >>${S}/drivers/net/phy/rtk/Makefile
+	fi
 
 	patch -p1 <${WORKDIR}/${MACHINE_EXTERNAL_PATCH}
 
