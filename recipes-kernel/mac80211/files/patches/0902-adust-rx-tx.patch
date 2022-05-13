@@ -390,7 +390,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  
  	if (unlikely(skb->len < ETH_HLEN)) {
  		kfree_skb(skb);
-@@ -4175,12 +4244,85 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4175,12 +4244,96 @@ void __ieee80211_subif_start_xmit(struct
  	}
  
  	rcu_read_lock();
@@ -428,6 +428,16 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
 +	if(skb->protocol == htons(ETH_P_802_2)) {
 +		printk("restore skb protocol\r\n");
 +		skb->protocol = htons(ETH_P_ALL);
++		if((unsigned char)skb->data[12] != 0x88 && (unsigned char)skb->data[13] != 0x8e) {
++			printk("crypto data\r\n");
++			info_flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT;
++			hdr = (struct ieee80211_hdr *)skb->data;
++			sta = sta_info_get_bss(sdata, hdr->addr1);
++			if (IS_ERR(sta)) {
++				sta = NULL;
++			}
++			goto prepare_done;
++		}
 +	}
 +	if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
 +#if 0
@@ -476,6 +486,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
 +		}
 +	}
 +#endif
++prepare_done:
  
  	if (local->ops->wake_tx_queue) {
  		u16 queue = __ieee80211_select_queue(sdata, sta, skb);
