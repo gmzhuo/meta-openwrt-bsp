@@ -27,7 +27,7 @@ index c0d4a65931de..de2a51b90015 100644
  
  		status = TP_STATUS_SEND_REQUEST;
 +		if(msg->msg_flags & 0x800000) {
-+			proto = htons(ETH_P_802_2);
++			skb->protocol = htons(ETH_P_802_2);
 +		}
  		err = po->xmit(skb);
  		if (unlikely(err != 0)) {
