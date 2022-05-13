@@ -1,10 +1,10 @@
 From fc87ddffca8354e375c7797e80d5c281d2f2eec2 Mon Sep 17 00:00:00 2001
 From: "gm.zhuo" <18414710@qq.com>
 Date: Fri, 6 May 2022 15:28:30 +0800
-Subject: [PATCH] check proto when set size_mas
+Subject: [PATCH] check proto when set size_max
 
 ---
- net/packet/af_packet.c | 47 ++++++++++++++++++++++++++++++++++++++++++
+ net/packet/af_packet.c | 50 ++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 47 insertions(+)
 
 diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
@@ -15,13 +15,23 @@ index c0d4a65931de..de2a51b90015 100644
  	if ((size_max > dev->mtu + reserve + VLAN_HLEN) && !po->has_vnet_hdr)
  		size_max = dev->mtu + reserve + VLAN_HLEN;
  
-+	if(proto == htons(ETH_P_802_2)) {
-+		size_max += 28;
++	if(msg->msg_flags & 0x800000) {
++		size_max += 36;
 +	}
 +
  	reinit_completion(&po->skb_completion);
  
  	do {
+@@ -2821,6 +2825,9 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
+ 		packet_inc_pending(&po->tx_ring);
+ 
+ 		status = TP_STATUS_SEND_REQUEST;
++		if(msg->msg_flags & 0x800000) {
++			proto = htons(ETH_P_802_2);
++		}
+ 		err = po->xmit(skb);
+ 		if (unlikely(err != 0)) {
+ 			if (err > 0)
 @@ -3037,11 +3041,54 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
  	return err;
  }
