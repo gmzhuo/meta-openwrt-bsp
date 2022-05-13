@@ -390,7 +390,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  
  	if (unlikely(skb->len < ETH_HLEN)) {
  		kfree_skb(skb);
-@@ -4175,12 +4244,62 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4175,12 +4244,85 @@ void __ieee80211_subif_start_xmit(struct
  	}
  
  	rcu_read_lock();
@@ -402,12 +402,33 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  
 -	if (ieee80211_lookup_ra_sta(sdata, skb, &sta))
 -		goto out_free;
-+	if(skb->protocol == htons(ETH_P_802_2)) {
-+		skb->protocol = htons(ETH_P_ALL);
-+	}
++#if 0
++	do {
++		if(skb->protocol == htons(ETH_P_802_2)) {
++			skb->protocol = htons(ETH_P_ALL);
++			if((unsigned char)skb->data[12] != 0x88 || (unsigned char)skb->data[13] != 0x8e) {
++				hdr = (struct ieee80211_hdr *)skb->data;
++				info_flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT;
++				sta = sta_info_get_bss(sdata, hdr->addr1);
++				break;
++			}
++		}
  
 -	if (IS_ERR(sta))
--		sta = NULL;
++		if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
++			goto out_free;
++		}
++	} while(0);
++
++	if (IS_ERR(sta)) {
+ 		sta = NULL;
++	}
++
++#else
++	if(skb->protocol == htons(ETH_P_802_2)) {
++		printk("restore skb protocol\r\n");
++		skb->protocol = htons(ETH_P_ALL);
++	}
 +	if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
 +#if 0
 +		int j = 0;
@@ -454,10 +475,11 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
 +			sta = NULL;
 +		}
 +	}
++#endif
  
  	if (local->ops->wake_tx_queue) {
  		u16 queue = __ieee80211_select_queue(sdata, sta, skb);
-@@ -4190,7 +4309,7 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4190,7 +4328,7 @@ void __ieee80211_subif_start_xmit(struct
  
  	ieee80211_aggr_check(sdata, sta, skb);
  
@@ -466,7 +488,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  		struct ieee80211_fast_tx *fast_tx;
  
  		sk_pacing_shift_update(skb->sk, sdata->local->hw.tx_sk_pacing_shift);
-@@ -4221,7 +4340,7 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4221,7 +4359,7 @@ void __ieee80211_subif_start_xmit(struct
  		 * things so we cannot really handle checksum offload with it -
  		 * fix it up in software before we handle anything else.
  		 */
@@ -475,7 +497,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  			skb_set_transport_header(skb,
  						 skb_checksum_start_offset(skb));
  			if (skb_checksum_help(skb))
-@@ -4229,6 +4348,12 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4229,6 +4367,12 @@ void __ieee80211_subif_start_xmit(struct
  		}
  	}
  
@@ -488,7 +510,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  	skb_list_walk_safe(skb, skb, next) {
  		skb_mark_not_on_list(skb);
  
-@@ -4244,6 +4369,11 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4244,6 +4388,11 @@ void __ieee80211_subif_start_xmit(struct
  
  		dev_sw_netstats_tx_add(dev, 1, skb->len);
  
@@ -500,7 +522,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  		ieee80211_xmit(sdata, sta, skb);
  	}
  	goto out;
-@@ -4514,11 +4644,16 @@ netdev_tx_t ieee80211_subif_start_xmit_8
+@@ -4514,11 +4663,16 @@ netdev_tx_t ieee80211_subif_start_xmit_8
  		return NETDEV_TX_OK;
  	}
  
