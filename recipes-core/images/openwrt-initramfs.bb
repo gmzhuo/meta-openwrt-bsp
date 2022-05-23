@@ -10,7 +10,7 @@ LICENSE = "MIT"
 export IMAGE_BASENAME = "${MLPREFIX}openwrt-initramfs"
 
 inherit core-image openwrt openwrt-kmods openwrt-services fitimage-rootfs mkits uboot-config
-DEPENDS += " lzma-native padjffs2-native u-boot-tools-native mtd-utils-native"
+DEPENDS += " lzma-native padjffs2-native u-boot-tools-native mtd-utils-native dtc-native"
 
 CORE_IMAGE_BASE_INSTALL = '\
     packagegroup-core-boot \
@@ -121,6 +121,24 @@ do_openwrt_firmware_fit() {
 		done
 	fi
 
+	WITH_INITRD_ARGS=""
+	if [[ $@ == *"with-initrd"* ]]; then
+		rootfs_paths=$(ls ${IMGDEPLOYDIR}/*.cpio*)
+		bbnote get  WITH_ROOTFS_ARGS ${rootfs_paths}
+
+		count="0"
+
+		for rootfs_path in ${rootfs_paths};
+		do
+			if [ -f ${rootfs_path} -a "${count}" == "0" ]; then
+				count="1"
+
+				WITH_INITRD_ARGS=" -i ${rootfs_path} "
+				bbnote set WITH_INITRD_ARGS ${WITH_INITRD_ARGS}
+			fi
+		done
+	fi
+
 	for dts in ${DEVICE_DTS_OVERLAY};
 	do
 		if [ -f ${DEPLOY_DIR_IMAGE}/devicetree/${dts}.dtbo ]; then
@@ -134,6 +152,7 @@ do_openwrt_firmware_fit() {
 		-k ${WORKDIR}/linux-vmlinux/tmp/firmare.bin \
 		-C ${1} -d ${DEPLOY_DIR_IMAGE}/devicetree/${MACHINE_DEFAULT_DTB} \
 		${WITH_ROOTFS_ARGS} \
+		${WITH_INITRD_ARGS} \
 		-a ${UBOOT_LOADADDRESS} -e ${ENTRYPOINT} \
 		${WITH_DTS_OVERLAY_ARGS} \
 		-c "${OPENWRT_DEVICE_DTS_CONFIG}"  -A ${UBOOT_ARCH} -v "${@oe.utils.read_file('${STAGING_KERNEL_BUILDDIR}/kernel-abiversion')}"

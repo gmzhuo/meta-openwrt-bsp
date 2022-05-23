@@ -458,3 +458,21 @@ make[1]: Leaving directory '/opt/work/yocto/openwrt/openwrt'
 	-c "config-1" -A arm64 -v 5.10.83
 
 PATH=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/home/gmzhuo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin mkimage  -E -B 0x1000 -p 0x1000 -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.its /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-squashfs-sysupgrade.itb.new
+
+
+
+/opt/work/yocto/openwrt/openwrt/scripts/mkits.sh -D bananapi_bpi-r64 、
+	-o /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb.its 、
+	-k /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb \
+	-C lzma  -d /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-$(basename /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dtb)  \
+	-i /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/initrd.cpio.xz \
+	-a 0x44000000 -e 0x44000000   \
+	-O mt7622-bananapi-bpi-r64-pcie1:/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-pcie1.dtb \
+	-O mt7622-bananapi-bpi-r64-sata:/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/image-mt7622-bananapi-bpi-r64-sata.dtb \
+	-c "config-1" -A arm64 -v 5.10.83
+
+PATH=/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/linux-5.10.83/scripts/dtc:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/toolchain-aarch64_cortex-a53_gcc-11.2.0_musl/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/opt/work/yocto/openwrt/openwrt/staging_dir/host/bin:/home/gmzhuo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin \
+	mkimage  -f /opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb.its \
+	/opt/work/yocto/openwrt/openwrt/build_dir/target-aarch64_cortex-a53_musl/linux-mediatek_mt7622/tmp/openwrt-mediatek-mt7622-bananapi_bpi-r64-initramfs-recovery.itb.new
+
+

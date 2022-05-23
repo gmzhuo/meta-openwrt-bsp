@@ -9,15 +9,23 @@ DEPENDS = "virtual/kernel"
 
 DEPENDS += "flex-native"
 
-SRC_URI = "file://qca-ssdk-2021-04-28-c9bc3bc3.tar.xz \
-			file://0001-SSDK-config-add-kernel-5.10.patch file://0003-add-aquantia-phy-id-113CB0-0x31c31C12.patch file://0005-SSDK-dts-fix-of_get_mac_address.patch  file://0007-qca8081-convert-to-5.11-IRQ-model.patch \
-			file://0002-SSDK-replace-ioremap_nocache-with-ioremap.patch  file://0004-platform-use-of_mdio_find_bus-to-get-MDIO-bus.patch  file://0006-SSDK-config-add-kernel-5.15.patch \
+SRC_URI = "git://git.codelinaro.org/clo/qsdk/oss/lklm/qca-ssdk.git;protocol=https;branch=NHSS.QSDK.12.0 \
+			file://patch-ssdk/0001-SSDK-config-add-kernel-5.10.patch \
+			file://patch-ssdk/0002-SSDK-replace-ioremap_nocache-with-ioremap.patch \
+			file://patch-ssdk/0004-platform-use-of_mdio_find_bus-to-get-MDIO-bus.patch \
+			file://patch-ssdk/0005-SSDK-dts-fix-of_get_mac_address.patch \
+			file://patch-ssdk/0006-SSDK-config-add-kernel-5.15.patch \
+			file://patch-ssdk/0007-qca8081-convert-to-5.11-IRQ-model.patch \
+			file://patch-ssdk/0008-qca807x-add-a-LED-quirk-for-Xiaomi-AX9000.patch \
+			file://patch-ssdk/0009-qca807x-add-a-LED-quirk-for-Xiaomi-AX3600.patch \
+			file://patch-ssdk/0012-include-fix-compilation-error-for-parse_uci_option.patch \
           "
 
+SRCREV = "62955de3c838028d3f72313eef99c57fa4babb71"
 # Modify these as desired
 PV = "1.0"
 
-S = "${WORKDIR}/qca-ssdk-2021-04-28-c9bc3bc3"
+S = "${WORKDIR}/git"
 
 # The inherit of module.bbclass will automatically name module packages with
 # "kernel-module-" prefix as required by the oe-core build environment.

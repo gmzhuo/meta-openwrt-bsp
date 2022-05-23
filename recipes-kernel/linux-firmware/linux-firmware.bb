@@ -14,9 +14,11 @@ PV = "20220209"
 
 PACKAGES += " firmware-ath10k-qca988x"
 PACKAGES += " board-ath10k-qca988x"
+PACKAGES += " firmware-rtl8153a-4"
 
 FILES:firmware-ath10k-qca988x = "/lib/firmware/ath10k/QCA988X/hw2.0/firmware*"
 FILES:board-ath10k-qca988x = "/lib/firmware/ath10k/QCA988X/hw2.0/board*"
+FILES:firmware-rtl8153a-4 = "/lib/firmware/rtl_nic/rtl8153a-4.fw"
 
 do_configure() {
 }
@@ -26,6 +28,9 @@ do_install() {
 
 	install ${S}/ath10k/QCA988X/hw2.0/firmware-5.bin ${D}/lib/firmware/ath10k/QCA988X/hw2.0/
 	install ${S}/ath10k/QCA988X/hw2.0/board.bin ${D}/lib/firmware/ath10k/QCA988X/hw2.0/
+
+	install -d -m 755 ${D}/lib/firmware/rtl_nic/
+	install ${S}/rtl_nic/rtl8153a-4.fw ${D}/lib/firmware/rtl_nic/
 }
 
 do_compile() {

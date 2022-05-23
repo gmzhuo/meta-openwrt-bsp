@@ -1,4 +1,5 @@
 SRC_URI += "file://patches/ath10k/080-ath10k_thermal_config.patch \
+		file://patches/ath10k/100-ath10k-support-bus-and-device-specific-API-1-BDF-sel.patch \
 		file://patches/ath10k/120-ath10k-fetch-calibration-data-via-nvmem-subsystem.patch \
 		file://patches/ath10k/921-ath10k_init_devices_synchronously.patch \
 		file://patches/ath10k/930-ath10k_add_tpt_led_trigger.patch \
