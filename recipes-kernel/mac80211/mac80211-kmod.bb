@@ -8,9 +8,11 @@ inherit module
 DEPENDS += "flex-native ncurses-native"
 MAC80211_PACKAGE_CONFIGS ?= ""
 
-SRC_URI = "https://cdn.kernel.org/pub/linux/kernel/projects/backports/stable/v5.15.33/backports-5.15.33-1.tar.xz \
+SRC_URI = "git://github.com/robimarko/wireless-backport-releases.git;protocol=https \
 		  file://test.cfg \
           "
+
+SRCREV = "7aa1df4f57570a0c148165f5aa869b289bfcd72f"
 
 include include/build.inc include/subsys.inc include/ath.inc include/ath5k.inc  include/ath9k.inc \
 	include/ath10k.inc include/ath11k.inc include/rt2x00.inc include/brcm.inc include/mwl.inc
@@ -19,7 +21,7 @@ SRC_URI += " file://patches/0901-add-nl80211-debug.patch file://patches/0902-adu
 
 SRC_URI[sha256sum] = "1b6b3bded4c81814ebebe2d194c2f8966d2399005b85ebb0557285b6e73f5422"
 
-S = "${WORKDIR}/backports-5.15.33-1"
+S = "${WORKDIR}/git"
 
 FILES:${PN}-dev += " /usr/include/*"
 
