@@ -12,7 +12,7 @@ SRC_URI = "git://github.com/openwrt/mt76.git"
 S = "${WORKDIR}/git"
 
 PV = "1.0+git${SRCPV}"
-SRCREV = "${AUTOREV}"
+SRCREV = "1d8af168e86fa4087351b7d10572accd5dee4d36"
 
 PACKAGES += " ${PN}-mt76x2"
 

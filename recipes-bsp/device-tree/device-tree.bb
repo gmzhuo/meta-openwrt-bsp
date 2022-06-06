@@ -4,7 +4,7 @@ SRC_URI = " \
 	file://dts/ \
 	${OPENWRT_SRC_URI};type=openwrt;name=openwrt;destsuffix=openwrt \
 	"
-SRCREV = "${AUTOREV}"
+SRCREV = "${OPENWRT_SRC_REV}"
 
 do_dts_copy() {
 	if [ -d ${WORKDIR}/openwrt/target/linux/${KERNEL_FEATURE_BSP_PATH}/dts ]; then

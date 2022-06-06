@@ -11,7 +11,19 @@ diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
 index c0d4a65931de..de2a51b90015 100644
 --- a/net/packet/af_packet.c
 +++ b/net/packet/af_packet.c
-@@ -2733,6 +2733,10 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
+@@ -2663,6 +2663,11 @@ static int tpacket_parse_header(struct packet_sock *po, void *frame,
+ 	*data = frame + off;
+ 	return tp_len;
+ }
++
++struct PACKET_TX_INFO {
++	u64 packet_tx_magic;
++	u64 packet_tx_flags;
++};
+ 
+ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
+ {
+@@ -2733,6 +2738,10 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
  	if ((size_max > dev->mtu + reserve + VLAN_HLEN) && !po->has_vnet_hdr)
  		size_max = dev->mtu + reserve + VLAN_HLEN;
  
@@ -22,17 +34,19 @@ index c0d4a65931de..de2a51b90015 100644
  	reinit_completion(&po->skb_completion);
  
  	do {
-@@ -2821,6 +2825,9 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
+@@ -2821,6 +2830,11 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
  		packet_inc_pending(&po->tx_ring);
  
  		status = TP_STATUS_SEND_REQUEST;
 +		if(msg->msg_flags & 0x800000) {
-+			skb->protocol = htons(ETH_P_802_2);
++			struct PACKET_TX_INFO* pinfo = (struct PACKET_TX_INFO*)&skb->cb;
++			pinfo->packet_tx_magic = 0xabcdabcd12341234;
++			pinfo->packet_tx_flags = 0x800000;
 +		}
  		err = po->xmit(skb);
  		if (unlikely(err != 0)) {
  			if (err > 0)
-@@ -3037,11 +3041,54 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
+@@ -3037,11 +3048,54 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
  	return err;
  }
  

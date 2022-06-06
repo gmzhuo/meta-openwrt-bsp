@@ -17,9 +17,10 @@ SRCREV = "7aa1df4f57570a0c148165f5aa869b289bfcd72f"
 include include/build.inc include/subsys.inc include/ath.inc include/ath5k.inc  include/ath9k.inc \
 	include/ath10k.inc include/ath11k.inc include/rt2x00.inc include/brcm.inc include/mwl.inc
 
-SRC_URI += " file://patches/0901-add-nl80211-debug.patch file://patches/0902-adust-rx-tx.patch"
+SRC_URI += " file://patches/0901-add-nl80211-debug.patch"
+#SRC_URI += " file://patches/0902-adust-rx-tx.patch"
 
-SRC_URI[sha256sum] = "1b6b3bded4c81814ebebe2d194c2f8966d2399005b85ebb0557285b6e73f5422"
+#SRC_URI[sha256sum] = "1b6b3bded4c81814ebebe2d194c2f8966d2399005b85ebb0557285b6e73f5422"
 
 S = "${WORKDIR}/git"
 
