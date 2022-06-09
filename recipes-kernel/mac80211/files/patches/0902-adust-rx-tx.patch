@@ -1,7 +1,7 @@
-Index: backports-5.15.33-1/net/mac80211/rx.c
+Index: git/net/mac80211/rx.c
 ===================================================================
---- backports-5.15.33-1.orig/net/mac80211/rx.c
-+++ backports-5.15.33-1/net/mac80211/rx.c
+--- git.orig/net/mac80211/rx.c
++++ git/net/mac80211/rx.c
 @@ -33,6 +33,8 @@
  #include "wme.h"
  #include "rate.h"
@@ -20,7 +20,7 @@ Index: backports-5.15.33-1/net/mac80211/rx.c
  	}
  
  	switch (rx->key->conf.cipher) {
-@@ -3867,6 +3869,45 @@ static void ieee80211_rx_cooked_monitor(
+@@ -3913,6 +3915,45 @@ static void ieee80211_rx_cooked_monitor(
  	dev_kfree_skb(skb);
  }
  
@@ -66,7 +66,7 @@ Index: backports-5.15.33-1/net/mac80211/rx.c
  static void ieee80211_rx_handlers_result(struct ieee80211_rx_data *rx,
  					 ieee80211_rx_result res)
  {
-@@ -3890,6 +3931,20 @@ static void ieee80211_rx_handlers_result
+@@ -3936,6 +3977,20 @@ static void ieee80211_rx_handlers_result
  		ieee80211_rx_cooked_monitor(rx, rate);
  		break;
  		}
@@ -87,20 +87,23 @@ Index: backports-5.15.33-1/net/mac80211/rx.c
  	case RX_DROP_UNUSABLE:
  		I802_DEBUG_INC(rx->sdata->local->rx_handlers_drop);
  		if (rx->sta)
-Index: backports-5.15.33-1/net/mac80211/tx.c
+Index: git/net/mac80211/tx.c
 ===================================================================
---- backports-5.15.33-1.orig/net/mac80211/tx.c
-+++ backports-5.15.33-1/net/mac80211/tx.c
-@@ -37,6 +37,8 @@
+--- git.orig/net/mac80211/tx.c
++++ git/net/mac80211/tx.c
+@@ -38,6 +38,11 @@
  #include "wme.h"
  #include "rate.h"
  
-+const u32 IEEE80211_TX_CTRL_INJECT_PACKET = BIT(10);
++struct PACKET_TX_INFO {
++	u64 packet_tx_magic;
++	u64 packet_tx_flags;
++};
 +
  /* misc utils */
  
  static __le16 ieee80211_duration(struct ieee80211_tx_data *tx,
-@@ -1834,6 +1836,7 @@ static int invoke_tx_handlers_late(struc
+@@ -1842,6 +1847,7 @@ static int invoke_tx_handlers_late(struc
  	CALL_TXH(ieee80211_tx_h_sequence);
  	CALL_TXH(ieee80211_tx_h_fragment);
  	/* handlers after fragment must be aware of tx info fragmentation! */
@@ -108,7 +111,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  	CALL_TXH(ieee80211_tx_h_stats);
  	CALL_TXH(ieee80211_tx_h_encrypt);
  	if (!ieee80211_hw_check(&tx->local->hw, HAS_RATE_CONTROL))
-@@ -1841,6 +1844,7 @@ static int invoke_tx_handlers_late(struc
+@@ -1849,6 +1855,7 @@ static int invoke_tx_handlers_late(struc
  #undef CALL_TXH
  
   txh_done:
@@ -116,7 +119,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  	if (unlikely(res == TX_DROP)) {
  		I802_DEBUG_INC(tx->local->tx_handlers_drop);
  		if (tx->skb)
-@@ -2035,7 +2039,10 @@ void ieee80211_xmit(struct ieee80211_sub
+@@ -2043,7 +2050,10 @@ void ieee80211_xmit(struct ieee80211_sub
  		}
  	}
  
@@ -128,7 +131,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  	ieee80211_tx(sdata, sta, skb, false);
  }
  
-@@ -2558,7 +2565,7 @@ static struct sk_buff *ieee80211_build_h
+@@ -2566,7 +2576,7 @@ static struct sk_buff *ieee80211_build_h
  	int head_need;
  	u16 ethertype, hdrlen,  meshhdrlen = 0;
  	__le16 fc;
@@ -137,7 +140,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  	struct ieee80211s_hdr mesh_hdr __maybe_unused;
  	struct mesh_path __maybe_unused *mppath = NULL, *mpath = NULL;
  	const u8 *encaps_data;
-@@ -2571,10 +2578,18 @@ static struct sk_buff *ieee80211_build_h
+@@ -2579,10 +2589,18 @@ static struct sk_buff *ieee80211_build_h
  	struct ieee80211_sub_if_data *ap_sdata;
  	enum nl80211_band band;
  	int ret;
@@ -156,7 +159,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  #ifdef CPTCFG_MAC80211_DEBUGFS
  	if (local->force_tx_status)
  		info_flags |= IEEE80211_TX_CTL_REQ_TX_STATUS;
-@@ -2771,7 +2786,7 @@ static struct sk_buff *ieee80211_build_h
+@@ -2779,7 +2797,7 @@ static struct sk_buff *ieee80211_build_h
  		goto free;
  	}
  
@@ -165,7 +168,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  
  	/* sta is always NULL for mesh */
  	if (sta) {
-@@ -2799,7 +2814,7 @@ static struct sk_buff *ieee80211_build_h
+@@ -2807,7 +2825,7 @@ static struct sk_buff *ieee80211_build_h
  		      !ether_addr_equal(sdata->vif.addr, skb->data + ETH_ALEN)))) {
  #ifdef CPTCFG_MAC80211_VERBOSE_DEBUG
  		net_info_ratelimited("%s: dropped frame to %pM (unauthorized port)\n",
@@ -174,7 +177,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  #endif
  
  		I802_DEBUG_INC(local->tx_handlers_drop_unauth_port);
-@@ -2832,72 +2847,74 @@ static struct sk_buff *ieee80211_build_h
+@@ -2840,72 +2858,74 @@ static struct sk_buff *ieee80211_build_h
  		}
  	}
  
@@ -306,20 +309,21 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  
  	info = IEEE80211_SKB_CB(skb);
  	memset(info, 0, sizeof(*info));
-@@ -4168,6 +4185,7 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4160,6 +4180,8 @@ void __ieee80211_subif_start_xmit(struct
  	struct sta_info *sta;
  	struct sk_buff *next;
  	int len = skb->len;
 +	struct ieee80211_hdr *hdr = NULL;
++	struct PACKET_TX_INFO* pinfo = (struct PACKET_TX_INFO*)&skb->cb;
  
  	if (unlikely(skb->len < ETH_HLEN)) {
  		kfree_skb(skb);
-@@ -4176,12 +4194,29 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4168,12 +4190,27 @@ void __ieee80211_subif_start_xmit(struct
  
  	rcu_read_lock();
  
-+	if(skb->protocol == htons(ETH_P_802_2)) {
-+		skb->protocol = htons(ETH_P_ALL);
++	if((pinfo->packet_tx_magic == 0xabcdabcd12341234） &&
++			(pinfo->packet_tx_flags == 0x800000)) {
 +		if((unsigned char)skb->data[12] != 0x88 && (unsigned char)skb->data[13] != 0x8e) {
 +			info_flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT;
 +			hdr = (struct ieee80211_hdr *)skb->data;
@@ -328,8 +332,6 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
 +				sta = NULL;
 +			}
 +			goto prepare_done;
-+		} else {
-+			skb->protocol = sdata->control_port_protocol;
 +		}
 +	}
 +
@@ -344,7 +346,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  	if (local->ops->wake_tx_queue) {
  		u16 queue = __ieee80211_select_queue(sdata, sta, skb);
  		skb_set_queue_mapping(skb, queue);
-@@ -4190,7 +4225,7 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4182,7 +4219,7 @@ void __ieee80211_subif_start_xmit(struct
  
  	ieee80211_aggr_check(sdata, sta, skb);
  
@@ -353,7 +355,7 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  		struct ieee80211_fast_tx *fast_tx;
  
  		sk_pacing_shift_update(skb->sk, sdata->local->hw.tx_sk_pacing_shift);
-@@ -4221,7 +4256,7 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4213,7 +4250,7 @@ void __ieee80211_subif_start_xmit(struct
  		 * things so we cannot really handle checksum offload with it -
  		 * fix it up in software before we handle anything else.
  		 */
@@ -362,9 +364,23 @@ Index: backports-5.15.33-1/net/mac80211/tx.c
  			skb_set_transport_header(skb,
  						 skb_checksum_start_offset(skb));
  			if (skb_checksum_help(skb))
-@@ -4517,8 +4552,7 @@ netdev_tx_t ieee80211_subif_start_xmit_8
+@@ -4500,6 +4537,7 @@ netdev_tx_t ieee80211_subif_start_xmit_8
+ 	struct ethhdr *ehdr = (struct ethhdr *)skb->data;
+ 	struct ieee80211_key *key;
+ 	struct sta_info *sta;
++	struct PACKET_TX_INFO* pinfo = (struct PACKET_TX_INFO*)&skb->cb;
+ 
+ 	if (unlikely(skb->len < ETH_HLEN)) {
+ 		kfree_skb(skb);
+@@ -4508,9 +4546,13 @@ netdev_tx_t ieee80211_subif_start_xmit_8
+ 
  	rcu_read_lock();
  
++	if((pinfo->packet_tx_magic == 0xabcdabcd12341234) &&
++		(pinfo->packet_tx_flags == 0x800000)) {
++		goto skip_offload;
++	}
++
  	if (ieee80211_lookup_ra_sta(sdata, skb, &sta)) {
 -		kfree_skb(skb);
 -		goto out;
