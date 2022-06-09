@@ -38,60 +38,68 @@ Signed-off-by: Robert Marko <robimarko@gmail.com>
  		}
 --- a/drivers/net/wireless/ath/ath11k/core.c
 +++ b/drivers/net/wireless/ath/ath11k/core.c
-@@ -101,6 +101,7 @@ static const struct ath11k_hw_params ath
- 		.current_cc_support = false,
- 		.dbr_debug_support = true,
- 		.global_reset = false,
+@@ -111,6 +111,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
+ 		.ce_window_idx = 0,
+ 		.fixed_fw_mem = false,
+ 		.support_off_channel_tx = false,
 +		.threaded_napi = true,
  	},
  	{
  		.hw_rev = ATH11K_HW_IPQ6018_HW10,
-@@ -167,6 +168,7 @@ static const struct ath11k_hw_params ath
- 		.current_cc_support = false,
- 		.dbr_debug_support = true,
- 		.global_reset = false,
+@@ -187,6 +188,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
+ 		.ce_window_idx = 0,
+ 		.fixed_fw_mem = false,
+ 		.support_off_channel_tx = false,
 +		.threaded_napi = false,
  	},
  	{
  		.name = "qca6390 hw2.0",
-@@ -232,6 +234,7 @@ static const struct ath11k_hw_params ath
- 		.current_cc_support = true,
- 		.dbr_debug_support = false,
- 		.global_reset = true,
+@@ -262,6 +264,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
+ 		.ce_window_idx = 0,
+ 		.fixed_fw_mem = false,
+ 		.support_off_channel_tx = true,
 +		.threaded_napi = false,
  	},
  	{
  		.name = "qcn9074 hw1.0",
-@@ -297,6 +300,7 @@ static const struct ath11k_hw_params ath
- 		.current_cc_support = false,
- 		.dbr_debug_support = true,
- 		.global_reset = false,
+@@ -337,6 +340,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
+ 		.ce_window_idx = 2,
+ 		.fixed_fw_mem = false,
+ 		.support_off_channel_tx = false,
 +		.threaded_napi = true,
  	},
  	{
  		.name = "wcn6855 hw2.0",
-@@ -362,6 +366,7 @@ static const struct ath11k_hw_params ath
- 		.current_cc_support = true,
- 		.dbr_debug_support = false,
- 		.global_reset = true,
+@@ -412,6 +416,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
+ 		.ce_window_idx = 0,
+ 		.fixed_fw_mem = false,
+ 		.support_off_channel_tx = true,
 +		.threaded_napi = false,
  	},
  	{
  		.name = "wcn6855 hw2.1",
-@@ -426,6 +431,7 @@ static const struct ath11k_hw_params ath
- 		.current_cc_support = true,
- 		.dbr_debug_support = false,
- 		.global_reset = true,
+@@ -486,6 +491,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
+ 		.ce_window_idx = 0,
+ 		.fixed_fw_mem = false,
+ 		.support_off_channel_tx = true,
++		.threaded_napi = false,
+ 	},
+ 	{
+ 		.name = "wcn6750 hw1.0",
+@@ -560,6 +566,7 @@ static const struct ath11k_hw_params ath11k_hw_params[] = {
+ 		.ce_window_idx = 2,
+ 		.fixed_fw_mem = true,
+ 		.support_off_channel_tx = false,
 +		.threaded_napi = false,
  	},
  };
  
 --- a/drivers/net/wireless/ath/ath11k/hw.h
 +++ b/drivers/net/wireless/ath/ath11k/hw.h
-@@ -195,6 +195,7 @@ struct ath11k_hw_params {
- 	bool current_cc_support;
- 	bool dbr_debug_support;
- 	bool global_reset;
+@@ -205,6 +205,7 @@ struct ath11k_hw_params {
+ 	u8 ce_window_idx;
+ 	bool fixed_fw_mem;
+ 	bool support_off_channel_tx;
 +	bool threaded_napi;
  };
  

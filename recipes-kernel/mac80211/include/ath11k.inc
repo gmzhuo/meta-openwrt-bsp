@@ -196,6 +196,46 @@ SRC_URI += "file://patches/ath11k/0001-ath11k-fix-4-addr-tx-failure-for-AP-and-S
 		file://patches/ath11k/0224-ath11k-mhi-add-error-handling-for-suspend-and-resume.patch \
 		file://patches/ath11k/0225-ath11k-mhi-remove-unnecessary-goto-from-ath11k_mhi_s.patch \
 		file://patches/ath11k/0226-ath11k-Fix-spelling-mistake-reseting-resetting.patch \
+		file://patches/ath11k/0227-ath11k-add-support-for-extended-wmi-service-bit.patch \
+		file://patches/ath11k/0228-ath11k-Add-support-for-SAR.patch \
+		file://patches/ath11k/0229-ath11k-fix-missing-unlock-on-error-in-ath11k_wow_op_.patch \
+		file://patches/ath11k/0230-ath11k-Fix-build-warning-without-CONFIG_IPV6.patch \
+		file://patches/ath11k/0231-ath11k-Do-not-put-HW-in-DBS-mode-for-WCN6750.patch \
+		file://patches/ath11k/0232-ath11k-WMI-changes-to-support-WCN6750.patch \
+		file://patches/ath11k/0233-ath11k-Update-WBM-idle-ring-HP-after-FW-mode-on.patch \
+		file://patches/ath11k/0234-ath11k-disable-spectral-scan-during-spectral-deinit.patch \
+		file://patches/ath11k/0235-ath11k-read-country-code-from-SMBIOS-for-WCN6855-QCA.patch \
+		file://patches/ath11k/0236-ath11k-Don-t-use-GFP_KERNEL-in-atomic-context.patch \
+		file://patches/ath11k/0237-ath11k-change-management-tx-queue-to-avoid-connectio.patch \
+		file://patches/ath11k/0239-ath11k-Move-parameters-in-bus_params-to-hw_params.patch \
+		file://patches/ath11k/0240-ath11k-Add-HW-params-for-WCN6750.patch \
+		file://patches/ath11k/0241-ath11k-Add-register-access-logic-for-WCN6750.patch \
+		file://patches/ath11k/0242-ath11k-Fetch-device-information-via-QMI-for-WCN6750.patch \
+		file://patches/ath11k/0243-ath11k-Add-QMI-changes-for-WCN6750.patch \
+		file://patches/ath11k/0244-ath11k-HAL-changes-to-support-WCN6750.patch \
+		file://patches/ath11k/0245-ath11k-Datapath-changes-to-support-WCN6750.patch \
+		file://patches/ath11k/0246-ath11k-Add-support-for-WCN6750-device.patch \
+		file://patches/ath11k/0247-ath11k-Add-support-for-targets-without-trustzone.patch \
+		file://patches/ath11k/0249-ath11k-Fix-RX-de-fragmentation-issue-on-WCN6750.patch \
+		file://patches/ath11k/0250-ath11k-reset-11d-state-in-process-of-recovery.patch \
+		file://patches/ath11k/0251-ath11k-Handle-keepalive-during-WoWLAN-suspend-and-re.patch \
+		file://patches/ath11k/0252-ath11k-Implement-remain-on-channel-support.patch \
+		file://patches/ath11k/0253-ath11k-Don-t-check-arvif-is_started-before-sending-m.patch \
+		file://patches/ath11k/0254-ath11k-Designating-channel-frequency-when-sending-ma.patch \
+		file://patches/ath11k/0256-ath11k-Reuse-the-available-memory-after-firmware-rel.patch \
+		file://patches/ath11k/0257-ath11k-remove-redundant-assignment-to-variables-vht_.patch \
+		file://patches/ath11k/0258-ath11k-update-missing-MU-MIMO-and-OFDMA-stats.patch \
+		file://patches/ath11k/0259-ath11k-Fix-warning-on-variable-sar-dereference-befor.patch \
+		file://patches/ath11k/0260-ath11k-Init-hw_params-before-setting-up-AHB-resource.patch \
+		file://patches/ath11k/0261-mac80211-introduce-BSS-color-collision-detection.patch \
+		file://patches/ath11k/0262-ath11k-fix-netdev-open-race.patch \
+		file://patches/ath11k/0263-ath11k-fix-IRQ-affinity-warning-on-shutdown.patch \
+		file://patches/ath11k/0264-ath11k-support-avg-signal-in-station-dump.patch \
+		file://patches/ath11k/0265-ath11k-fix-missing-skb-drop-on-htc_tx_completion-err.patch \
+		file://patches/ath11k/0266-ath11k-Fix-incorrect-debug_mask-mappings.patch \
+		file://patches/ath11k/0267-ath11k-Avoid-REO-CMD-failed-prints-during-firmware-r.patch \
+		file://patches/ath11k/0268-ath11k-Fix-LDPC-config-in-set_bitrate_mask-hook.patch \
+		file://patches/ath11k/0269-ath11k-Fix-warnings-reported-by-checkpatch.patch \
 		file://patches/ath11k/100-ath11k-load-appropriate-board-data-from-board-id.patch \
 		file://patches/ath11k/101-ath11k-update-debugfs-support-for-mupltiple-radios-i.patch \
 		file://patches/ath11k/102-ath11k-Enable-threaded-NAPI-on-some-radios.patch \
@@ -203,4 +243,3 @@ SRC_URI += "file://patches/ath11k/0001-ath11k-fix-4-addr-tx-failure-for-AP-and-S
 		file://patches/ath11k/901-ath11k-ipq8074-support-512MB-memory-profile.patch \
 		"
 
-		

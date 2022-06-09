@@ -26,7 +26,11 @@ SRC_URI += " \
 		file://patches/subsys/324-mac80211-MBSSID-beacon-handling-in-AP-mode.patch \
 		file://patches/subsys/325-mac80211-MBSSID-channel-switch.patch \
 		file://patches/subsys/326-mac80211-update-bssid_indicator-in-ieee80211_assign_.patch \
+		file://patches/subsys/328-mac80211-do-not-wake-queues-on-a-vif-that-is-being-s.patch \
 		file://patches/subsys/329-mac80211-minstrel_ht-fix-where-rate-stats-are-stored.patch \
+		file://patches/subsys/330-mac80211-fix-overflow-issues-in-airtime-fairness-cod.patch \
+		file://patches/subsys/331-mac80211-rework-the-airtime-fairness-implementation.patch \
+		file://patches/subsys/350-bss-color-collision.patch \
 		file://patches/subsys/400-allow-ibss-mixed.patch \
 		file://patches/subsys/500-mac80211_configure_antenna_gain.patch \
 		file://patches/subsys/782-net-next-1-of-net-pass-the-dst-buffer-to-of_get_mac_address.patch \
