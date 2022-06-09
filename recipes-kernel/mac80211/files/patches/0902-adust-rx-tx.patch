@@ -322,7 +322,7 @@ Index: git/net/mac80211/tx.c
  
  	rcu_read_lock();
  
-+	if((pinfo->packet_tx_magic == 0xabcdabcd12341234） &&
++	if((pinfo->packet_tx_magic == 0xabcdabcd12341234) &&
 +			(pinfo->packet_tx_flags == 0x800000)) {
 +		if((unsigned char)skb->data[12] != 0x88 && (unsigned char)skb->data[13] != 0x8e) {
 +			info_flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT;
