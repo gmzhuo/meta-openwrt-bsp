@@ -318,12 +318,11 @@ Index: git/net/mac80211/tx.c
  
  	if (unlikely(skb->len < ETH_HLEN)) {
  		kfree_skb(skb);
-@@ -4168,12 +4190,27 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4168,12 +4190,26 @@ void __ieee80211_subif_start_xmit(struct
  
  	rcu_read_lock();
  
-+	if((pinfo->packet_tx_magic == 0xabcdabcd12341234) &&
-+			(pinfo->packet_tx_flags == 0x800000)) {
++	if((pinfo->packet_tx_flags == 0x800000)) {
 +		if((unsigned char)skb->data[12] != 0x88 && (unsigned char)skb->data[13] != 0x8e) {
 +			info_flags |= IEEE80211_TX_INTFL_DONT_ENCRYPT;
 +			hdr = (struct ieee80211_hdr *)skb->data;
@@ -346,7 +345,7 @@ Index: git/net/mac80211/tx.c
  	if (local->ops->wake_tx_queue) {
  		u16 queue = __ieee80211_select_queue(sdata, sta, skb);
  		skb_set_queue_mapping(skb, queue);
-@@ -4182,7 +4219,7 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4182,7 +4218,7 @@ void __ieee80211_subif_start_xmit(struct
  
  	ieee80211_aggr_check(sdata, sta, skb);
  
@@ -355,7 +354,7 @@ Index: git/net/mac80211/tx.c
  		struct ieee80211_fast_tx *fast_tx;
  
  		sk_pacing_shift_update(skb->sk, sdata->local->hw.tx_sk_pacing_shift);
-@@ -4213,7 +4250,7 @@ void __ieee80211_subif_start_xmit(struct
+@@ -4213,7 +4249,7 @@ void __ieee80211_subif_start_xmit(struct
  		 * things so we cannot really handle checksum offload with it -
  		 * fix it up in software before we handle anything else.
  		 */
@@ -364,7 +363,7 @@ Index: git/net/mac80211/tx.c
  			skb_set_transport_header(skb,
  						 skb_checksum_start_offset(skb));
  			if (skb_checksum_help(skb))
-@@ -4500,6 +4537,7 @@ netdev_tx_t ieee80211_subif_start_xmit_8
+@@ -4500,6 +4536,7 @@ netdev_tx_t ieee80211_subif_start_xmit_8
  	struct ethhdr *ehdr = (struct ethhdr *)skb->data;
  	struct ieee80211_key *key;
  	struct sta_info *sta;
@@ -372,7 +371,7 @@ Index: git/net/mac80211/tx.c
  
  	if (unlikely(skb->len < ETH_HLEN)) {
  		kfree_skb(skb);
-@@ -4508,9 +4546,13 @@ netdev_tx_t ieee80211_subif_start_xmit_8
+@@ -4508,9 +4545,13 @@ netdev_tx_t ieee80211_subif_start_xmit_8
  
  	rcu_read_lock();
  
