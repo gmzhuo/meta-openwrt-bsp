@@ -34,4 +34,5 @@ SRC_URI += " \
 		file://patches/subsys/400-allow-ibss-mixed.patch \
 		file://patches/subsys/500-mac80211_configure_antenna_gain.patch \
 		file://patches/subsys/782-net-next-1-of-net-pass-the-dst-buffer-to-of_get_mac_address.patch \
+		file://patches/subsys/783-sync-nl80211.patch \
 		"
