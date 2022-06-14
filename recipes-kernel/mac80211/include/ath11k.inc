@@ -239,6 +239,7 @@ SRC_URI += "file://patches/ath11k/0001-ath11k-fix-4-addr-tx-failure-for-AP-and-S
 		file://patches/ath11k/100-ath11k-load-appropriate-board-data-from-board-id.patch \
 		file://patches/ath11k/101-ath11k-update-debugfs-support-for-mupltiple-radios-i.patch \
 		file://patches/ath11k/102-ath11k-Enable-threaded-NAPI-on-some-radios.patch \
+		file://patches/ath11k/103-RFC-ath11k-fix-peer-addition-deletion-error-on-sta-band-migration.patch \
 		file://patches/ath11k/900-ath11k-Disable-coldboot-calibration-for-IPQ8074.patch \
 		file://patches/ath11k/901-ath11k-ipq8074-support-512MB-memory-profile.patch \
 		"
