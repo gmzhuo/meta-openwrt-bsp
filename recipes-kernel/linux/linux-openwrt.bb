@@ -37,8 +37,9 @@ SRC_URI = " \
 	${OPENWRT_SRC_URI};type=openwrt;name=openwrt;destsuffix=openwrt \
 	file://configs/config-5.15.cfg;name=config-general \
 	file://configs/${KERNEL_FEATURE_BSP_CONFIG};name=config-machine \
-	file://patches/a00-packet-rx.patch \
     "
+
+SRC_URI += "file://patches/a00-packet-rx.patch "
 
 SRC_URI += "file://${MACHINE_EXTERNAL_PATCH}"
 
