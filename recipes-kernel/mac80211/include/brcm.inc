@@ -1,4 +1,6 @@
-SRC_URI += "file://patches/brcm/040-brcmutil_option.patch \
+SRC_URI += " \
+		file://patches/brcm/001-brcmfmac-allow-setting-wlan-MAC-address-using-device.patch \
+		file://patches/brcm/040-brcmutil_option.patch \
 		file://patches/brcm/810-b43-gpio-mask-module-option.patch \
 		file://patches/brcm/811-b43_no_pio.patch \
 		file://patches/brcm/812-b43-add-antenna-control.patch \

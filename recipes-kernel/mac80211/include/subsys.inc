@@ -28,8 +28,14 @@ SRC_URI += " \
 		file://patches/subsys/326-mac80211-update-bssid_indicator-in-ieee80211_assign_.patch \
 		file://patches/subsys/328-mac80211-do-not-wake-queues-on-a-vif-that-is-being-s.patch \
 		file://patches/subsys/329-mac80211-minstrel_ht-fix-where-rate-stats-are-stored.patch \
-		file://patches/subsys/330-mac80211-fix-overflow-issues-in-airtime-fairness-cod.patch \
-		file://patches/subsys/331-mac80211-rework-the-airtime-fairness-implementation.patch \
+		file://patches/subsys/330-mac80211-switch-airtime-fairness-back-to-deficit-rou.patch \
+		file://patches/subsys/331-mac80211-make-sta-airtime-deficit-field-s32-instead-.patch \
+		file://patches/subsys/332-mac80211-consider-aql_tx_pending-when-checking-airti.patch \
+		file://patches/subsys/333-mac80211-keep-recently-active-tx-queues-in-schedulin.patch \
+		file://patches/subsys/334-mac80211-add-a-per-PHY-AQL-limit-to-improve-fairness.patch \
+		file://patches/subsys/335-mac80211-add-debugfs-file-to-display-per-phy-AQL-pen.patch \
+		file://patches/subsys/336-mac80211-only-accumulate-airtime-deficit-for-active-.patch \
+		file://patches/subsys/337-mac80211-increase-quantum-for-airtime-scheduler.patch \
 		file://patches/subsys/350-bss-color-collision.patch \
 		file://patches/subsys/400-allow-ibss-mixed.patch \
 		file://patches/subsys/500-mac80211_configure_antenna_gain.patch \
