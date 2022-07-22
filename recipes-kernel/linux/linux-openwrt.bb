@@ -43,7 +43,7 @@ SRC_URI += "file://patches/a00-packet-rx.patch "
 
 SRC_URI += "file://${MACHINE_EXTERNAL_PATCH}"
 
-SRCREV_first = "207ca688162d4d77129981a8b4352114b97a52b5"
+SRCREV_first = "ee039006371a0b1d64d825a59f0eed8627bb3c91"
 SRCREV_meta = "145a91de103ca471a4796bc4cb2937b075b6d9d3"
 SRCREV_openwrt = "${OPENWRT_SRC_REV}"
 
